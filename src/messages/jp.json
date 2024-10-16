@@ -1,0 +1,16 @@
+{
+  "Header": {
+    "Home"  : "ホーム",
+    "Music" : "ミュージック",
+    "About" : "について",
+    "Shows" : "ショー",
+    "Live" : "ライブ"
+  },
+  "HomePage": {
+    "title":"こんにちは",
+    "about": "について"
+  },
+  "AboutPage": {
+    "title":"について"
+  }
+}
