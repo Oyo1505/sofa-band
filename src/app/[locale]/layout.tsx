@@ -15,17 +15,16 @@ export default async function LocaleLayout({
  
   return (
     <html lang={locale}>
-    <body className='h-screen relative bg-gradient-to-r from-lime-400 via-green-500 to-teal-600'>
+    <body>
+      <div className='relative h-screen noise-container'>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />
         <Suspense>
           {children}
         </Suspense>
       </NextIntlClientProvider>
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="w-full h-full grain-effect"></div>
-      </div>
-      
+      <div className="absolute inset-0 pointer-events-none noise z-0" /> 
+    </div>
     </body>
   </html>
   );
