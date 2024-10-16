@@ -1,0 +1,16 @@
+{
+  "Header": {
+    "Home"  : "Home",
+    "Music" : "Music",
+    "About" : "About",
+    "Shows" : "Shows",
+    "Live" : "Live"
+  },
+  "HomePage": {
+    "title":"Hello!",
+    "about": "About"
+  },
+  "AboutPage": {
+    "title":"About"
+  }
+}
