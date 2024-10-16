@@ -28,18 +28,23 @@ const config: Config = {
       }
     },
     extend: {
-      backgroundImage: {
-        // Ajoute une classe utilitaire personnalisée pour l'effet de grain
-        'grain-effect': "radial-gradient(circle, rgba(255, 255, 255, 0.03) 1%, transparent 1%)",
+      keyframes: {
+        patate: {
+          '0%': { borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%' }, 
+          '33%': { borderRadius: '40% 60% 60% 40% / 50% 50% 60% 60%' },
+          '66%': { borderRadius: '60% 40% 40% 60% / 60% 40% 40% 60%' },
+          '100%': { borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%' },
+        },
+        patateInverse: {
+          '0%': { borderRadius: '50% 50% 50% 50% / 40% 40% 60% 60%' },
+          '33%': { borderRadius: '60% 40% 40% 60% / 50% 50% 50% 50%' },
+          '66%': { borderRadius: '40% 60% 60% 40% / 60% 60% 40% 40%' },
+          '100%': { borderRadius: '50% 50% 50% 50% / 40% 40% 60% 60%' },
+        },
       },
-      backgroundSize: {
-        'grain-size': '3px 3px', // Taille personnalisée pour le grain
-      },
-      filter: {
-        'grain-filter': 'contrast(1.2) brightness(0.95)', // Filtre de contraste et luminosité pour accentuer l'effet
-      },
-      opacity: {
-        'grain-opacity': '0.3', // Opacité personnalisée pour rendre l'effet plus subtil
+      animation: {
+        patate: 'patate 4s ease-in-out infinite',
+        patateInverse: 'patateInverse 3s ease-in-out infinite',
       },
       colors: {
         background: "var(--background)",

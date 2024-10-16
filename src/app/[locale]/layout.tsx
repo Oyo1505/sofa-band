@@ -1,8 +1,15 @@
 import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
- import "../globals.css"
+import { getMessages } from 'next-intl/server';
+import "../globals.css"
+import { RocknRoll_One } from 'next/font/google'
 import Header from '@/domains/layout/header/components/header/header';
 import { Suspense } from 'react';
+
+const rock = RocknRoll_One({
+  weight: '400',
+  subsets: ['latin'],
+})
+
 export default async function LocaleLayout({
   children,
   params: {locale}
@@ -15,8 +22,8 @@ export default async function LocaleLayout({
  
   return (
     <html lang={locale}>
-    <body>
-      <div className='relative h-screen noise-container'>
+    <body className={rock.className}>
+      <div className='relative noise-container'>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />
         <Suspense>
