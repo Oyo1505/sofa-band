@@ -23,13 +23,13 @@ const Text = (
     children?: React.ReactNode, 
     className?: string 
   }) => {
-  const t = useTranslations(translationTheme);
+  const t = translationTheme ? useTranslations(translationTheme) : undefined;
 
   const Tag = type.toLowerCase() as keyof JSX.IntrinsicElements;
 
   return (
     <Tag className={cn(className,textColor)}>
-      {text || t(translationText)}
+      {text || t && t(translationText)}
       {children}
     </Tag>
   );
