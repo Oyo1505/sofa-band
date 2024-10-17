@@ -14,10 +14,10 @@ const Header =  ({locale}:{locale:string}) => {
       <div className='flex justify-between items-center h-20'>
         <nav className='flex text-lg gap-9 items-center justify-start'>
           <div><Link href="/">{t('Home')}</Link></div>
-          <div><Link href="/music">{t('Music')}</Link></div>
-          <div><Link href="/about">{t('About')}</Link></div>
-          <div><Link href="/shows">{t('Shows')}</Link></div>
-          <div><Link href="/live">{t('Live')}</Link></div>
+          <div><Link href="/music" prefetch>{t('Music')}</Link></div>
+          <div><Link href="/about" prefetch>{t('About')}</Link></div>
+          <div><Link href="/shows" prefetch>{t('Shows')}</Link></div>
+          <div><Link href="/live" prefetch>{t('Live')}</Link></div>
         </nav>
         <div className='flex gap-4'>
           <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
