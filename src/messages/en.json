@@ -8,9 +8,15 @@
   },
   "HomePage": {
     "title":"Hello!",
-    "about": "About"
+    "about": "About",
+    "desc" : "We are from Osaka and we are here to party. We love to eat baby alive and you ?"
   },
   "AboutPage": {
     "title":"About"
+  },
+  "MusicPage" : {
+    "ourMusic" : "Our Music",
+    "whereToBuy" : "Where to Buy",
+    "whereToListen" : "Where to Listen"
   }
 }
