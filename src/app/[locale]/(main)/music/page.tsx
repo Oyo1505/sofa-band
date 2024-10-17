@@ -54,16 +54,17 @@ export default function Page({params: {locale}} : {params:{locale:string}}) {
         {Eps?.sort((a ,b) => b.releaseYear - a.releaseYear).map((item, index)=>(
           <AlbumItem key={index} image={item.image} title={item.title} songs={item.songs} label={item.label} reference={item.ref} releaseYear={item?.releaseYear} />
         ))} 
-      <div className='flex flex-row w-full justify-evenly'>
-        <div className='pt-10 flex flex-col gap-2 items-start justify-center'>
-          <Title type='h2' text={t('whereToListen')} className='text-2xl pt-10' />
+        
+      <div className='flex flex-col gap-5 md:gap-0 md:flex-row w-full justify-between pt-5 md:items-start items-center md:justify-evenly'>
+        <div className='flex flex-col gap-2 items-start justify-center'>
+          <Title type='h2' text={t('whereToListen')} className='text-2xl' />
             <a target='_blank' className='flex w-full flex-row gap-2 items-center justify-start' href='http://cornerstone.shop-pro.jp/?pid=176992470'>
               <Spotify  className='size-7' />
               <Text text='Spotify' className='text-base' />
             </a>
         </div>
-        <div className='pt-10 flex flex-col items-start gap-2 justify-start'>
-          <Title type='h2' text={t('whereToBuy')} className='text-2xl pt-10' />
+        <div className='flex flex-col items-start gap-2 justify-start'>
+          <Title type='h2' text={t('whereToBuy')} className='text-2xl ' />
           <a target='_blank' className='flex w-full flex-row gap-2 items-center justify-start' href='http://cornerstone.shop-pro.jp/?pid=176992470'>
               <EarthIcon  className='size-7' />
               <Text text='Cornerstone' className='text-base' />
