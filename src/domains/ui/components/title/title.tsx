@@ -29,7 +29,7 @@ const Title = (
 
   return (
     <Tag className={cn(className,textColor)}>
-      {text || t(translationText)}
+      {text || translationText && t(translationText)}
       {children}
     </Tag>
   );
