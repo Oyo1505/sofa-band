@@ -1,35 +1,49 @@
 'use client'
-import React, { useEffect, useRef } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 interface Props {
   songUrl: string,
-  handleCurrent?: any
+  handleCurrent?: Dispatch<SetStateAction<void>>,
   isPlaying: boolean
 }
 
 const AudioComponent = ({songUrl, handleCurrent, isPlaying }: Props) => {
-  const audioRef = useRef(null);
+  
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   useEffect(() => {
-    if (audioRef.current) {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();  // Toujours arrêter l'audio actuel avant de modifier la source
+      audio.currentTime = 0;  // Réinitialise le temps
 
-      if (isPlaying) {
-        //@ts-ignore
-        audioRef.current.play();
+      // On change la source seulement si l'URL change
+      audio.src = songUrl;
 
-      } else {
-       //@ts-ignore
-        audioRef.current.pause();
-        //@ts-ignore
-        audioRef.current.currentTime = 0;
-      }
+      // Attend que l'audio puisse être lu sans interruption
+      const handleCanPlayThrough = () => {
+        if (isPlaying) {
+          audio.play().catch((error) => {
+            console.error("Erreur lors de la lecture de l'audio :", error);
+          });
+        }
+      };
+
+      audio.addEventListener('canplaythrough', handleCanPlayThrough);
+
+      // Nettoyage lors du démontage du composant ou du changement d'URL
+      return () => {
+        audio.removeEventListener('canplaythrough', handleCanPlayThrough);
+      };
     }
-  }, [isPlaying]);
+  }, [songUrl, isPlaying]); 
 
   const handleEnded = () => {
     if (handleCurrent) {
       handleCurrent();
     }
   };
+
   return (
     <div>
       <audio ref={audioRef} hidden onEnded={handleEnded}>

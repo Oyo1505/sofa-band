@@ -7,29 +7,46 @@ interface ButtonPlayProps {
   currentPlay: boolean;                  
   songUrl: string;                       
   setCurrentSong: Dispatch<SetStateAction<string | undefined>>; 
+  currentSong?:string
+  isPlayingCurrent:boolean
 }
 
-const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay} : ButtonPlayProps) => {
+const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSong} : ButtonPlayProps) => {
+
   const [isPlaying, setIsPlaying] = useState(false);
+
   useEffect(() => {
-    if(currentPlay === false) setIsPlaying(currentPlay)
-  }, [currentPlay])
+    // Si une autre chanson est jouée, on arrête la chanson actuelle
+    if (currentSong !== songUrl) {
+      setIsPlaying(false);
+    } else {
+      setIsPlaying(currentPlay);
+    }
+  }, [currentPlay, currentSong, songUrl]);
+
   return (
-    isPlaying ? <Pause 
-    onClick={() =>{
-      const newPlay = !isPlaying
-      setIsPlaying(newPlay)
-      handlePlay(newPlay)
-      setCurrentSong(undefined)
-    }} 
-    className='ml-2 size-5' /> : 
-    <Play onClick={() =>{
-      const newPlay = !isPlaying
-      setIsPlaying(newPlay)
-      setCurrentSong(songUrl)
-      handlePlay(newPlay)
-    }}  className='ml-2 size-5' />
-  )
+    isPlaying ? (
+      <Pause 
+        onClick={() => {
+          setIsPlaying(false);
+          handlePlay(false);
+          setCurrentSong(undefined); // Arrête la chanson actuelle
+        }} 
+        className='ml-2 size-5' 
+      />
+    ) : (
+      <Play 
+        onClick={() => {
+          if (currentSong !== songUrl) {
+            setCurrentSong(songUrl);  // Met à jour la nouvelle chanson
+          }
+          setIsPlaying(true);
+          handlePlay(true);  // Lance la lecture
+        }}  
+        className='ml-2 size-5' 
+      />
+    )
+  );
 }
 
 export default ButtonPlay

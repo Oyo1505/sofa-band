@@ -6,7 +6,7 @@ import React, { Suspense } from 'react'
 const Layout = ({children, params: {locale}}:{children:React.ReactNode,params:{locale:string}}) => {
   unstable_setRequestLocale(locale);
   return (
-   <Suspense fallback={<p>Loading...</p>}> <Container className='h-screen'>{children}</Container> </Suspense>
+   <Suspense fallback={<p>Loading...</p>}> <Container className='md:h-screen'>{children}</Container> </Suspense>
   )
 }
 

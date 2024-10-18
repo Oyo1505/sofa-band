@@ -1,7 +1,6 @@
 import React from 'react'
 import lalalie from '../../../../public/image/lalalie.webp'
 import ifyou from '../../../../public/image/if.png'
-import AlbumItem from '@/domains/music-page/components/album-item/album-item'
 import Title from '@/domains/ui/components/title/title'
 import { useTranslations } from 'next-intl'
 import { EarthIcon, Spotify } from '@/domains/ui/components/icons/icons'
@@ -10,51 +9,48 @@ import whisky from '../../../../public/audio/whisky.mp3';
 import if_you from '../../../../public/audio/ifyou.mp3';
 import lala from '../../../../public/audio/la_la_la_lie.mp3';
 import caseof from '../../../../public/audio/caseof.mp3';
+import AlbumList from '@/domains/music-page/components/album-list/album-list'
+
+const albums = [{
+  title: 'If You / ウイスキーが、お好きでしょ',
+  image: ifyou,
+  songs: [
+    {
+      track:'If You',
+      sound: if_you
+    }, 
+    {
+      track: 'ウイスキーが、お好きでしょ',
+      sound:whisky
+    }
+  ],
+  label: 'タカラディスク',
+  ref: 'TD-005',
+  releaseYear: 2022
+}, {
+  title: 'La la la lie / Case Of Insanity',
+  image: lalalie,
+  songs: [
+    {
+      track:'La la la lie',
+      sound:lala
+    }, 
+    {
+      track:'Case Of Insanity', 
+      sound:caseof
+    }],
+  label : 'タカラディスク',
+  ref: 'TD-006',
+  releaseYear: 2023
+}];
 
 export default function Page({params: {locale}} : {params:{locale:string}}) {
   const t = useTranslations('MusicPage');
 
-  const Eps = [{
-    title: 'If You / ウイスキーが、お好きでしょ',
-    image: ifyou,
-    songs: [
-      {
-        track:'If You',
-        sound: if_you
-      }, 
-      {
-        track: 'ウイスキーが、お好きでしょ',
-        sound:whisky
-      }
-    ],
-    label: 'タカラディスク',
-    ref: 'TD-005',
-    releaseYear: 2022
-  }, {
-    title: 'La la la lie / Case Of Insanity',
-    image: lalalie,
-    songs: [
-      {
-        track:'La la la lie',
-        sound:lala
-      }, 
-      {
-        track:'Case Of Insanity', 
-        sound:caseof
-      }],
-    label : 'タカラディスク',
-    ref: 'TD-006',
-    releaseYear: 2023
-  }];
-
   return (
     <>
-    <div className='flex flex-col h-screen items-start w-full justify-center'>
-
-        {Eps?.sort((a ,b) => b.releaseYear - a.releaseYear).map((item, index)=>(
-          <AlbumItem key={index} image={item.image} title={item.title} songs={item.songs} label={item.label} reference={item.ref} releaseYear={item?.releaseYear} />
-        ))} 
-        
+    <div className='flex flex-col md:h-screen items-start w-full justify-center'>
+      <AlbumList albums={albums}/>
       <div className='flex flex-col gap-5 md:gap-0 md:flex-row w-full justify-between pt-5 md:items-start items-center md:justify-evenly'>
         <div className='flex flex-col gap-2 items-start justify-center'>
           <Title type='h2' text={t('whereToListen')} className='text-2xl' />
