@@ -1,6 +1,6 @@
 'use client'
 import Image, { StaticImageData } from 'next/image';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Text from '../../../ui/components/text/text';
 import ButtonPlay from '../button-play/button-play';
 import AudioComponent from '../audio/audio';
@@ -17,18 +17,13 @@ interface Props {
   label : string,
   reference :string,
   releaseYear: number
+  handlePlay: (songUrl: boolean) => void; 
+  isPlaying:boolean,
+  currentSong?: string;                       
+  setCurrentSong: Dispatch<SetStateAction<string | undefined>>; 
 };
 
-const AlbumItem = ({image, title, songs, label, reference, releaseYear}:Props) => {
-  const [currentSong, setCurrentSong] = useState<string | undefined>('');
-  const [play, setplay] = useState(false);
-  const handlePlay = (isPlaying:boolean) => {
-    setplay(() => isPlaying)
-  };
- 
-  const handleCurrent = () => {
-    setplay(()=> false)
-  };
+const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong}:Props) => {
   
   return (
     <div className='flex  md:flex-row flex-col justify-start md:items-start items-center w-full gap-3 pt-3'>
@@ -41,11 +36,21 @@ const AlbumItem = ({image, title, songs, label, reference, releaseYear}:Props) =
               <Text key={`${index}-${item?.track}`}  type='p' className='text-base flex items-end justify-start h-5 w-full truncate'>
                {index +1 }. {item?.track} 
                </Text> 
-               <ButtonPlay  handlePlay={handlePlay} currentPlay={play} songUrl={item?.sound} setCurrentSong={setCurrentSong} key={`${index}-${item?.track}-play`} /> 
+               <ButtonPlay  
+                handlePlay={(newPlay) => {
+                  if (newPlay) {
+                    setCurrentSong(item.sound);
+                  }
+                  handlePlay(newPlay);
+                }}  
+                currentPlay={currentSong === item.sound && isPlaying} 
+                songUrl={item?.sound} 
+                setCurrentSong={setCurrentSong}
+                currentSong={currentSong} 
+                key={`${index}-${item?.track}-play`} /> 
              
               </div> 
             ))}
-             {currentSong && currentSong?.length > 0  && <AudioComponent handleCurrent={handleCurrent} isPlaying={play}  songUrl={currentSong} />} 
             <Text className='text-sm pt-2'>Label : {label}</Text>
             <Text className='text-sm'>Ref : {reference}</Text>
             <Text className='text-sm'>Date : {releaseYear}</Text>
