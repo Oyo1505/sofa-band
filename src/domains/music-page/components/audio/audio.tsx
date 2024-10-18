@@ -14,13 +14,10 @@ const AudioComponent = ({songUrl, handleCurrent, isPlaying }: Props) => {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.pause();  // Toujours arrêter l'audio actuel avant de modifier la source
-      audio.currentTime = 0;  // Réinitialise le temps
-
-      // On change la source seulement si l'URL change
+      audio.pause();
+      audio.currentTime = 0;  
       audio.src = songUrl;
 
-      // Attend que l'audio puisse être lu sans interruption
       const handleCanPlayThrough = () => {
         if (isPlaying) {
           audio.play().catch((error) => {
@@ -30,8 +27,6 @@ const AudioComponent = ({songUrl, handleCurrent, isPlaying }: Props) => {
       };
 
       audio.addEventListener('canplaythrough', handleCanPlayThrough);
-
-      // Nettoyage lors du démontage du composant ou du changement d'URL
       return () => {
         audio.removeEventListener('canplaythrough', handleCanPlayThrough);
       };
