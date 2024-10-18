@@ -21,10 +21,9 @@ interface Props {
   isPlaying:boolean,
   currentSong?: string;                       
   setCurrentSong: Dispatch<SetStateAction<string | undefined>>; 
-  handleCurrent: () => void
 };
 
-const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePlay, handleCurrent, isPlaying, currentSong, setCurrentSong}:Props) => {
+const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong}:Props) => {
   
   return (
     <div className='flex  md:flex-row flex-col justify-start md:items-start items-center w-full gap-3 pt-3'>
@@ -40,7 +39,6 @@ const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePl
                <ButtonPlay  
                 handlePlay={(newPlay) => {
                   if (newPlay) {
-                    // Si une nouvelle chanson est jouée, stoppe la précédente
                     setCurrentSong(item.sound);
                   }
                   handlePlay(newPlay);

@@ -3,12 +3,11 @@ import { Pause, Play } from '@/domains/ui/components/icons/icons';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 interface ButtonPlayProps {
-  handlePlay: (songUrl: boolean) => void; 
+  handlePlay: (isPlaying: boolean) => any;
   currentPlay: boolean;                  
   songUrl: string;                       
   setCurrentSong: Dispatch<SetStateAction<string | undefined>>; 
   currentSong?:string
-  isPlayingCurrent:boolean
 }
 
 const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSong} : ButtonPlayProps) => {

@@ -48,7 +48,6 @@ const AlbumList = ({albums}:Props) => {
         isPlaying={isPlaying}
         currentSong={currentSong}
         setCurrentSong={setCurrentSong}
-        handleCurrent={handleCurrent}
          />))}
       {currentSong && currentSong?.length > 0  && <AudioComponent handleCurrent={handleCurrent} isPlaying={isPlaying}  songUrl={currentSong} />} 
      </>
