@@ -2,7 +2,7 @@
 import { Play } from '@/domains/ui/components/icons/icons'
 import Text from '@/domains/ui/components/text/text'
 import Title from '@/domains/ui/components/title/title'
-import React, { use, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 interface Props {
   location : string
@@ -27,7 +27,8 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
     }
   }
   return (
-    <div className='group flex flex-col md:flex-row gap-3 w-full md:w-80  lg:w-96 relative hover:cursor-pointer'>
+    video ?
+    <div className='group flex flex-col md:flex-row gap-3 w-full  md:w-96 relative hover:cursor-pointer'>
       <div className="w-full flex justify-center relative md:w-full "> 
           <video ref={refVideo} 
               onClick={handleVideo} 
@@ -50,8 +51,17 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
       </div>
       }
     </div>
-    </div>
+    </div> : null
   )
 }
 
 export default LiveItem
+
+/*  <ReactPlayer 
+      className='w-full h-64 object-cover rounded-md'
+      url={video} 
+      controls={isPlaying}           
+      playing={isPlaying}
+      width="100%" 
+      height="100%" 
+    />  */

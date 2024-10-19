@@ -9,7 +9,7 @@
   "HomePage": {
     "title":"Hello!",
     "about": "About",
-    "desc" : "We are from Osaka and we are here to party and we love french food"
+    "desc" : "We are from Osaka, we are here to party and we love french food"
   },
   "AboutPage": {
     "title":"About"
@@ -21,5 +21,9 @@
     "Label": "Label",
     "Ref": "Ref",
     "Date":"Date"
-  }
+  },
+  "ShowPage": {
+    "event": "Event"
+   }
+  
 }

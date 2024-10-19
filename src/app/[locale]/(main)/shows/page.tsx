@@ -1,8 +1,60 @@
+import ShowItem from '@/domains/show-page/components/show-item/show-item'
 import React from 'react'
+import imageFlyer from '../../../../public/image/fly.jpg'
+
 
 export default function Page({params: {locale}} : {params:{locale:string}}) {
+  const events = [{
+    image: imageFlyer,
+    title: 'Fly',
+    location: 'Titty Bar',
+    time: '9:00 PM',
+    date: '26/10/2022',
+    infoLink: '/event-details',
+    city:"Osaka",
+    region : "Kansai",
+    country : "Japan"
+  },
+  {
+    image: imageFlyer,
+    title: 'Fly Festival',
+    location: 'Main Bar',
+    time: '9:00 PM ',
+    date: '26/10/2023',
+    infoLink: '/event-details',
+    city: "Tokyo",
+    region: "Kantō",
+    country: "Japan"
+  },
+  {
+    image: imageFlyer,
+    title: 'Fly',
+    location: 'Henri-Pierre Bar',
+    time: '9:00 PM',
+    date: '26/10/2023',
+    infoLink: '/event-details',
+    city: "Fukuoka",
+    region: "Kyūshū",
+    country: "Japan"
+  },
+  {
+    image: imageFlyer,
+    title: 'Fly',
+    location: 'bAttache Bar',
+    time: '9:00 PM',
+    date: '26/10/2023',
+    infoLink: '/event-details',
+    city: "Osaka",
+    region: "Kansai",
+    country: "Japan"
+  }
+] 
   
   return (
-    <div className='h-screen'>Shows</div>
+    <div className='flex flex-col h-screen pt-32 gap-6 items-center justify-center'>
+     {events.map((event, index) => (
+        <ShowItem key={index} event={event} />
+      ))}
+    </div>
   )
 }
