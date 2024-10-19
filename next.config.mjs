@@ -4,6 +4,7 @@ import  withVideos from  'next-videos';
 const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+
   webpack(config, options) {
     config.module.rules.push({
       test: /\.mp3$/,
@@ -13,6 +14,7 @@ const nextConfig = {
     });
     return config;
   },
+ 
 };
  
 export default withNextIntl(withVideos(nextConfig));

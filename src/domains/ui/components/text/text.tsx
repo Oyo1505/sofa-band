@@ -23,7 +23,7 @@ const Text = (
     children?: React.ReactNode, 
     className?: string 
   }) => {
-  const t = translationTheme ? useTranslations(translationTheme) : undefined;
+  const t =  useTranslations(translationTheme);
 
   const Tag = type.toLowerCase() as keyof JSX.IntrinsicElements;
 
