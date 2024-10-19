@@ -6,7 +6,7 @@ export default function Page({params: {locale}} : {params:{locale:string}}) {
   const t = useTranslations('AboutPage');
 
   return (
-  <div>
+  <div className='h-screen'>
     <h1>{t("title")}</h1>
   </div>
   );
