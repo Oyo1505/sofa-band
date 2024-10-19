@@ -1,6 +1,8 @@
 import ShowItem from '@/domains/show-page/components/show-item/show-item'
 import React from 'react'
 import imageFlyer from '../../../../public/image/fly.jpg'
+
+
 export default function Page({params: {locale}} : {params:{locale:string}}) {
   const events = [{
     image: imageFlyer,
@@ -50,7 +52,7 @@ export default function Page({params: {locale}} : {params:{locale:string}}) {
   
   return (
     <div className='flex flex-col h-screen pt-32 gap-6 items-center justify-center'>
-     {events.sort((a, b)=> b.date - a.date).map((event, index) => (
+     {events.map((event, index) => (
         <ShowItem key={index} event={event} />
       ))}
     </div>
