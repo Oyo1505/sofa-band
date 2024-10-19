@@ -25,7 +25,7 @@ const ShowItem = ({ event }: Props) => {
     <>
     <div className='w-full flex-col sm:flex sm:flex-row  sm:justify-around sm:items-center'>
          <Text type='p' className="text-sm w-24 ">{date}</Text>
-         <div className='inline-flex gap-2 items-center sm:gap-1 sm:items-start sm:w-80'>
+         <div className='inline-flex gap-2 items-center sm:gap-1 sm:items-start sm:w-96'>
           {title && <Title className="text-sm sm:w-2/3 font-semibold sm:truncate">{title}</Title>}
           <Text type='p' className="text-sm sm:w-2/3 sm:truncate">@{location}</Text>
           <Text type='p' className="text-sm sm:w-4/12">{time}</Text>
