@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import lalalie from '../../../../public/image/lalalie.webp'
 import ifyou from '../../../../public/image/if.png'
