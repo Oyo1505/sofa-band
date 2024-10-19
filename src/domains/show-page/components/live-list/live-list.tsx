@@ -4,8 +4,6 @@ import live2 from '../../../../public/video/live_corner_3.mp4';
 import live3 from '../../../../public/video/live_corner_2.mp4';
 import LiveItem from '../live-item/live-item';
 
-
-
 const LiveList = ({locale}:{locale:string}) => {
   const lives = [
     {

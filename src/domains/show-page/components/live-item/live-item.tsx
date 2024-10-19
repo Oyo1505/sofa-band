@@ -2,7 +2,7 @@
 import { Play } from '@/domains/ui/components/icons/icons'
 import Text from '@/domains/ui/components/text/text'
 import Title from '@/domains/ui/components/title/title'
-import React, { useRef, useState } from 'react'
+import React, { Suspense, useRef, useState } from 'react'
 
 interface Props {
   location : string
@@ -27,7 +27,7 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
     }
   }
   return (
-    video ?
+     <Suspense fallback={<p>Loading video...</p>}>
     <div className='group flex flex-col md:flex-row gap-3 w-full  md:w-96 relative hover:cursor-pointer'>
       <div className="w-full flex justify-center relative md:w-full "> 
           <video ref={refVideo} 
@@ -35,8 +35,8 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
               onMouseEnter={()=>refVideo.current?.setAttribute("controls", "")}  
               onMouseLeave={()=>refVideo.current?.removeAttribute("controls")}  
               className='w-full h-64 object-cover rounded-md'>
-            <source src={video} type="video/mp4" />
-            <a href={video} >MP4</a>
+            <source src={require('../../../../public/video/live_corner.mp4')} type="video/mp4" />
+           
       </video>
      
       {!isPlaying && 
@@ -51,7 +51,7 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
       </div>
       }
     </div>
-    </div> : null
+    </div></Suspense>
   )
 }
 
