@@ -1,6 +1,7 @@
 import React from 'react'
 import Title from '@/domains/ui/components/title/title'
 import Text from '@/domains/ui/components/text/text'
+import { useTranslations } from 'next-intl'
 
 interface Event {
   title: string
@@ -17,23 +18,24 @@ interface Props {
 } 
 
 const ShowItem = ({ event }: Props) => {
-  const { title, location, time, date, city, region, country } = event;
+  const t = useTranslations('ShowPage');
+  const { title, location, time, date, city, region } = event;
 
   return (
     <>
     <div className='w-full flex-col sm:flex sm:flex-row sm:pr-5 sm:pl-5 sm:pt-4 sm:pb-4 sm:justify-between sm:items-center'>
-         <Text type='p' className="text-sm ">{date}</Text>
-         <div className='flex-col flex gap-4 sm:flex-row sm:gap-2 sm:items-start sm:justify-between'>
-          {title && <Title className="text-sm font-semibold">{title}</Title>}
-          <Text type='p' className="text-sm ">@{location}</Text>
-          <Text type='p' className="text-sm ">{time}</Text>
+         <Text type='p' className="text-sm w-24 ">{date}</Text>
+         <div className='flex-col flex gap-4 sm:flex-row sm:gap-2 sm:items-start sm:justify-between w-80 truncate'>
+          {title && <Title className="text-sm sm:w-2/3 font-semibold sm:truncate">{title}</Title>}
+          <Text type='p' className="text-sm sm:w-2/3 sm:truncate">@{location}</Text>
+          <Text type='p' className="text-sm sm:w-4/12">{time}</Text>
          </div>
-        <div className='inline-flex gap-2 items-center'>
+        <div className='inline-flex gap-2 items-center sm:gap-1 sm:items-start'>
           <Text type='p' className="text-sm ">{city},</Text>
-          <Text type='p' className="text-sm ">{region},</Text>
-          <Text type='p' className="text-sm ">{country}</Text>
+          <Text type='p' className="text-sm ">{region}</Text>
+          {/* <Text type='p' className="text-sm ">{country}</Text> */}
         </div>
-        <Title className="text-sm">plus d'informations</Title>
+        <a href='https://www.instagram.com/p/DBLCY7_y5Kt/' target='_blank'><Text type='p' className="text-sm">{t('event')}</Text></a>
       
     </div>
     <hr className="border-t w-full border-gray-300" />
