@@ -5,7 +5,7 @@ export default function Page({params: {locale}} : {params:{locale:string}}) {
   const events = [{
     image: imageFlyer,
     title: 'Fly',
-    location: 'Corner Bar',
+    location: 'Titty Bar',
     time: '9:00 PM - 11:00 PM',
     date: '26/10/2022',
     infoLink: '/event-details',
@@ -16,14 +16,37 @@ export default function Page({params: {locale}} : {params:{locale:string}}) {
   {
     image: imageFlyer,
     title: 'Fly',
-    location: 'Corner Bar',
+    location: 'Main Bar',
     time: '9:00 PM - 11:00 PM',
     date: '26/10/2023',
     infoLink: '/event-details',
     city: "Osaka",
     region: "Kansai",
     country: "Japan"
-  }] 
+  },
+  {
+    image: imageFlyer,
+    title: 'Fly',
+    location: 'Henri-Pierre Bar',
+    time: '9:00 PM - 11:00 PM',
+    date: '26/10/2023',
+    infoLink: '/event-details',
+    city: "Osaka",
+    region: "Kansai",
+    country: "Japan"
+  },
+  {
+    image: imageFlyer,
+    title: 'Fly',
+    location: 'bAttache Bar',
+    time: '9:00 PM - 11:00 PM',
+    date: '26/10/2023',
+    infoLink: '/event-details',
+    city: "Osaka",
+    region: "Kansai",
+    country: "Japan"
+  }
+] 
   
   return (
     <div className='flex flex-col h-screen pt-32 gap-6 items-center justify-center'>
