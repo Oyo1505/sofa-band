@@ -35,7 +35,7 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
               onMouseEnter={()=>refVideo.current?.setAttribute("controls", "")}  
               onMouseLeave={()=>refVideo.current?.removeAttribute("controls")}  
               className='w-full h-64 object-cover rounded-md'>
-            <source src={require('../../../../public/video/live_corner.mp4')} type="video/mp4" />
+            <source src={require(`../../../../public/video/${video}`)} type="video/mp4" />
            
       </video>
      

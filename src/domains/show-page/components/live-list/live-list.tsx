@@ -1,7 +1,4 @@
 import React from 'react';
-import live from '../../../../public/video/live_corner.mp4';
-import live2 from '../../../../public/video/live_corner_3.mp4';
-import live3 from '../../../../public/video/live_corner_2.mp4';
 import LiveItem from '../live-item/live-item';
 
 const LiveList = ({locale}:{locale:string}) => {
@@ -11,35 +8,35 @@ const LiveList = ({locale}:{locale:string}) => {
       city:'Tokyo',
       cityJp:'東京都',
       date: 2022,
-      video:live
+      video:'live_corner_2.mp4'
     },
     {
       location: 'Corner stone Bar',
       city:'Osaka',
       cityJp:'大阪市',
       date: 2024,
-      video:live2
+      video:"live_corner_3.mp4"
     },
     {
       location: 'Corner stone Bar',
       city:'Osaka',
       cityJp:'大阪市',
       date: 2023,
-      video:live3
+      video:"live_corner.mp4"
     },
     {
       location: 'Corner stone Bar',
       city:'Osaka',
       cityJp:'大阪市',
       date: 2023,
-      video:live3
+      video:"live_corner_3.mp4"
     },
     {
       location: 'Corner stone Bar',
       city:'Osaka',
       cityJp:'大阪市',
       date: 2023,
-      video:live3
+      video:"live_corner.mp4"
     }
     ]
   return (
