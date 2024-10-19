@@ -25,14 +25,22 @@ const ShowItem = ({ event }: Props) => {
     <>
     <div className='w-full flex-col sm:flex sm:flex-row  sm:justify-around sm:items-center'>
          <Text type='p' className="text-sm w-24 ">{date}</Text>
-         <div className='inline-flex gap-2 items-center sm:gap-1 sm:items-start sm:w-96'>
-          {title && <Title className="text-sm sm:w-2/3 font-semibold sm:truncate">{title}</Title>}
-          <Text type='p' className="text-sm sm:w-2/3 sm:truncate">@{location}</Text>
-          <Text type='p' className="text-sm sm:w-4/12">{time}</Text>
-         </div>
-        <div className='inline-flex gap-2 items-center sm:gap-1 sm:items-start'>
-          <Text type='p' className="text-sm ">{city},</Text>
-          <Text type='p' className="text-sm ">{region}</Text>
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center sm:gap-1 sm:w-96">
+            {title && (
+              <Title className="text-sm sm:w-2/3 font-semibold sm:truncate col-span-2">
+                {title}
+              </Title>
+            )}
+            <Text type="p" className="text-sm sm:w-2/3 sm:truncate col-span-2">
+              @{location}
+            </Text>
+            <Text type="p" className="text-sm col-span-1">
+              {time}
+            </Text>
+          </div>
+          <div className="inline-flex sm:grid-cols-2 items-center gap-0.5 w-36">
+          <Text type='p' className="text-sm w-auto">{city},</Text>
+          <Text type='p' className="text-sm w-auto">{region}</Text>
           {/* <Text type='p' className="text-sm ">{country}</Text> */}
         </div>
         <a href='https://www.instagram.com/p/DBLCY7_y5Kt/' target='_blank'><Text type='p' className="text-sm">{t('event')}</Text></a>
