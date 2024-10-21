@@ -2,7 +2,7 @@
 import React from 'react'
 import ShowItem from '../show-item/show-item'
 
-const ShowList = ({events}: {events: Event[]}) => {
+const ShowList = ({events}: {events: any[]}) => {
   
   return (
     events.map((event, index) => (
