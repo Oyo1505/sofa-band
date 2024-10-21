@@ -63,7 +63,7 @@ const container = {
     variants={container}
     initial="hidden"
     animate="visible"
-    className='flex flex-col h-screen pt-32 gap-6 items-center justify-center'>
+    className='flex flex-col lg:h-screen pt-32 gap-6 items-center justify-center'>
       <ShowList events={events} />
     </motion.div>
   )
