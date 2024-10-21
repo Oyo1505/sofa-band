@@ -35,9 +35,8 @@ const AnimatedText = (
   }) => {
 
   const t = useTranslations(translationTheme || '');
-  
+
   return (
-  
     <motion.div  
       initial="hidden"
       animate="visible"
@@ -46,14 +45,14 @@ const AnimatedText = (
       aria-hidden
       onAnimationComplete={()=>setIsAnimationFinished && setIsAnimationFinished(true)}
     >
-     
       <>
-        {text && item && text.split("").map((letter, index) => (
+        {text && item ? text.split("").map((letter, index) => (
           <AnimatedLetter key={index} item={item} letter={letter}  />
-        ))}
-        {translationText && t(translationText).split("").map((letter, index) => (
-          <AnimatedLetter key={index} item={item} letter={letter}  /> 
-        ))}
+        )) : text ? <div>{text}</div> : null}
+
+        {translationText && item ? t(translationText).split("").map((letter, index) => (
+          <AnimatedLetter key={index} item={item} letter={letter}  />  
+        )) : translationText ? <div>{t(translationText)}</div> : null}
       </>
     </motion.div>
   )
