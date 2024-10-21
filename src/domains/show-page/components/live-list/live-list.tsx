@@ -1,6 +1,9 @@
+
 import React from 'react';
+import * as motion from 'framer-motion/client'
 import LiveItem from '../live-item/live-item';
 import moment from 'moment';
+
 const LiveList = ({locale}:{locale:string}) => {
   const lives = [
     {
@@ -46,13 +49,26 @@ const LiveList = ({locale}:{locale:string}) => {
       video:'live_corner_3.mp4'
     },
     ]
-
+    const container = {
+      hidden: { scale: 0 },
+      visible: {
+        scale: 1,
+        transition: {
+          delayChildren: 0.3,
+          staggerChildren: 0.2
+        }
+      }
+    };
   return (
-    <div className='flex flex-col md:flex-row flex-wrap gap-4 w-full'>
+    <motion.div className='grid sm:grid-cols-3  gap-6'
+    variants={container}
+    initial="hidden"
+    animate="visible"
+    >
       {lives && lives.sort((a, b)=> Number(b.date) - Number(a.date)).map((item, index) =>
         <LiveItem key={`${Number(item.date)}-${index}`} location={item.location} date={item.date} cityJp={item.cityJp} city={item.city} video={item.video} locale={locale} />
       )}
-    </div>
+    </motion.div>
   )
 }
 

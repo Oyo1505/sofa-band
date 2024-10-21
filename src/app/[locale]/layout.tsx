@@ -5,7 +5,7 @@ import { RocknRoll_One } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
 import { Suspense } from 'react';
 import clsx from 'clsx';
-import Footer from '@/domains/layout/components/footer/footer';
+
 
 const rock = RocknRoll_One({
   weight: '400',

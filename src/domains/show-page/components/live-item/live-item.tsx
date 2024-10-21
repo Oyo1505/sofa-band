@@ -1,5 +1,6 @@
 'use client'
 import { Play } from '@/domains/ui/components/icons/icons'
+import { motion } from 'framer-motion'
 import Text from '@/domains/ui/components/text/text'
 import Title from '@/domains/ui/components/title/title'
 import moment from 'moment'
@@ -27,8 +28,15 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
       refVideo.current?.pause()
     }
   }
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
   return (
-    <div className='group flex flex-col md:flex-row gap-3 w-full  md:w-96 relative hover:cursor-pointer'>
+    <motion.div variants={item} className='group flex flex-col md:flex-row gap-3 w-full   relative hover:cursor-pointer'>
       <div className="w-full flex justify-center relative md:w-full "> 
           <video ref={refVideo} 
               onClick={handleVideo} 
@@ -49,7 +57,7 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
       </div>
       }
     </div>
-    </div>
+    </motion.div>
   )
 }
 
