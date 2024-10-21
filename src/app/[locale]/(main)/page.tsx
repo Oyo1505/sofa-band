@@ -1,10 +1,9 @@
-import Text from "@/domains/ui/components/text/text";
-import Title from "@/domains/ui/components/title/title";
 import { routing } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import {unstable_setRequestLocale} from 'next-intl/server';
 import Image from "next/image";
 import bande from "../../../public/image/front_band.jpg";
+import TitlesContainer from "@/domains/home-page/components/titles-container/titles-container";
 
 export default function Home({params: {locale}}:{params:{locale:string}}) {
   unstable_setRequestLocale(locale);
@@ -13,9 +12,7 @@ export default function Home({params: {locale}}:{params:{locale:string}}) {
   <div className="flex flex-col h-screen w-full">
    <div className="flex items-center h-full flex-1  justify-between">
     <div className="text-center relative w-full lg:w-6/12">
-      <Title className="text-4xl z-3 md:text-8xl" text="Sofa Rockers" textColor="text-white"/>
-      <Text className="md:text-3xl mt-10"   text={t('desc')} />
-
+      <TitlesContainer />
     </div>
 
       <div className="lg:flex w-6/12 relative h-96 hidden  items-center justify-center">

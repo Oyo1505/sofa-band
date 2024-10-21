@@ -1,7 +1,7 @@
-import ShowItem from '@/domains/show-page/components/show-item/show-item'
 import React from 'react'
 import imageFlyer from '../../../../public/image/fly.jpg'
-
+import ShowList from '@/domains/show-page/components/show-list/show-list'
+import * as  motion from 'framer-motion/client'
 
 export default function Page({params: {locale}} : {params:{locale:string}}) {
   const events = [{
@@ -49,12 +49,22 @@ export default function Page({params: {locale}} : {params:{locale:string}}) {
     country: "Japan"
   }
 ] 
-  
+const container = {
+  visible: {
+    transition: {
+      delayChildren: 0.2,
+      staggerChildren: 0.2
+    }
+  }
+};
   return (
-    <div className='flex flex-col h-screen pt-32 gap-6 items-center justify-center'>
-     {events.map((event, index) => (
-        <ShowItem key={index} event={event} />
-      ))}
-    </div>
+
+    <motion.div 
+    variants={container}
+    initial="hidden"
+    animate="visible"
+    className='flex flex-col h-screen pt-32 gap-6 items-center justify-center'>
+      <ShowList events={events} />
+    </motion.div>
   )
 }
