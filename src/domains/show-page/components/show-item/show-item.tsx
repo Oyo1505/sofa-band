@@ -16,7 +16,7 @@ interface Event {
 }
 
 interface Props {
-  event: Event
+  event: any 
 } 
 
 const ShowItem = ({ event }: Props) => {
