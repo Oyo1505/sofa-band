@@ -48,7 +48,7 @@ const LiveList = ({locale}:{locale:string}) => {
     ]
 
   return (
-    <div className='flex flex-col md:flex-row flex-wrap gap-4 w-full'>
+    <div className='grid sm:grid-cols-3  gap-6'>
       {lives && lives.sort((a, b)=> Number(b.date) - Number(a.date)).map((item, index) =>
         <LiveItem key={`${Number(item.date)}-${index}`} location={item.location} date={item.date} cityJp={item.cityJp} city={item.city} video={item.video} locale={locale} />
       )}
