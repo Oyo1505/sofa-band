@@ -9,7 +9,7 @@ const ButtonSwitchLangage = ({locale}: {locale : string}) => {
   const path = pathname.replace(`${locale}`, "/");
   return (
   <Link href={path} locale={locale === 'jp' ? 'en' : 'jp'}>
-    Lang : {locale === 'jp' ? '🇬🇧' : '🇯🇵' }
+    Lang : {locale === 'jp' ? '🇯🇵' : '🇬🇧' }
   </Link>
   )
 }

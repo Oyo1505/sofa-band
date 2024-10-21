@@ -7,8 +7,9 @@ import React, { useState } from 'react'
 const TitlesContainer = () => {
   const t = useTranslations('HomePage');
   const [isAnimationFinished, setIsAnimationFinished] = useState(false);
-  
-  const containerTile = {
+  const [isAnimationFirstTitleFinished, setIsAnimationFirstTitleFinished] = useState(false);
+
+  const containerFirstTile = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1, 
@@ -17,6 +18,7 @@ const TitlesContainer = () => {
       },
     },
   };
+
 
   const containerSubTitle = {
     hidden: { 
@@ -28,13 +30,14 @@ const TitlesContainer = () => {
     },
   };
 
-  const itemAnimationTitle = {
+  const itemAnimationFirstTitle = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1
     }
   };
+
   const itemAnimationSubtitle = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,8 +49,9 @@ const TitlesContainer = () => {
   };
   return (
     <>
-     <AnimatedText className="text-8xl z-3" item={itemAnimationTitle} container={containerTile} setIsAnimationFinished={setIsAnimationFinished} text="Sofa Rockers" textColor="text-white"/>
-     <AnimatedText className="md:text-3xl mt-10 h-20" item={itemAnimationSubtitle}  isAnimated={isAnimationFinished} container={containerSubTitle} text={t('desc')}  />
+     <AnimatedText className="text-7xl z-3" item={itemAnimationFirstTitle} container={containerFirstTile} setIsAnimationFinished={setIsAnimationFirstTitleFinished} text="Sofa" textColor="text-foreground"/>
+     <div style={{ opacity: isAnimationFirstTitleFinished ? 1 : 0,  }} className='min-h-20 mb-6 md:mb-10'>{isAnimationFirstTitleFinished && <AnimatedText className="text-7xl z-3" item={itemAnimationFirstTitle} container={containerFirstTile}  setIsAnimationFinished={setIsAnimationFinished} text="Rockers" textColor="text-foreground"/> }</div>
+     <div style={{ opacity: isAnimationFirstTitleFinished ? 1 : 0,  }} className='min-h-28'>{isAnimationFinished && <AnimatedText className="text-2xl md:text-3xl " item={itemAnimationSubtitle}   container={containerSubTitle} text={t('desc')}  /> }</div>
     </>
   )
 }

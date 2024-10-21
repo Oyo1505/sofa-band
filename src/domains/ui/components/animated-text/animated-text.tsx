@@ -22,7 +22,6 @@ const AnimatedText = (
     container,
     item,
     setIsAnimationFinished,
-    isAnimated=true
   }
   :{
     translationTheme?: string, 
@@ -33,7 +32,6 @@ const AnimatedText = (
     item?:any
     className?: string,
     setIsAnimationFinished?: Dispatch<React.SetStateAction<boolean>>,
-    isAnimated?:boolean
   }) => {
 
   const t = useTranslations(translationTheme || '');
@@ -48,7 +46,7 @@ const AnimatedText = (
       aria-hidden
       onAnimationComplete={()=>setIsAnimationFinished && setIsAnimationFinished(true)}
     >
-      {isAnimated &&
+     
       <>
         {text && item && text.split("").map((letter, index) => (
           <AnimatedLetter key={index} item={item} letter={letter}  />
@@ -56,7 +54,7 @@ const AnimatedText = (
         {translationText && t(translationText).split("").map((letter, index) => (
           <AnimatedLetter key={index} item={item} letter={letter}  /> 
         ))}
-      </>}
+      </>
     </motion.div>
   )
 }

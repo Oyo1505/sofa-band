@@ -60,7 +60,7 @@ const LiveList = ({locale}:{locale:string}) => {
       }
     };
   return (
-    <motion.div className='grid sm:grid-cols-3  gap-6'
+    <motion.div className='grid sm:grid-cols-3 gap-6'
     variants={container}
     initial="hidden"
     animate="visible"
