@@ -1,17 +1,17 @@
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion, SVGMotionProps } from "framer-motion";
 
-const Path = props => (
+const Path = (props: SVGMotionProps<SVGPathElement>) => (
   <motion.path
     fill="transparent"
     strokeWidth="3"
     stroke="hsl(0, 0%, 18%)"
     strokeLinecap="round"
-    {...props}
+    {...props} 
   />
 );
 
-export const MenuToggle = ({ toggle }) => (
+export const MenuToggle = ({ toggle } : { toggle :() => void}) => (
   <button onClick={toggle} className="rounded-xl h-14 w-14 top-3.5 left-7 z-20 cursor-pointer absolute">
     <svg width="23" height="23" viewBox="0 0 23 23">
       <Path

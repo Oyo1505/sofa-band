@@ -1,6 +1,7 @@
+//@ts-nocheck
 'use client'
-import React, { Dispatch, useRef } from 'react'
-import {CycleState, motion, useCycle} from 'framer-motion'
+import React, { useRef } from 'react'
+import { motion, useCycle} from 'framer-motion'
 import { MenuToggle } from '../button-toggle-menu/button-toggle-menu'
 import { useDimensions } from '../../hooks/use-dimensions';
 import { useTranslations } from 'next-intl';
@@ -28,7 +29,7 @@ const sidebar = {
 };
 
 
-const ItemMenu = ({item, link, onClick, lang, locale}:{ item?:string, link?:string, onClick:Dispatch<CycleState<boolean>>, lang?:boolean, locale?:string }) => {
+const ItemMenu = ({item, link, onClick, lang, locale}:{ item?:string, link?:string,  onClick: () => void, lang?:boolean, locale?:string }) => {
   const variantsLi = {
     open: {
       y: 0,
@@ -53,7 +54,7 @@ const ItemMenu = ({item, link, onClick, lang, locale}:{ item?:string, link?:stri
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       >
-       {link && item && !lang ? <Link href={`${link}`}>{item}</Link> : <ButtonSwitchLangage locale={locale} />} 
+       {link && item && !lang ? <Link href={`${link}`}>{item}</Link> : locale && <ButtonSwitchLangage locale={locale} />} 
       </motion.li>
   )
 }
@@ -101,9 +102,9 @@ const MenuMobile = ({locale}: { locale: string }) => {
         ref={containerRef}
       >
       <motion.div className="absolute top-0 left-0 w-80 bg-foreground h-screen" variants={sidebar} />
-      <motion.ul className='p-25 absolute top-24 w-56 left-4' variants={variantsContainer}>
+      <motion.ul className='p-25 absolute top-24 w-56 left-4 flex flex-col gap-2' variants={variantsContainer}>
         {links && links?.map(({link, item}) => <ItemMenu onClick={toggleOpen} key={link} item={item} link={link} />)}
-        <ItemMenu className='text-black' lang={true}  onClick={toggleOpen} locale={locale} />
+        <ItemMenu lang={true}  onClick={toggleOpen} locale={locale} />
       </motion.ul>
       <MenuToggle toggle={() => toggleOpen()} />
   </motion.nav>

@@ -1,6 +1,6 @@
 'use client'
-import { Link } from '@/i18n/routing'
-import { usePathname } from 'next/navigation'
+import { Link, usePathname } from '@/i18n/routing'
+
 import React from 'react'
 
 const ButtonSwitchLangage = ({locale}: {locale : string}) => {
