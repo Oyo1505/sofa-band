@@ -21,13 +21,9 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params:any
 }) {
-  const header = await headers()
-  const localeHeader = header.get('x-next-intl-locale');
   const { locale } = await params;
   const messages = await getMessages();
-  if(localeHeader === null){
-    return
-  }
+
   return (
     <html lang={locale}>
     <body className={cn(rock.className, 'antialiased')}>
