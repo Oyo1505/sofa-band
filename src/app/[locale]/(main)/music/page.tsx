@@ -45,12 +45,11 @@ const albums = [{
   releaseYear: 2023
 }];
 
-export default function Page({params: {locale}} : {params:{locale:string}}) {
+export default  function Page() {
   const t = useTranslations('MusicPage');
-
   return (
     <>
-    <div className='flex flex-col pb-6 md:pb-0 lg:h-screen items-start w-full justify-center'>
+    <div className='flex flex-col pb-6 pt-10 md:pt-0 md:pb-0 lg:h-screen items-start w-full justify-center'>
       <AlbumList albums={albums}/>
       <div className='flex flex-col gap-5 md:gap-0 md:flex-row w-full justify-between pt-5 md:items-start items-center md:justify-evenly'>
         <div className='flex flex-col gap-2 items-start justify-center'>
