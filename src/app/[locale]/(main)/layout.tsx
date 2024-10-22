@@ -7,7 +7,7 @@ const Layout = ({children, params: {locale}}:{children:React.ReactNode,params:{l
   unstable_setRequestLocale(locale);
   return (
   <Suspense fallback={<p>Loading...</p>}> 
-      <Container className='h-screen'>{children}</Container> 
+      <Container className='h-full sm:h-screen'>{children}</Container> 
   </Suspense>
   )
 }
