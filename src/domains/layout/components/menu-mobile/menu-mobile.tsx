@@ -97,8 +97,9 @@ const MenuMobile = ({locale}: { locale: string }) => {
 
   return (
     <>
+
     <motion.nav
-        className='md:hidden absolute top-0 left-0 w-52 z-20'
+        className='md:hidden fixed top-0 left-0 w-52 z-20'
         animate={isOpen ? "open" : "closed"}
         custom={height}
         ref={containerRef}
@@ -140,6 +141,7 @@ const MenuMobile = ({locale}: { locale: string }) => {
       </motion.ul>
       <MenuToggle toggle={() => toggleOpen()} />
   </motion.nav>
+
     </>
   
   )
