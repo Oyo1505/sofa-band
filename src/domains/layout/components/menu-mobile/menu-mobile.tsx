@@ -111,7 +111,6 @@ const MenuMobile = ({locale}: { locale: string }) => {
           <ItemMenu lang={true}  onClick={toggleOpen} locale={locale} />
             <div className='flex items-center gap-2'>
               <motion.li
-               initial={{ display: 'none' }}
               onClick={toggleOpen}
               className='text-black flex items-center gap-2'
               variants={variantsLi}
