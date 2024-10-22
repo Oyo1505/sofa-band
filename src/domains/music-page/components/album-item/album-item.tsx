@@ -34,13 +34,16 @@ const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePl
     }
   };
   return (
-    <motion.div variants={item} className='flex  md:flex-row flex-col justify-start md:items-start items-center w-full gap-3 pt-3'>
+    <motion.div  variants={item} className='flex  md:flex-row flex-col justify-start md:items-start items-center w-full gap-3 pt-3'>
       <Image src={image} quality={90} priority alt={title} className=' w-40 h-40 md:max-w-48 md:max-h-48 rounded' width={200} height={200} />
       <div>
         <Text className='text-2xl font-bold text-center'>{title}</Text>
         <div className='pt-4 w-full sm:max-w-64'>
             {songs && songs?.map((item, index)=>(
-            <div   key={`${index}-${item?.track}-div`} className='flex w-full justify-between'>
+            <div onClick={()=> {
+                handlePlay(true);
+                setCurrentSong(item.sound);
+            }}   key={`${index}-${item?.track}-div`} className='flex w-full justify-between cursor-pointer'>
               <Text key={`${index}-${item?.track}`}  type='p' className='text-base flex items-end justify-start h-5 w-full truncate'>
                {index +1 }. {item?.track} 
                </Text> 
