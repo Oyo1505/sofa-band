@@ -1,9 +1,9 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
 import React from 'react'
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage'
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons'
+import { Link } from '@/i18n/routing'
 
 const MenuNav = ({locale}:{locale:string}) => {
   const t = useTranslations('Header')
