@@ -21,7 +21,7 @@ const sidebar = {
   closed: {
     clipPath: "circle(30px at 40px 40px)",
     transition: {
-      delay: 0.5,
+      delay: 0.1,
       type: "spring",
       stiffness: 400,
       damping: 40
@@ -49,14 +49,15 @@ const variantsLi = {
 const ItemMenu = ({item, link, onClick, lang, locale}:{ item?:string, link?:string,  onClick: () => void, lang?:boolean, locale?:string }) => {
  
   return(
-      <motion.li
+      <motion.li 
+      initial={{ opacity: 0 }}
       onClick={onClick}
       className='text-black'
       variants={variantsLi}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
       >
-       {link && item && !lang ? <Link prefetch href={`${link}`}>{item}</Link> : locale && <ButtonSwitchLangage locale={locale} />} 
+       {link && item && !lang ? <Link  prefetch href={`${link}`}>{item}</Link> : locale && <ButtonSwitchLangage locale={locale} />} 
       </motion.li>
   )
 }
@@ -104,41 +105,43 @@ const MenuMobile = ({locale}: { locale: string }) => {
         custom={height}
         ref={containerRef}
       >
-      <motion.div className="absolute top-0 left-0 w-80 bg-foreground h-screen" variants={sidebar} />
-      <motion.ul className='p-25 absolute top-24 w-56 left-4 flex flex-col gap-2' variants={variantsContainer}>
-        {links && links?.map(({link, item}) => <ItemMenu onClick={toggleOpen} key={link} item={item} link={link} />)}
-        <ItemMenu lang={true}  onClick={toggleOpen} locale={locale} />
-        <div className='flex items-center gap-2'>
-          <motion.li
-          onClick={toggleOpen}
-          className='text-black flex items-center gap-2'
-          variants={variantsLi}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-        <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
+      <motion.div  initial={{ clipPath: "circle(30px at 40px 40px)"}} className="absolute top-0 left-0 w-80 bg-foreground h-screen" variants={sidebar} />
+        <motion.ul className={`${isOpen ? 'block' : 'hidden'} p-25 relative top-24 w-56 left-4 flex flex-col gap-2`} variants={variantsContainer}>
+          {links && links?.map(({link, item}) => <ItemMenu onClick={toggleOpen} key={link} item={item} link={link} />)}
+          <ItemMenu lang={true}  onClick={toggleOpen} locale={locale} />
+            <div className='flex items-center gap-2'>
+              <motion.li
+              onClick={toggleOpen}
+              className='text-black flex items-center gap-2'
+              variants={variantsLi}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+            <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
 
-       </motion.li>
-       <motion.li
-          onClick={toggleOpen}
-          className='text-black flex items-center gap-2'
-          variants={variantsLi}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-       <a target="_blank" href="https://www.discogs.com/fr/artist/14308751-Sofa-Rockers"><DiscogsIcon /></a>
-       </motion.li>
-       <motion.li
-          onClick={toggleOpen}
-          className='text-black flex items-center gap-2'
-          variants={variantsLi}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-         <a target="_blank" href="http://cornerstone.shop-pro.jp/?pid=176992470"><Spotify fillcolor='black' /></a>
-       </motion.li>
-      </div>
-      </motion.ul>
+          </motion.li>
+          <motion.li
+              initial={{ opacity: 0 }}
+              onClick={toggleOpen}
+              className='text-black flex items-center gap-2'
+              variants={variantsLi}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+          <a target="_blank" href="https://www.discogs.com/fr/artist/14308751-Sofa-Rockers"><DiscogsIcon /></a>
+          </motion.li>
+          <motion.li
+               initial={{ opacity: 0 }}
+              onClick={toggleOpen}
+              className='text-black flex items-center gap-2'
+              variants={variantsLi}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+            <a target="_blank" href="http://cornerstone.shop-pro.jp/?pid=176992470"><Spotify fillcolor='black' /></a>
+          </motion.li>
+          </div>
+        </motion.ul>
       <MenuToggle toggle={() => toggleOpen()} />
   </motion.nav>
 
