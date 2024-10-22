@@ -1,11 +1,11 @@
+//@ts-nocheck
 'use client'
 import Image, { StaticImageData } from 'next/image';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Text from '../../../ui/components/text/text';
 import ButtonPlay from '../button-play/button-play';
-import AudioComponent from '../audio/audio';
 import { useTranslations } from 'next-intl';
-
+import {motion} from 'framer-motion'
 interface Song {
   track:string,
   sound:string
@@ -26,8 +26,15 @@ interface Props {
 
 const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong}:Props) => {
   const t = useTranslations('MusicPage');
+  const item = {
+    hidden: { x: 20, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1
+    }
+  };
   return (
-    <div className='flex  md:flex-row flex-col justify-start md:items-start items-center w-full gap-3 pt-3'>
+    <motion.div variants={item} className='flex  md:flex-row flex-col justify-start md:items-start items-center w-full gap-3 pt-3'>
       <Image src={image} quality={90} priority alt={title} className=' w-40 h-40 md:max-w-48 md:max-h-48 rounded' width={200} height={200} />
       <div>
         <Text className='text-2xl font-bold text-center'>{title}</Text>
@@ -58,7 +65,7 @@ const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePl
       
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
