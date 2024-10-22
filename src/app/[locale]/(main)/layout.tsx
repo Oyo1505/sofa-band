@@ -5,7 +5,7 @@ const Layout = async ({children}:{children:React.ReactNode}) => {
 
   return (
   <Suspense fallback={<p>Loading...</p>}> 
-    <Container className='h-full sm:h-screen'>{children}</Container> 
+    <Container className='min-h-full sm:min-h-screen'>{children}</Container> 
   </Suspense>
   )
 }
