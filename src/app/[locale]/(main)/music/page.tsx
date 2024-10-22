@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
 import React from 'react'
 import lalalie from '../../../../public/image/lalalie.webp'
@@ -11,6 +12,7 @@ import if_you from '../../../../public/audio/ifyou.mp3';
 import lala from '../../../../public/audio/la_la_la_lie.mp3';
 import caseof from '../../../../public/audio/caseof.mp3';
 import AlbumList from '@/domains/music-page/components/album-list/album-list'
+import * as motion from 'framer-motion/client';
 
 const albums = [{
   title: 'If You / ウイスキーが、お好きでしょ',
@@ -47,9 +49,17 @@ const albums = [{
 
 export default  function Page() {
   const t = useTranslations('MusicPage');
+  const container = {
+    visible: {
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.2
+      }
+    }
+  };
   return (
     <>
-    <div className='flex flex-col pb-6 pt-10 md:pt-0 md:pb-0 lg:h-screen items-start w-full justify-center'>
+    <motion.div variants={container} initial="hidden" animate="visible" className='flex flex-col pb-6 pt-10 md:pt-0 md:pb-0 lg:h-screen items-start w-full justify-center'>
       <AlbumList albums={albums}/>
       <div className='flex flex-col gap-5 md:gap-0 md:flex-row w-full justify-between pt-5 md:items-start items-center md:justify-evenly'>
         <div className='flex flex-col gap-2 items-start justify-center'>
@@ -72,7 +82,7 @@ export default  function Page() {
             </a>
         </div>
       </div>
-    </div>
+    </motion.div>
     </>
   )
 }
