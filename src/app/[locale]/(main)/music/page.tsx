@@ -59,7 +59,7 @@ export default  function Page() {
   };
   return (
     <>
-    <motion.div variants={container} initial="hidden" animate="visible" className='flex flex-col pb-6 pt-10 md:pt-0 md:pb-0 lg:h-screen items-start w-full justify-center'>
+    <motion.div variants={container} initial="hidden" animate="visible" className='flex flex-col pb-6 pt-10 md:pt-28 md:pb-0 lg:pt-0 lg:h-screen items-start w-full justify-center'>
       <AlbumList albums={albums}/>
       <div className='flex flex-col gap-5 md:gap-0 md:flex-row w-full justify-between pt-5 md:items-start items-center md:justify-evenly'>
         <div className='flex flex-col gap-2 items-start justify-center'>
