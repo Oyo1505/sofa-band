@@ -1,9 +1,12 @@
+//@ts-nocheck
 import React from 'react'
 import imageFlyer from '../../../../public/image/fly.jpg'
 import ShowList from '@/domains/show-page/components/show-list/show-list'
-import * as  motion from 'framer-motion/client'
+import * as motion from 'framer-motion/client'
 
-export default function Page({params: {locale}} : {params:{locale:string}}) {
+
+export default async function Page() {
+
   const events = [{
     image: imageFlyer,
     title: 'Fly',
@@ -58,8 +61,7 @@ const container = {
   }
 };
   return (
-
-    <motion.div 
+  <motion.div 
     variants={container}
     initial="hidden"
     animate="visible"

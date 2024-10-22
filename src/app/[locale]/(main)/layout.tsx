@@ -1,13 +1,11 @@
 import Container from '@/domains/ui/components/container/container';
-import { unstable_setRequestLocale } from 'next-intl/server';
 import React, { Suspense } from 'react'
-import Template from './template';
 
-const Layout = ({children, params: {locale}}:{children:React.ReactNode,params:{locale:string}}) => {
-  unstable_setRequestLocale(locale);
+const Layout = async ({children}:{children:React.ReactNode}) => {
+
   return (
   <Suspense fallback={<p>Loading...</p>}> 
-      <Container className='h-full sm:h-screen'>{children}</Container> 
+    <Container className='h-full sm:h-screen'>{children}</Container> 
   </Suspense>
   )
 }

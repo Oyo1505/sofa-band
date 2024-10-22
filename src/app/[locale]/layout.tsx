@@ -1,11 +1,11 @@
-import {NextIntlClientProvider} from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import "../globals.css"
 import { RocknRoll_One } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
 import { Suspense } from 'react';
-import clsx from 'clsx';
-
+import { headers } from 'next/headers';
+import { cn } from '@/libs/utils';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -16,17 +16,21 @@ const rock = RocknRoll_One({
 
 export default async function LocaleLayout({
   children,
-  params: {locale}
+  params
 }: {
   children: React.ReactNode;
-  params: {locale: string};
+  params:any
 }) {
-
+  const header = await headers()
+  const localeHeader = header.get('x-next-intl-locale');
+  const { locale } = await params;
   const messages = await getMessages();
- 
+  if(localeHeader === null){
+    return
+  }
   return (
     <html lang={locale}>
-    <body className={clsx(rock.className, 'antialiased')}>
+    <body className={cn(rock.className, 'antialiased')}>
       <div className='relative noise-container'>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />

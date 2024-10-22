@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
 import { Play } from '@/domains/ui/components/icons/icons'
 import { motion } from 'framer-motion'

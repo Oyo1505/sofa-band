@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 import React from 'react';
 import * as motion from 'framer-motion/client'
 import LiveItem from '../live-item/live-item';

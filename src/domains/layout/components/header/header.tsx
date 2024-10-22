@@ -4,18 +4,18 @@ import { useTranslations } from 'next-intl'
 import React from 'react'
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage'
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons'
+import MenuMobile from '../menu-mobile/menu-mobile'
 
 const Header =  ({locale}:{locale:string}) => {
   const t = useTranslations('Header')
 
   return (
     <header className="group fixed w-full top-0 flex h-15  pt-2 pb-2 items-center gap-4 z-20 justify-between lg:justify-end">
-    <Container>
+    <Container className='hidden md:block'>
       <div className='flex justify-between items-center h-20'>
         <nav className='flex text-lg gap-9 items-center justify-start'>
           <div><Link href="/">{t('Home')}</Link></div>
           <div><Link href="/music" prefetch>{t('Music')}</Link></div>
-          {/* <div><Link href="/about" prefetch>{t('About')}</Link></div> */}
           <div><Link href="/shows" prefetch>{t('Shows')}</Link></div>
           <div><Link href="/live" prefetch>{t('Live')}</Link></div>
         </nav>
@@ -27,6 +27,7 @@ const Header =  ({locale}:{locale:string}) => {
         </div>
       </div>
     </Container>
+    <MenuMobile locale={locale}/>
     </header>
   )
 }

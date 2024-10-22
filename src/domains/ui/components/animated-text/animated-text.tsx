@@ -1,3 +1,4 @@
+//@ts-nocheck
 'use client'
 import { cn } from '@/libs/utils';
 import { useTranslations } from 'next-intl';

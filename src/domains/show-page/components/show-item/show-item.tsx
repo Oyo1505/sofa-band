@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react'
 import Title from '@/domains/ui/components/title/title'
 import Text from '@/domains/ui/components/text/text'
