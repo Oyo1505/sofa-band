@@ -1,9 +1,10 @@
 //@ts-nocheck
-import React from 'react';
+import React, { Suspense } from 'react';
 import * as motion from 'framer-motion/client'
 import LiveItem from '../live-item/live-item';
 import moment from 'moment';
 import { Live } from '@/models/lives/live';
+import Loading from '@/app/[locale]/(main)/loading';
 
 const LiveList = ({locale, lives}:{locale:string, lives:Live[]}) => {
   const container = {
@@ -17,6 +18,7 @@ const LiveList = ({locale, lives}:{locale:string, lives:Live[]}) => {
     }
   };
   return (
+    <Suspense fallback={<Loading />}>
     <motion.div className='grid sm:grid-cols-3 gap-6'
     variants={container}
     initial="hidden"
@@ -26,6 +28,7 @@ const LiveList = ({locale, lives}:{locale:string, lives:Live[]}) => {
         <LiveItem key={`${Number(item.date)}-${index}`} location={item.location} date={item.date} cityJp={item.cityJp} city={item.city} video={item.video} locale={locale} />
       )}
     </motion.div>
+    </Suspense>
   )
 }
 
