@@ -36,10 +36,7 @@ export default async function LocaleLayout({
       <div className='relative noise-container'>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />
-        <Suspense>
           {children}
-        </Suspense>
-       
       </NextIntlClientProvider>
       <div className="absolute inset-0 pointer-events-none noise z-0" /> 
     </div>
