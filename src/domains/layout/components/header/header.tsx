@@ -9,10 +9,10 @@ const MenuMobile = dynamic(() => import('../menu-mobile/menu-mobile'), {ssr: fal
 const Header =  ({locale}:{locale:string}) => {
   return (
     <>
-    <header className="font-shippori hidden md:flex group fixed w-full top-0  h-15  pt-2 pb-2 items-center gap-4 z-20 justify-between lg:justify-end">
+    <header className={`${locale === 'jp' ? 'font-rock' : 'font-shippori'} font-bold hidden md:flex group fixed w-full top-0  h-15  pt-2 pb-2 items-center gap-4 z-20 justify-between lg:justify-end`}>
       <Container >
         <MenuNav locale={locale} />
-      </Container>
+      </Container> 
     </header>
     <Suspense>
      <MenuMobile locale={locale} /> 

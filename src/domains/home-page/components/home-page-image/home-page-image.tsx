@@ -10,11 +10,11 @@ export const HomePageImage = () => {
     initial: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
     animate: {
       opacity: 1, 
-      scale: [1.1, 1], // effet de rebond
+      scale: [1.1, 1],
       filter: 'blur(0px)',
       transition: {
-        duration: 0.5,
-        ease: [0.6, 0.05, 0.2, 0.9] // courbe d'animation pour le rebond
+        duration: 0.8,
+        ease: [0.6, 0.05, 0.2, 0.9] 
       }
     },
     exit: { opacity: 0, scale: 0.9, filter: 'blur(10px)' },

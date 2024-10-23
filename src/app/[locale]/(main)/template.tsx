@@ -1,6 +1,5 @@
 'use client'
 import { motion } from 'framer-motion'
-import { tr } from 'framer-motion/client';
 
 export default function Template({ children } : { children: React.ReactNode }) {
   const anim = (variants: any) => {
@@ -13,9 +12,9 @@ export default function Template({ children } : { children: React.ReactNode }) {
   };
 
   const opacity = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { duration: 0.3 } },
-    exit: { opacity: 0 },
+    initial: { opacity: 0, filter: 'blur(10px)' },
+    animate: { opacity: 1, transition: { duration: 0.5 }, filter: 'blur(0px)'},
+    exit: { opacity: 0, filter: 'blur(0px)' },
 
   };
 
