@@ -39,7 +39,8 @@ const LiveItem = ({location, video, date, city, cityJp, locale}:Props) => {
   return (
     <motion.div variants={item} className='group flex flex-col md:flex-row gap-3 w-full relative hover:cursor-pointer'>
       <div className="w-full flex justify-center relative md:w-full "> 
-          <video ref={refVideo} 
+          <video ref={refVideo}
+              loading="lazy" 
               onClick={handleVideo} 
               onMouseEnter={()=>refVideo.current?.setAttribute("controls", "")}  
               onMouseLeave={()=>refVideo.current?.removeAttribute("controls")}  

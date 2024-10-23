@@ -4,8 +4,9 @@ import "../globals.css"
 import { RocknRoll_One } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
 import { Suspense } from 'react';
-import { headers } from 'next/headers';
 import { cn } from '@/libs/utils';
+import { routing } from '@/i18n/routing';
+import { notFound } from 'next/navigation';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -21,13 +22,14 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params:any
 }) {
-  const header = await headers()
-  const localeHeader = header.get('x-next-intl-locale');
+ // Ensure that the incoming `locale` is valid
+ 
   const { locale } = await params;
-  const messages = await getMessages();
-  if(localeHeader === null){
-    return
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
   }
+  const messages = await getMessages();
+ 
   return (
     <html lang={locale}>
     <body className={cn(rock.className, 'antialiased')}>

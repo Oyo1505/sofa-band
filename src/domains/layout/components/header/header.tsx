@@ -1,7 +1,9 @@
+'use client'
 import Container from '@/domains/ui/components/container/container'
-import React from 'react'
-import MenuMobile from '../menu-mobile/menu-mobile'
+import React, { Suspense } from 'react'
 import MenuNav from '../menu-nav/menu-nav'
+import dynamic from 'next/dynamic';
+const MenuMobile = dynamic(() => import('../menu-mobile/menu-mobile'), {ssr: false});
 
 const Header =  ({locale}:{locale:string}) => {
   return (
@@ -11,7 +13,9 @@ const Header =  ({locale}:{locale:string}) => {
         <MenuNav locale={locale} />
       </Container>
     </header>
-    <MenuMobile locale={locale}/> 
+    <Suspense>
+     <MenuMobile locale={locale} /> 
+    </Suspense>
     </>
   )
 }
