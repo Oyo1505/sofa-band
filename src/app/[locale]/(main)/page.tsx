@@ -1,8 +1,7 @@
 import { routing } from "@/i18n/routing";
 import {setRequestLocale} from 'next-intl/server';
-import Image from "next/image";
-import bande from "../../../public/image/front_band.jpg";
 import TitlesContainer from "@/domains/home-page/components/titles-container/titles-container";
+import { HomePageImage } from "@/domains/home-page/components/home-page-image/home-page-image";
 
 export default async function Home({params}:{params:any}) {
   const { locale } = await params
@@ -14,13 +13,7 @@ export default async function Home({params}:{params:any}) {
     <div className="text-center relative w-full lg:w-6/12">
       <TitlesContainer />
     </div>
-
-    <div className="lg:flex w-6/12 relative h-96 hidden  items-center justify-center">
-      <div className="w-full z-10 absolute h-full clip-border-patate animate-patateInverse" />
-      <div className="w-full z-10 absolute bottom-2 h-full">
-        <Image src={bande} priority alt={'Sofa Band'} className="z-9 object-cover grayscale clip-patate animate-patate w-full h-full" />
-      </div>
-      </div>
+    <HomePageImage />
     </div>
   </div>
   );

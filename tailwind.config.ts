@@ -8,6 +8,9 @@ const config: Config = {
     "./src/domains/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily : {
+      shippori: ['Shippori Antique B1', 'sans-serif'],
+    },
     container: {
       center: true,
       screens: {
