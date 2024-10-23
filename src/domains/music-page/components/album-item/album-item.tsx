@@ -41,7 +41,7 @@ const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePl
         <div className='pt-4 w-full sm:max-w-64'>
             {songs && songs?.map((item, index)=>(
             <div   key={`${index}-${item?.track}-div`} className='flex w-full justify-between'>
-              <Text key={`${index}-${item?.track}`}  type='p' className='text-base flex items-end justify-start h-5 w-full truncate'>
+              <Text key={`${index}-${item?.track}`}  type='p' className='text-base font-shippori font-extrabold flex items-end justify-start h-5 w-full truncate'>
                {index +1 }. {item?.track} 
                </Text> 
                <ButtonPlay  

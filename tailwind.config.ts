@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     fontFamily : {
       shippori: ['Shippori Antique B1', 'sans-serif'],
+      rock : ['RocknRoll One', 'sans-serif'],
     },
     container: {
       center: true,
