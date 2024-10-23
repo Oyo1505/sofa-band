@@ -89,7 +89,7 @@ const MenuMobile = ({locale, router}: { locale: string }) => {
     <>
 
     <motion.nav
-        className='md:hidden fixed top-0 left-0 w-52 z-20'
+        className='md:hidden font-shippori fixed top-0 left-0 w-52 z-20'
         animate={isOpen ? "open" : "closed"}
         custom={height}
         ref={containerRef}
