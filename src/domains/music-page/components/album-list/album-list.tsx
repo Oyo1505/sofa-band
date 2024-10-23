@@ -1,8 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import AlbumItem from '../album-item/album-item'
 import { StaticImageData } from 'next/image';
 import AudioComponent from '../audio/audio';
+import Loading from '@/app/[locale]/(main)/loading';
 
 interface Song {
   track: string;
@@ -34,7 +35,7 @@ const AlbumList = ({albums}:Props) => {
   };
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
     {albums?.sort((a ,b) => b.releaseYear - a.releaseYear).map((item, index)=>(
       <AlbumItem 
         key={index} 
@@ -50,7 +51,7 @@ const AlbumList = ({albums}:Props) => {
         setCurrentSong={setCurrentSong}
          />))}
       {currentSong && currentSong?.length > 0  && <AudioComponent handleCurrent={handleCurrent} isPlaying={isPlaying}  songUrl={currentSong} />} 
-     </>
+     </Suspense>
   )
 }
 
