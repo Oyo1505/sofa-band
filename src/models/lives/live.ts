@@ -2,7 +2,7 @@ export interface Live {
   location: string;
   city: string;
   cityJp: string;
-  date: string;
+  date: Date;
   video: string;
 }
 
