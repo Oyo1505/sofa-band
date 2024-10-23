@@ -4,7 +4,6 @@ import "../globals.css"
 import { RocknRoll_One } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
 import { Suspense } from 'react';
-import { headers } from 'next/headers';
 import { cn } from '@/libs/utils';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
