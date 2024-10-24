@@ -8,9 +8,7 @@ import Loading from '@/app/[locale]/(main)/loading';
 
 const LiveList = ({locale, lives}:{locale:string, lives:Live[]}) => {
   const container = {
-    hidden: { scale: 0 },
     visible: {
-      scale: 1,
       transition: {
         delayChildren: 0.3,
         staggerChildren: 0.2
@@ -19,10 +17,10 @@ const LiveList = ({locale, lives}:{locale:string, lives:Live[]}) => {
   };
   return (
     <Suspense fallback={<Loading />}>
-    <motion.div className='grid sm:grid-cols-3 gap-6'
-    variants={container}
-    initial="hidden"
-    animate="visible"
+    <motion.div className='grid sm:grid-cols-3 w-full gap-6'
+      variants={container}
+      initial="hidden"
+      animate="visible"
     >
       {lives && lives.sort((a, b)=> Number(b.date) - Number(a.date)).map((item, index) =>
         <LiveItem key={`${Number(item.date)}-${index}`} location={item.location} date={item.date} cityJp={item.cityJp} city={item.city} video={item.video} locale={locale} />
