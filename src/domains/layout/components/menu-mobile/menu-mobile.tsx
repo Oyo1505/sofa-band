@@ -1,7 +1,7 @@
 //@ts-nocheck
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import { motion, useCycle} from 'framer-motion'
+import { animate, motion, useCycle} from 'framer-motion'
 import { MenuToggle } from '../button-toggle-menu/button-toggle-menu'
 import { useDimensions } from '../../hooks/use-dimensions';
 import { useTranslations } from 'next-intl';
@@ -17,10 +17,11 @@ const sidebar = {
       duration : 0.3,
     }
   }),
+  animate: {x: -350, transition: { duration: 0.5 },},
   closed: {
     x: -350,
     transition: {
-      duration : 0.3,
+      duration : 0.9,
     }
   }
 };
@@ -90,7 +91,7 @@ const MenuMobile = ({locale, router}: { locale: string }) => {
         custom={height}
         ref={containerRef}
       >
-      <motion.div   className={`absolute top-0 ${isOpen ? 'block' : 'hidden'} -left-(350px) w-80 bg-foreground h-screen`} variants={sidebar} />
+      <motion.div initial='hidden' animate='visible'  className={`absolute top-0 ${isOpen ? 'block' : 'hidden'} -left-(350px) w-80 bg-foreground h-screen`} variants={sidebar} />
         <motion.ul className={`${isOpen ? 'block' : 'hidden'} p-25 relative top-24 w-56 left-4 flex flex-col gap-2`} variants={variantsContainer}>
           {links && links?.map(({link, item}) => <ItemMenu onClick={toggleOpen} key={link} item={item} link={link} />)}
           <ItemMenu lang={true}  locale={locale} />

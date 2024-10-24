@@ -38,12 +38,22 @@ const TitlesContainer = () => {
       opacity: 1
     }
   };
+  const itemAnimationSubTitle = {
+    hidden: { opacity: 0, filter: 'blur(10px)' },
+    visible: {
+      opacity: 1,
+      filter: 'blur(0px)',
+      transition: {
+        duration: 0.3,
+      },
+    }
+  };
 
   return (
     <>
      <AnimatedText className="text-7xl z-3" item={itemAnimationFirstTitle} container={containerFirstTile} setIsAnimationFinished={setIsAnimationFirstTitleFinished} text="Sofa" textColor="text-foreground"/>
      <div style={{ opacity: isAnimationFirstTitleFinished ? 1 : 0,  }} className='min-h-20 mb-6 md:mb-10'>{isAnimationFirstTitleFinished && <AnimatedText className="text-7xl z-3" item={itemAnimationFirstTitle} container={containerFirstTile}  setIsAnimationFinished={setIsAnimationFinished} text="Rockers" textColor="text-foreground"/> }</div>
-     <div style={{ opacity: isAnimationFirstTitleFinished ? 1 : 0,  }} className='font-shippori min-h-28'>{isAnimationFinished && <AnimatedText className="text-2xl md:text-3xl" container={containerSubTitle} text={t('desc')}  /> }</div>
+     <div style={{ opacity: isAnimationFinished ? 1 : 0,  }} className='font-shippori min-h-28'>{isAnimationFinished && <AnimatedText className="text-2xl md:text-3xl" item={itemAnimationSubTitle}  container={containerSubTitle} text={t('desc')}  /> }</div>
     </>
   )
 }
