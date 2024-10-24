@@ -7,17 +7,17 @@ import { motion } from 'framer-motion';
 
 export const HomePageImage = () => {
   const variants = {
-    initial: { opacity: 0, scale: 0.8, filter: 'blur(10px)' },
+    initial: { opacity: 0, scale: 0.8, filter: 'blur(5px)' },
     animate: {
       opacity: 1, 
       scale: [0.95, 1],
       filter: 'blur(0px)',
       transition: {
-        duration: 0.7,
+        duration: 0.4,
         ease: [0.6, 0.05, 0.2, 0.9] 
       }
     },
-    exit: { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
+
   };
   return (
     <motion.div 

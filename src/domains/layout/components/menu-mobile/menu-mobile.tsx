@@ -11,20 +11,16 @@ import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/ico
 import { URL_HOME, URL_LIVE, URL_MUSIC, URL_SHOWS } from '@/libs/routes';
 
 const sidebar = {
-  open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+  open: () => ({
+    x: 0,
     transition: {
-      type: "spring",
-      stiffness: 20,
-      restDelta: 2
+      duration : 0.3,
     }
   }),
   closed: {
-    clipPath: "circle(30px at 40px 40px)",
+    x: -350,
     transition: {
-      type: "spring",
-      stiffness: 600,
-      damping: 40
+      duration : 0.3,
     }
   }
 };
@@ -94,7 +90,7 @@ const MenuMobile = ({locale, router}: { locale: string }) => {
         custom={height}
         ref={containerRef}
       >
-      <motion.div  initial={{ clipPath: "circle(30px at 40px 40px)"}} className="absolute top-0 left-0 w-80 bg-foreground h-screen" variants={sidebar} />
+      <motion.div   className={`absolute top-0 ${isOpen ? 'block' : 'hidden'} -left-(350px) w-80 bg-foreground h-screen`} variants={sidebar} />
         <motion.ul className={`${isOpen ? 'block' : 'hidden'} p-25 relative top-24 w-56 left-4 flex flex-col gap-2`} variants={variantsContainer}>
           {links && links?.map(({link, item}) => <ItemMenu onClick={toggleOpen} key={link} item={item} link={link} />)}
           <ItemMenu lang={true}  locale={locale} />
