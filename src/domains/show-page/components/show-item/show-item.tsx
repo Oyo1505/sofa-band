@@ -32,7 +32,7 @@ const ShowItem = ({ event }: Props) => {
   };
   return (
     <>
-      <motion.div variants={item} className='font-shippori font-light w-full flex-col sm:flex sm:flex-row  sm:justify-around sm:items-center'>
+      <motion.div variants={item} className='font-shippori font-bold  w-full flex-col sm:flex sm:flex-row  sm:justify-around sm:items-center'>
          <Text type='p' className="text-sm w-24 ">{date}</Text>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center sm:gap-1 sm:w-96">
             {title && (

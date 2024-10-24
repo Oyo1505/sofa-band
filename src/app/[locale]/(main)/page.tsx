@@ -13,7 +13,7 @@ export default async function Home({params}:{params:any}) {
     <div className="text-center relative w-full lg:w-6/12">
       <TitlesContainer />
     </div>
-    <HomePageImage />
+      <HomePageImage />
     </div>
   </div>
   );

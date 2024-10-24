@@ -27,9 +27,9 @@ interface Props {
 const AlbumItem = ({image, title, songs, label, reference, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong}:Props) => {
   const t = useTranslations('MusicPage');
   const item = {
-    hidden: { x: 20, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
-      x: 0,
+      y: 0,
       opacity: 1
     }
   };
