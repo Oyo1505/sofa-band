@@ -4,7 +4,8 @@
     "Music" : "Music",
     "About" : "About",
     "Shows" : "Shows",
-    "Live" : "Live"
+    "Live" : "Live",
+    "Signin" : "Signin"
   },
   "HomePage": {
     "title":"Hello!",
