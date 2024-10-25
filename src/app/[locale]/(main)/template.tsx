@@ -2,15 +2,16 @@
 'use client'
 import { useIsMobile } from '@/domains/shared/hooks/useIsMobile';
 import Container from '@/domains/ui/components/container/container';
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import { usePathname } from 'next/navigation';
 
 export default  function Template({ children } : { children: React.ReactNode }) {
   const  isMobile = useIsMobile();
-
+  const pathname = usePathname();
   const anim = (variants: any,  custom=null) => {
     return {
       initial: "initial",
-      animate: "animate",
+      animate: "enter",
       exit: "exit",
       variants,
       custom
@@ -21,7 +22,7 @@ export default  function Template({ children } : { children: React.ReactNode }) 
     initial: {
         top: 0
     },
-    animate: (i:number) => ({    
+    enter : (i:number) => ({
         top: "100vh",
         transition: {
             duration: 0.4,
@@ -37,7 +38,6 @@ export default  function Template({ children } : { children: React.ReactNode }) 
             delay: 0.05 * i,
             ease: [0.215, 0.61, 0.355, 1]
         }
-
     })
 
 }
@@ -48,10 +48,10 @@ export default  function Template({ children } : { children: React.ReactNode }) 
     animate: { opacity: 0, transition: { duration: 0.5 }},
 }
 
-const nbOfColumns = 5
+const nbOfColumns = 4
 
   return (
-    !isMobile ?
+    pathname !== '/en' &&  pathname !== '/jp' && !isMobile ?
     <>
     <div className='stairs'>
             <motion.div {...anim(opacity)} className='transition-background' />
@@ -61,7 +61,8 @@ const nbOfColumns = 5
                         <motion.div
                             key={i}
                             {...anim(expand, nbOfColumns - i)}
-                            className="relative w-full h-10"
+                            exit={{ opacity: 0 }}
+                            className="relative w-full bg-black h-10"
                         />
                     ))
                 }
