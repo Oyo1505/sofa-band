@@ -47,7 +47,7 @@ const AnimatedText = (
       onAnimationComplete={()=>setIsAnimationFinished && setIsAnimationFinished(true)}
     >
       <>
-        {text && item &&  <motion.div variants={item}>{text}</motion.div> }
+        {text && item ?  <motion.div variants={item}>{text}</motion.div> : text ? <div>{text}</div> : null}
 
         {translationText && item ? t(translationText).split("").map((letter, index) => (
           <AnimatedLetter key={index} item={item} letter={letter}  />  

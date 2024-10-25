@@ -6,6 +6,8 @@ import Header from '@/domains/layout/components/header/header';
 import { cn } from '@/libs/utils';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
+import { headers } from 'next/headers';
+import { userAgent } from 'next/server';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -21,8 +23,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params:any
 }) {
- // Ensure that the incoming `locale` is valid
- 
+
   const { locale } = await params;
   if (!routing.locales.includes(locale as any)) {
     notFound();
