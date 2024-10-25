@@ -2,6 +2,7 @@ import LiveList from '@/domains/show-page/components/live-list/live-list'
 import moment from 'moment';
 import React from 'react'
 
+export const revalidate = 60
 
 export default async function Page({params} : {params:any}) {
   const { locale } = await params

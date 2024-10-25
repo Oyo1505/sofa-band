@@ -1,4 +1,7 @@
 import Container from '@/domains/ui/components/container/container';
 import React from 'react'
-const Layout = async ({children}:{children:React.ReactNode}) => <Container className='min-h-full sm:min-h-screen'>{children}</Container>
+const Layout = async ({children}:{children:React.ReactNode}) => children
+
+  
+
 export default Layout
