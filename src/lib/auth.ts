@@ -5,8 +5,8 @@ import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth";
 
 const prisma = new PrismaClient()
-const clientId = process.env.NEXT_PUBLIC_GOOGLE_ID
-const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_SECRET
+const clientId = process.env.GOOGLE_ID
+const clientSecret = process.env.GOOGLE_SECRET
 
   if(!clientId || !clientSecret) {
     throw new Error("Missing NEXT_PUBLIC_GOOGLE_ID or NEXT_PUBLIC_GOOGLE_SECRET")
