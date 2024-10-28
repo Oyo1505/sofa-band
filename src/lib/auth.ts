@@ -2,7 +2,7 @@
 import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 
 const prisma = new PrismaClient()
 const clientId = process.env.GOOGLE_ID
