@@ -3,11 +3,11 @@ import { getMessages } from 'next-intl/server';
 import "../globals.css"
 import { RocknRoll_One } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
-import { cn } from '@/libs/utils';
+import { cn } from '@/lib/utils';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
-import { headers } from 'next/headers';
-import { userAgent } from 'next/server';
+import { SessionProvider } from "next-auth/react"
+import { auth } from '@/lib/auth';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -29,10 +29,11 @@ export default async function LocaleLayout({
     notFound();
   }
   const messages = await getMessages();
- 
+  const session = await auth();
   return (
     <html lang={locale}>
     <body className={cn(rock.className, 'antialiased')}>
+    <SessionProvider session={session}>
       <div className='relative noise-container'>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />
@@ -40,6 +41,7 @@ export default async function LocaleLayout({
       </NextIntlClientProvider>
       <div className="absolute inset-0 pointer-events-none noise z-0" /> 
     </div>
+    </SessionProvider >
     </body>
   </html>
   );

@@ -2,7 +2,7 @@
 'use client'
 import { useIsMobile } from '@/domains/shared/hooks/useIsMobile';
 import Container from '@/domains/ui/components/container/container';
-import { URL_DASHBOARD, URL_SIGNIN } from '@/libs/routes';
+import { URL_DASHBOARD, URL_SIGNIN } from '@/lib/routes';
 import { AnimatePresence, motion } from 'framer-motion'
 import { useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';

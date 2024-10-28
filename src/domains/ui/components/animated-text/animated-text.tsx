@@ -1,6 +1,6 @@
 //@ts-nocheck
 'use client'
-import { cn } from '@/libs/utils';
+import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React, { Dispatch } from 'react'
 import { animate, motion } from 'framer-motion'

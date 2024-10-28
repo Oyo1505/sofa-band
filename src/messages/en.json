@@ -5,7 +5,9 @@
     "About" : "About",
     "Shows" : "Shows",
     "Live" : "Live",
-    "Signin" : "Signin"
+    "Signin" : "Signin",
+    "Signout" : "Signout",
+    "Dashboard" : "Dashboard"
   },
   "HomePage": {
     "title":"Hello!",

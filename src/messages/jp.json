@@ -5,7 +5,9 @@
     "About" : "について",
     "Shows" : "ショー",
     "Live" : "ライブ",
-    "Signin" : "サインイン"
+    "Signin" : "サインイン",
+    "Signout" : "サインアウト",
+    "Dashboard" : "ダッシュボード"
   },
   "HomePage": {
     "title":"こんにちは",
