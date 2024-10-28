@@ -36,7 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
         // details into the JWT
 
         const userProfile: User = {
-          id: token && token?.sub,
+          id: token?.sub || '',
           name: profile?.name,
           email: profile?.email,
           image: token?.picture,   
