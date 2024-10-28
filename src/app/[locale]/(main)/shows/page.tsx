@@ -22,7 +22,7 @@ export default async function Page() {
     image: imageFlyer,
     title: 'Fly Festival',
     location: 'Main Bar',
-    time: '9:00 PM ',
+    time: '9:00 PM',
     date: '26/10/2023',
     infoLink: '/event-details',
     city: "Tokyo",

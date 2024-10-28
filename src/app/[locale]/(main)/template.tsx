@@ -2,11 +2,14 @@
 'use client'
 import { useIsMobile } from '@/domains/shared/hooks/useIsMobile';
 import Container from '@/domains/ui/components/container/container';
+import { URL_DASHBOARD, URL_SIGNIN } from '@/lib/routes';
 import { AnimatePresence, motion } from 'framer-motion'
+import { useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
 export default  function Template({ children } : { children: React.ReactNode }) {
   const  isMobile = useIsMobile();
+  const locales = useLocale();
   const pathname = usePathname();
   const anim = (variants: any,  custom=null) => {
     return {
@@ -51,7 +54,7 @@ export default  function Template({ children } : { children: React.ReactNode }) 
 const nbOfColumns = 4
 
   return (
-    pathname !== '/en' &&  pathname !== '/jp' && !isMobile ?
+    pathname !== '/en' &&  pathname !== '/jp' && pathname !== `/${locales}${URL_DASHBOARD}`&&  pathname !== `/${locales}${URL_SIGNIN}` && !isMobile ?
     <>
     <div className='stairs'>
             <motion.div {...anim(opacity)} className='transition-background' />
@@ -68,14 +71,14 @@ const nbOfColumns = 4
                 }
             </div>
 
-        <Container className='min-h-full sm:min-h-screen'>
+        <>
           {children}
-          </Container>
+          </>
         </div>
       </>
        :
-      <Container className='min-h-full sm:min-h-screen'>
+      <>
         {children}
-      </Container>
+      </>
   );
 } 

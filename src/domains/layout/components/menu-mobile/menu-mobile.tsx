@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage';
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons';
-import { URL_HOME, URL_LIVE, URL_MUSIC, URL_SHOWS } from '@/libs/routes';
+import { URL_HOME, URL_LIVE, URL_MUSIC, URL_SHOWS } from '@/lib/routes';
 
 const sidebar = {
   open: () => ({

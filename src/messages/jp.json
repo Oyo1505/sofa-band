@@ -4,7 +4,10 @@
     "Music" : "ミュージック",
     "About" : "について",
     "Shows" : "ショー",
-    "Live" : "ライブ"
+    "Live" : "ライブ",
+    "Signin" : "サインイン",
+    "Signout" : "サインアウト",
+    "Dashboard" : "ダッシュボード"
   },
   "HomePage": {
     "title":"こんにちは",
