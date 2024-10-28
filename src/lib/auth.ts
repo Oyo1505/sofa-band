@@ -16,8 +16,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({
-      clientId:process.env.NEXT_PUBLIC_GOOGLE_ID!,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET!,
+      clientId:process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
       authorization: {  
         params: {
         access_type: 'offline',

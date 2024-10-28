@@ -1,3 +1,4 @@
+import Container from '@/domains/ui/components/container/container';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation'
 
@@ -8,7 +9,7 @@ const Page = async () => {
 
   if(!session) return redirect('/')
   return (
-    <div>Dashboard</div>
+    <div className='flex flex-col h-1/2 bg-foreground rounded-sm'> d</div>
   )
 }
 

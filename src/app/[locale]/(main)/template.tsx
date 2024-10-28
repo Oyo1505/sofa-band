@@ -70,8 +70,7 @@ const nbOfColumns = 4
                     ))
                 }
             </div>
-
-        <>
+          <>
           {children}
           </>
         </div>
