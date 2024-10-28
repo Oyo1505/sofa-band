@@ -25,12 +25,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
       }, },
     })
   ],
-  // async signIn({ account, profile }) {
-  //   if (account.provider === "google") {
-  //     return profile.email_verified && profile.email.endsWith("@gmail.com")
-  //   }
-  //   return true 
-  // },
   session: { strategy: "jwt",  
     maxAge: 60 * 60 * 2, 
     updateAge: 10 * 60, },
@@ -42,7 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
         // details into the JWT
 
         const userProfile: User = {
-          id: token.sub,
+          id: token && token?.sub,
           name: profile?.name,
           email: profile?.email,
           image: token?.picture,   
