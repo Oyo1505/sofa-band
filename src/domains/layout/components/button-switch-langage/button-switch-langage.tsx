@@ -5,9 +5,9 @@ import React from 'react'
 
 const ButtonSwitchLangage = ({locale}: {locale : string}) => {
   const pathname = usePathname()
-  const path = pathname.replace(`${locale}`, "/");
+  // const path = pathname.replace(`${locale}`, "/");
   return (
-  <Link href={path} locale={locale === 'jp' ? 'en' : 'jp'}>
+  <Link href={pathname} locale={locale === 'jp' ? 'en' : 'jp'}>
     Lang {locale === 'jp' ? '🇯🇵' : '🇬🇧' }
   </Link>
   )

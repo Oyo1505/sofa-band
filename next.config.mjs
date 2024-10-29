@@ -10,6 +10,7 @@ const nextConfig = {
       static: 180,
     },
   },
+  
    webpack(config, options) {
     
     config.module.rules.push({

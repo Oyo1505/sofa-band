@@ -1,6 +1,6 @@
 //@ts-nocheck
 'use client'
-import { useIsMobile } from '@/domains/shared/hooks/useIsMobile';
+import { useIsMobile } from '@/shared/hooks/useIsMobile';
 import Container from '@/domains/ui/components/container/container';
 import { URL_DASHBOARD, URL_SIGNIN } from '@/lib/routes';
 import { AnimatePresence, motion } from 'framer-motion'
@@ -54,7 +54,7 @@ export default  function Template({ children } : { children: React.ReactNode }) 
 const nbOfColumns = 4
 
   return (
-    pathname !== '/en' &&  pathname !== '/jp' && pathname !== `/${locales}${URL_DASHBOARD}`&&  pathname !== `/${locales}${URL_SIGNIN}` && !isMobile ?
+    pathname !== '/en' &&  pathname !== '/jp' && pathname !== `/${locales}${URL_DASHBOARD}/*`&&  pathname !== `/${locales}${URL_SIGNIN}` && !isMobile ?
     <>
     <div className='stairs'>
             <motion.div {...anim(opacity)} className='transition-background' />
