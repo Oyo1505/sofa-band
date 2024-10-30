@@ -41,12 +41,12 @@ model Live {
 }
 
 model Event {
-  id        Int      @id @default(autoincrement())
+  id        String    @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String  
   location  String   @db.VarChar(255)
-  time      String
+  time      Int
   city      String   @db.VarChar(255)
   cityInJpn String   @db.VarChar(255)
   date      String

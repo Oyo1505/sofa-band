@@ -28,7 +28,7 @@ const FormEvent = ({addEvent}:{addEvent: any}) => {
     defaultValues: {
       title:  event?.title ?? '',
       location: event?.location   ?? '',
-       time: event?.time ??  '',
+       time: event?.time ??  0,
        city: event?.city ??  '',
        cityInJpn: event?.cityInJpn ?? '',
        date: event?.date ?? '',
@@ -41,7 +41,8 @@ const FormEvent = ({addEvent}:{addEvent: any}) => {
   const onCreateEvent = async(data: any) => {await addEvent({event :data, user})}
   
   const handleHoursChange = (hours: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue('time', hours.target.value)
+    console.log(typeof hours.target.value)
+    setValue('time', Number(hours.target.value))
   }
   return (
     <>

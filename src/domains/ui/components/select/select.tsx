@@ -35,7 +35,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
       {optionsList?.map((option, index) => (
         <option 
           key={`${option?.[locale]}-${index}`} 
-          value={option?.[locale]}
+          value={option?.id}
         >
           {option?.[locale]}
         </option>

@@ -2,7 +2,7 @@ export interface Event {
   id: number,
   title: string,
   location: string,
-  time: string,
+  time: number,
   city: string,
   cityInJpn: string,
   date: string,
