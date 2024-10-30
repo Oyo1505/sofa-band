@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Event" ALTER COLUMN "time" SET DATA TYPE TEXT,
+ALTER COLUMN "country" DROP NOT NULL;

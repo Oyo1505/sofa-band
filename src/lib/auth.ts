@@ -16,8 +16,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({
-      clientId:process.env.NEXT_PUBLIC_GOOGLE_ID!,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET!,
+      clientId:process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
       authorization: {  
         params: {
         access_type: 'offline',
@@ -65,8 +65,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
             const response = await fetch("https://oauth2.googleapis.com/token", {
               method: "POST",
               body: new URLSearchParams({
-                client_id: process.env.NEXT_PUBLIC_GOOGLE_ID! as string,
-                client_secret: process.env.NEXT_PUBLIC_GOOGLE_SECRET! as string,
+                client_id: process.env.GOOGLE_ID! as string,
+                client_secret: process.env.GOOGLE_SECRET! as string,
                 grant_type: "refresh_token",
                 refresh_token: token.refresh_token! as string,
               }),

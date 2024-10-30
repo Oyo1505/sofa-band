@@ -46,12 +46,12 @@ model Event {
   updatedAt DateTime @updatedAt
   title     String  
   location  String   @db.VarChar(255)
-  time      DateTime
+  time      String
   city      String   @db.VarChar(255)
   cityInJpn String   @db.VarChar(255)
-  date      DateTime
+  date      String
   infoLink  String   
-  country   String   @db.VarChar(255)
+  country   String?   @db.VarChar(255)
   region    String   @db.VarChar(255)
   published Boolean  @default(true)
   author    User     @relation(fields: [authorId], references: [id])
