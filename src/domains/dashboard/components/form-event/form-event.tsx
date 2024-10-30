@@ -60,7 +60,7 @@ const FormEvent = ({addEvent}:{addEvent: any}) => {
             formData={{}}
             className='w-full p-1 rounded-md bg-white'
             formDataKey='time_slots' 
-            locale={locale} 
+            locale={locale as 'jp' | 'en'}
             onChange={handleHoursChange}
             
           />        

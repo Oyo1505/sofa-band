@@ -3,17 +3,13 @@ import React from 'react';
 type TimeSlot<K extends string = 'jp' | 'en'> = {
   [key in K]: string;
 };
-enum LocaleEnum {
-  jp = 'jp',
-  en = 'en'
-}
 
 interface SelectInputProps {
   optionsList:  TimeSlot[];
   formData: Record<string, any>;
   label?: string;
   formDataKey: string;
-  locale: LocaleEnum;
+  locale: 'jp' | 'en';
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
 }
