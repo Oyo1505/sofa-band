@@ -4,6 +4,7 @@ import imageFlyer from '../../../../public/image/fly.jpg'
 import ShowList from '@/domains/show-page/components/show-list/show-list'
 import * as motion from 'framer-motion/client'
 
+const revalidate = 60;
 
 export default async function Page() {
 
