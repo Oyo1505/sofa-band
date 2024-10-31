@@ -11,8 +11,13 @@ import { Event } from '@/shared/models/event';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+interface FormEventProps {
+  addEvent?: ({ event, user }: { event: Event, user: any }) => Promise<number> | undefined;
+  editEvent?: ({ event }: { event: Event | undefined }) => void;
+  event?: Event | undefined;
+}
 
-const FormEvent = ({ addEvent, event }: { addEvent?: ({ event, user }: { event: Event, user: any }) => number | undefined, event?: Event | undefined }) => {
+const FormEvent = ({ addEvent, editEvent, event }: FormEventProps) => {
   const locale = useLocale(); 
   const [eventData, setEvent] = React.useState<Event | undefined>(event ?? undefined)
   const session = useSession()
@@ -25,19 +30,29 @@ const FormEvent = ({ addEvent, event }: { addEvent?: ({ event, user }: { event: 
     formState: { errors },
   } = useForm({
     defaultValues: {
+      id: eventData?.id ?? '',
       title:  eventData?.title ?? '',
       location: eventData?.location   ?? '',
-       time: eventData?.time ??  0,
-       city: eventData?.city ??  '',
-       cityInJpn: eventData?.cityInJpn ?? '',
-       date: eventData?.date ?? '',
-       infoLink:eventData?.infoLink ??  '',
-       region: eventData?.region ?? '',
+      time: eventData?.time ??  0,
+      city: eventData?.city ??  '',
+      cityInJpn: eventData?.cityInJpn ?? '',
+      date: eventData?.date ?? '',
+      infoLink:eventData?.infoLink ??  '',
+      region: eventData?.region ?? '',
     },
     resolver: zodResolver(EventSchema),
   });
 
-  const onCreateEvent = async(data: any) => {
+  const onEditEvent = async (data: any) => {
+    if(!editEvent) return
+    try{
+      await editEvent({event :data})
+    }catch(error) {
+      console.log(error)
+    }
+  }
+
+  const onCreateEvent = async (data: any) => {
     if (!addEvent || !user) {
       return
     }
@@ -57,8 +72,9 @@ const FormEvent = ({ addEvent, event }: { addEvent?: ({ event, user }: { event: 
   
   return (
     <>
-      <form onSubmit={handleSubmit(onCreateEvent)} className='flex w-full pl-4 pr-4 md:pr-0 md:pl-0 md:w-2/3  flex-col overflow-scroll gap-4'>
+      <form onSubmit={handleSubmit(eventData && eventData.id ? onEditEvent : onCreateEvent)} className='flex w-full pl-4 pr-4 md:pr-0 md:pl-0 md:w-2/3  flex-col overflow-scroll gap-4'>
         <Input label="Title*" error={errors.title} className='w-full p-1 rounded-md' {...register('title')}  />
+        {eventData && eventData.id  && <Input type='hidden' {...register('id')}   />}
         <Input label="Location*" error={errors.location}  className='w-full p-1 rounded-md' {...register('location')}   />
         <div className='flex flex-col gap-2 md:flex-row w-full'>
         <SelectInput 
