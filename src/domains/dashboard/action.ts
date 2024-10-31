@@ -13,8 +13,20 @@ export const getEvents = async () => {
   }
 }
 
-export const addEvent = async ({event, user}: {event: Event, user: any}) => {
+export const getEventById = (id:string) =>{
+  if(!id){ return { status : 400}}
+  try{
+    const event = prisma.event.findUnique({
+      where : {id},
+    })
+    return {event, status : 200}
+  }catch(error){
+    return { status : 500}
+  }
+}
 
+export const addEvent = async ({ event, user }: { event: Event, user: any }): Promise<{ event: Event | null, status: number }> => {
+  
   if (!event.title) {
     return { event: null, status: 400 }
   }
@@ -34,10 +46,26 @@ export const addEvent = async ({event, user}: {event: Event, user: any}) => {
         authorId: user.id,
       },
     })
-    revalidatePath('/dashboard/events')
-    return { eventData, status: 200 }
+    return { event: eventData, status: 200 } 
   } catch (error) {
     console.log(error)
     return { event: null, status: 500 }
+  }
+}
+
+export const deleteEventById = async(id:string) =>{
+  if(!id)   return { event: null, status: 400 }
+  try{
+   await prisma.event.delete({
+      where: {
+        id
+      }
+    })
+    console.log(id)
+    revalidatePath('/dashboard/events')
+    return { status: 200 }
+  }catch(err){
+    console.log(err)
+    return { status: 500 }
   }
 }

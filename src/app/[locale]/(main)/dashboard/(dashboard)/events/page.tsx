@@ -13,9 +13,9 @@ const Page = async () => {
   const data = await getData();
   const sortedData = data.sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)))
   return (
-    <div>
-      <ListEvents events={sortedData} />
-    </div>
+    <>
+      {sortedData &&  sortedData.length > 0 ? <ListEvents events={sortedData} /> : <div className='text-black'>No events</div>}
+    </>
   )
 }
 

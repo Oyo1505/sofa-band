@@ -1,12 +1,12 @@
 import React from 'react';
 
-type TimeSlot<K extends string = 'jp' | 'en'> = {
-  [key in K]: string;
+type TimeSlot<K extends string = 'jp' | 'en' | 'id'> = {
+  [key in K]: string | number;
 };
 
 interface SelectInputProps {
   optionsList:  TimeSlot[];
-  formData: Record<string, any>;
+  formData?: number;
   label?: string;
   formDataKey: string;
   locale: 'jp' | 'en';
@@ -23,12 +23,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
   onChange,
   className,
 }) => {
+  const time = optionsList.filter(h => h.id === formData)[0]
+
   return (
     <div className='flex flex-col gap-2'>
     <label>{label}</label>
     <select 
       onChange={onChange} 
-      defaultValue={formData?.[formDataKey]} 
+      defaultValue={time ? time.id : ''}
       className={className}
     >
       <option value=""></option>
