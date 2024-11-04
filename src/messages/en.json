@@ -9,6 +9,29 @@
     "Signout" : "Signout",
     "Dashboard" : "Dashboard"
   },
+  "DasboardPage": {
+    "title":"Dashboard",
+    "addEvent": "Add Event",
+    "events": "Events"
+  },
+  "EventPage": {
+    "title":"Event",
+    "addEvent": "Add Event",
+    "deleteEvent": "Delete Event",
+    "editEvent": "Edit Event",
+    "event": "Event",
+    "Title": "Title",
+    "Location": "Location",
+    "Time": "Time",
+    "City": "City",
+    "cityInJpn": "City in Japanese",
+    "Region": "Region",
+    "Date": "Date",
+    "InfoLink": "Info Link",
+    "Edit": "Edit",
+    "Delete": "Delete",
+    "Submit": "Submit"
+  },
   "HomePage": {
     "title":"Hello!",
     "about": "About",
@@ -27,5 +50,9 @@
   },
   "ShowPage": {
     "event": "Event"
-   }
+   },
+   "MenuAside": {
+     "Dashboard": "Dashboard",
+     "Events": "Events"
+    }
 }

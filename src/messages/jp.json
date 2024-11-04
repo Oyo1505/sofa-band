@@ -9,6 +9,28 @@
     "Signout" : "サインアウト",
     "Dashboard" : "ダッシュボード"
   },
+  "DasboardPage": {
+    "title":"ダッシュボード",
+    "addEvent": "イベントを追加",
+    "events": "イベント"
+  },
+  "EventPage": {
+    "Title":"イベント",
+    "addEvent": "イベントを追加",
+    "deleteEvent": "イベントを削除",
+    "editEvent": "イベントを編集",
+    "Event": "イベント",
+    "Location": "場所",
+    "Time": "時間",
+    "City": "市区町村",
+    "cityInJpn": "日本語市区町村",
+    "Region": "地域",
+    "Date": "日付",
+    "InfoLink": "情報リンク",
+    "Edit": "編集",
+    "Delete": "削除",
+    "Submit": "送信"
+  },
   "HomePage": {
     "title":"こんにちは",
     "about": "について",
@@ -27,5 +49,9 @@
   },
   "ShowPage": {
     "event": "イベント"
-   }
+   },
+   "MenuAside": {
+     "Dashboard": "ダッシュボード",
+     "Events": "イベント"
+    }
 }
