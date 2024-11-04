@@ -17,7 +17,7 @@ const EventItem = ({event, deleteEvent}: {event: Event, deleteEvent: (id:string)
       {/*@ts-ignore */}
       <div className=''>{time[locale]}</div>
       <div className='truncate'>{event.date}</div>
-      <div className='truncate'>{event.city}</div>
+      <div className='truncate'>{locale === 'jp' && event.cityInJpn ? event.cityInJpn : event.city}</div>
       <div className=''>{event.region}</div>
       <Link className='bg-black text-foreground text-center rounded-md px-2 py-1' href={{pathname: '/dashboard/events/edit-event', query: {id: event.id}}}>{t('Edit')}</Link>
       <button className='bg-red-500 text-white text-center rounded-md px-2 py-1' onClick={()=>deleteEvent(event.id)}>{t('Delete')}</button>
