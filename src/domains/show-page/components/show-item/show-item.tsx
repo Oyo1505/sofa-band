@@ -24,7 +24,8 @@ interface Props {
 
 const ShowItem = ({ event }: Props) => {
 
-  const { title, location, time, date, city, region } = event;
+  const { title, location, time, date, city, region, cityInJpn } = event;
+
   const item = {
     hidden: { x: 20, opacity: 0 },
     visible: {
@@ -52,7 +53,7 @@ const ShowItem = ({ event }: Props) => {
             </Text>
           </div>
           <div className="inline-flex sm:grid-cols-2 items-center gap-0.5 w-36">
-          <Text type='p' className="text-sm w-auto">{city},</Text>
+          <Text type='p' className="text-sm w-auto">{locale === 'jp' && cityInJpn ? cityInJpn : city},</Text>
           <Text type='p' className="text-sm w-auto">{region}</Text>
           {/* <Text type='p' className="text-sm ">{country}</Text> */}
         </div>

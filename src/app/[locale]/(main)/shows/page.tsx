@@ -14,7 +14,7 @@ const getData = async () =>{
 export default async function Page() {
   const events = await getData();
   const sortedData = events.sort((a, b) => moment(a.date).diff(moment(b.date)))
-//     image: imageFlyer,
+
 //     title: 'Fly',
 //     location: 'Titty Bar',
 //     time: '9:00 PM',
