@@ -3,6 +3,7 @@ import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import NextAuth, { User } from "next-auth";
+import authConfig from "./auth.config";
 
 const prisma = new PrismaClient()
 const clientId = process.env.GOOGLE_ID
@@ -14,17 +15,7 @@ const clientSecret = process.env.GOOGLE_SECRET
 
 export const { handlers, auth, signIn, signOut } = NextAuth ({
   adapter: PrismaAdapter(prisma),
-  providers: [
-    Google({
-      clientId:process.env.GOOGLE_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!,
-      authorization: {  
-        params: {
-        access_type: 'offline',
-        prompt: 'consent',
-      }, },
-    })
-  ],
+  ...authConfig,
   session: { strategy: "jwt",  
     maxAge: 60 * 60 * 2, 
     updateAge: 10 * 60, },
