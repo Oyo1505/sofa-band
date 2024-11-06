@@ -37,7 +37,7 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
   return (
     <motion.div variants={item} className='group flex flex-col md:flex-row gap-3 w-full relative hover:cursor-pointer'>
       <div className="w-full flex justify-center relative md:w-full "> 
-      <ReactPlayer  playing={isPlaying} width="100%" height='256px' url={`https://www.youtube.com/watch?v=${videoId}`} />
+      {videoId && <ReactPlayer  playing={isPlaying} width="100%" height='256px' url={`https://www.youtube.com/watch?v=${videoId}`} /> }
       {!isPlaying && 
       <div onClick={handleVideo} className='group z-8 absolute top-0 left-0 w-full h-full rounded-md bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300'>
         <div className=' w-full h-full'>
