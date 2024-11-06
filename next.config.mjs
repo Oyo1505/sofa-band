@@ -1,6 +1,4 @@
-import createNextIntlPlugin from 'next-intl/plugin';
-import  withVideos from  'next-videos';
- 
+import createNextIntlPlugin from 'next-intl/plugin'; 
 const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,7 +9,7 @@ const nextConfig = {
     },
   },
   
-   webpack(config, options) {
+   webpack(config) {
     
     config.module.rules.push({
       test: /\.mp3$/,
@@ -24,4 +22,4 @@ const nextConfig = {
  
 };
  
-export default withNextIntl(withVideos(nextConfig));
+export default withNextIntl(nextConfig);
