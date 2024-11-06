@@ -8,6 +8,7 @@ import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { SessionProvider } from "next-auth/react"
 import { auth } from '@/lib/auth';
+import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -35,10 +36,12 @@ export default async function LocaleLayout({
     <body className={cn(rock.className, 'antialiased')}>
     <SessionProvider session={session}>
       <div className='relative noise-container'>
+      <LayoutLogic>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />
           {children}
       </NextIntlClientProvider>
+      </LayoutLogic>
       <div className="absolute inset-0 pointer-events-none noise z-0" /> 
     </div>
     </SessionProvider >
