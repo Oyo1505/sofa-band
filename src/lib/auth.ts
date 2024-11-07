@@ -18,10 +18,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
   adapter: PrismaAdapter(prisma),
   ...authConfig,
   session: { strategy: "jwt",  
-    maxAge: 60 * 60 * 2, 
+    maxAge: 60 * 60 * 20, 
     updateAge: 10 * 60, },
     callbacks: {
-      async signIn({ user}) {
+      async signIn({user}) {
         const { mails } = await getAuthorizedEmails()
         const usersEmail = mails?.map((item: any) => item?.email)
          if(user?.email && !usersEmail?.includes(user?.email)) return '/'
