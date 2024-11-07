@@ -39,7 +39,7 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
       <div className="w-full flex justify-center relative md:w-full "> 
       {videoId && <ReactPlayer  playing={isPlaying} width="100%" height='256px' url={`https://www.youtube.com/watch?v=${videoId}`} /> }
       {!isPlaying && 
-      <div onClick={handleVideo} className='group z-8 absolute top-0 left-0 w-full h-full rounded-md bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-300'>
+      <div onClick={handleVideo} className='group z-8 absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-opacity duration-300'>
         <div className=' w-full h-full'>
           <div className='flex flex-col justify-center h-full  items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
             <div className="text-2xl text-center font-bold mb-2" ><Play className='size-5' /></div>

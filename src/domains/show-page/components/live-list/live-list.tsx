@@ -58,7 +58,7 @@ const LiveList = () => {
   };
   return (
     <Suspense fallback={<Loading />}>
-    <motion.div className='grid sm:grid-cols-3 w-full gap-6'
+    <motion.div className='grid mih-h-screen sm:grid-cols-3 w-full gap-6'
       variants={container}
       initial="hidden"
       animate="visible"
