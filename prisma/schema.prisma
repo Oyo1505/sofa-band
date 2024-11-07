@@ -58,7 +58,10 @@ model Event {
   authorId  String
 }
 
-
+model AuthorizedEmail {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+}
 
 model Account {
   id                 String  @id @default(cuid())

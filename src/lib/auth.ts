@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import NextAuth, { User } from "next-auth";
 import authConfig from "./auth.config";
+import { getAuthorizedEmails } from "@/domains/auth/auth.action";
 
 const prisma = new PrismaClient()
 const clientId = process.env.GOOGLE_ID
@@ -20,6 +21,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth ({
     maxAge: 60 * 60 * 2, 
     updateAge: 10 * 60, },
     callbacks: {
+      async signIn({ user}) {
+        const { mails } = await getAuthorizedEmails()
+        const usersEmail = mails?.map((item: any) => item?.email)
+         if(user?.email && !usersEmail?.includes(user?.email)) return '/'
+        return true
+      },
     async jwt({ token, account, profile }) {
       
       if (account) {

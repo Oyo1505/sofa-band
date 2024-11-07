@@ -1,7 +1,6 @@
 
 import prisma from "@/lib/db";
 import { Event } from "@/shared/models/event";
-import exp from "constants";
 import { revalidatePath } from "next/cache";
 
 export const getEvents = async () => {
