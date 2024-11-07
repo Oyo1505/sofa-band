@@ -51,6 +51,9 @@
   "ShowPage": {
     "event": "Event"
    },
+   "LivePage": {
+    "NoVideo": "No available video"
+   },
    "MenuAside": {
      "Dashboard": "Dashboard",
      "Events": "Events"

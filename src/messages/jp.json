@@ -47,6 +47,9 @@
     "Ref": "参照",
     "Date":"日付"
   },
+  "LivePage": {
+    "NoVideo": "利用可能な動画がありません"
+  },
   "ShowPage": {
     "event": "イベント"
    },

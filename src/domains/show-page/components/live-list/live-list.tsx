@@ -5,12 +5,14 @@ import * as motion from 'framer-motion/client'
 import LiveItem from '../live-item/live-item';
 import { Live } from '@/models/lives/live';
 import Loading from '@/app/[locale]/(main)/loading';
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
+
 const LiveList = () => {
   const [livesSorted, setLives] = useState<Live[]>([])
   const [idPlaylist, setIdPlaylist] = useState(null)
   const channelId = 'UC8xzsABKxgXbJYLhxTn8GpQ'
-
+  const t = useTranslations('LivePage')
    useQuery({
     queryKey: ['youtube-channel', channelId],
     queryFn: async () => {
@@ -63,7 +65,7 @@ const LiveList = () => {
     >
       {livesSorted && livesSorted?.length > 0 ? livesSorted.map((item, index) =>
         <LiveItem key={`${item.resourceId.videoId}-${index}`} title={item.title} date={item.publishedAt} videoId={item.resourceId.videoId}  />
-      ) : <p>Pas de video</p>}
+      ) : <p>{t('NoVideo')}</p>}
     </motion.div>
     </Suspense>
   )
