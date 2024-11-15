@@ -15,7 +15,7 @@ const Header =  ({locale}:{locale:string}) => {
       </Container> 
     </header>
     <Suspense>
-     <MenuMobile locale={locale} /> 
+      <MenuMobile locale={locale} /> 
     </Suspense>
     </>
   )
