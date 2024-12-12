@@ -41,24 +41,15 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
         bounce: 0.3
       }
     },
-    // hover: {
-    //   scale: 1.01,
-    //   transition: {
-    //     duration: 0.1,
-    //     ease: "easeOut"
-    //   }
-    // }
   };
 
   const songItemVariants = {
-    hidden: { x: -30, opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, },
     visible: {
       x: 0,
       opacity: 1,
-      scale: 1,
       transition: {
         type: "spring",
-        stiffness: 120
       }
     }
   };
@@ -69,7 +60,7 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
       initial="hidden"
       animate="visible"
       whileHover="hover"
-      className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-lg overflow-hidden max-w-xl mx-auto my-6 backdrop-blur-sm border border-gray-200 dark:border-gray-700"
+      className="bg-gradient-to-br from-[rgba(235,150,31,0.5)] to-[rgba(73,161,163,0.9)] rounded-xl shadow-2xl overflow-hidden max-w-xl mx-auto my-6 backdrop-blur-3xl"
     >
       <div className="flex flex-col md:flex-row">
         <motion.div 
@@ -94,7 +85,7 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, type: "spring" }}
-            className="text-2xl font-bold mb-4 text-gray-800 dark:text-white bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent"
+            className="text-2xl font-bold mb-4 text-white"
           >
             {title}
           </motion.h2>
@@ -104,12 +95,12 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
               <motion.div 
                 key={`${index}-${item?.track}-div`}
                 variants={songItemVariants} 
-                whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,0.1)" }}
-                className="flex items-center justify-between p-2 rounded-lg bg-white/40 dark:bg-gray-800/40 backdrop-blur-sm hover:bg-white/60 dark:hover:bg-gray-700/60 transition-all duration-300 shadow-sm hover:shadow"
+              
+                className="flex items-center justify-between p-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-sm hover:shadow"
               >
                 <Text 
                   type="p" 
-                  className="font-medium text-sm text-gray-700 dark:text-gray-200 truncate flex-1"
+                  className="font-medium text-sm text-white truncate flex-1"
                 >
                   {index + 1}. {item?.track}
                 </Text>
@@ -133,11 +124,11 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.4 }}
-            className="mt-6 pt-3 border-t border-gray-200 dark:border-gray-700 space-y-2 hover:cursor-default"
+            className="mt-6 pt-3 border-t border-white/20 space-y-2 hover:cursor-default"
           >
-            <Text className="text-xs text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">{t('Label')} : {label}</Text>
-            <Text className="text-xs text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('Ref')} : {reference}</Text>
-            <Text className="text-xs text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">{t('Date')} : {releaseYear}</Text>
+            <Text className="text-xs text-white/80 hover:text-white transition-colors">{t('Label')} : {label}</Text>
+            <Text className="text-xs text-white/80 hover:text-white transition-colors">{t('Ref')} : {reference}</Text>
+            <Text className="text-xs text-white/80 hover:text-white transition-colors">{t('Date')} : {releaseYear}</Text>
           </motion.div>
         </div>
       </div>
