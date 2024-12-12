@@ -36,21 +36,23 @@ const AlbumList = ({albums}:Props) => {
 
   return (
     <Suspense fallback={<Loading />}>
-    {albums?.sort((a ,b) => b.releaseYear - a.releaseYear).map((item, index)=>(
-      <AlbumItem 
-        key={index} 
-        image={item.image} 
-        title={item.title} 
-        songs={item.songs} 
-        label={item.label} 
-        reference={item.ref} 
-        releaseYear={item?.releaseYear}
-        handlePlay={handlePlay}
-        isPlaying={isPlaying}
-        currentSong={currentSong}
-        setCurrentSong={setCurrentSong}
-         />))}
-      {currentSong && currentSong?.length > 0  && <AudioComponent handleCurrent={handleCurrent} isPlaying={isPlaying}  songUrl={currentSong} />} 
+    <div className="flex w-full flex-col lg:flex-row lg:items-center lg:justify-center">
+      {albums?.sort((a ,b) => b.releaseYear - a.releaseYear).map((item, index)=>(
+        <AlbumItem 
+          key={index} 
+          image={item.image} 
+          title={item.title} 
+          songs={item.songs} 
+          label={item.label} 
+          reference={item.ref} 
+          releaseYear={item?.releaseYear}
+          handlePlay={handlePlay}
+          isPlaying={isPlaying}
+          currentSong={currentSong}
+          setCurrentSong={setCurrentSong}
+          />))}
+        {currentSong && currentSong?.length > 0  && <AudioComponent handleCurrent={handleCurrent} isPlaying={isPlaying}  songUrl={currentSong} />} 
+      </div>
      </Suspense>
   )
 }
