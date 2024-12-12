@@ -41,13 +41,13 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
         bounce: 0.3
       }
     },
-    hover: {
-      scale: 1.03,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut"
-      }
-    }
+    // hover: {
+    //   scale: 1.01,
+    //   transition: {
+    //     duration: 0.1,
+    //     ease: "easeOut"
+    //   }
+    // }
   };
 
   const songItemVariants = {

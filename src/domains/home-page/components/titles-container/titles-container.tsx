@@ -2,6 +2,9 @@
 import AnimatedText from '@/domains/ui/components/animated-text/animated-text'
 import { useTranslations } from 'next-intl'
 import React, { useState } from 'react'
+import { Spicy_Rice } from 'next/font/google'
+import { cn } from '@/lib/utils'
+const spicy = Spicy_Rice({ subsets: ['latin'], weight: '400' })
 
 const TitlesContainer = () => {
   const t = useTranslations('HomePage');
@@ -51,8 +54,8 @@ const TitlesContainer = () => {
 
   return (
     <>
-     <AnimatedText className="text-7xl z-3" item={itemAnimationFirstTitle} container={containerFirstTile} setIsAnimationFinished={setIsAnimationFirstTitleFinished} text="Sofa" textColor="text-foreground"/>
-     <div style={{ opacity: isAnimationFirstTitleFinished ? 1 : 0,  }} className='min-h-20 mb-6 md:mb-10'>{isAnimationFirstTitleFinished && <AnimatedText className="text-7xl z-3" item={itemAnimationFirstTitle} container={containerFirstTile}  setIsAnimationFinished={setIsAnimationFinished} text="Rockers" textColor="text-foreground"/> }</div>
+     <AnimatedText className={cn("text-8xl z-3", spicy.className)} item={itemAnimationFirstTitle} container={containerFirstTile} setIsAnimationFinished={setIsAnimationFirstTitleFinished} text="Sofa" textColor="text-foreground"/>
+     <div style={{ opacity: isAnimationFirstTitleFinished ? 1 : 0,  }} className='min-h-20 mb-6 md:mb-10'>{isAnimationFirstTitleFinished && <AnimatedText className={cn("text-8xl z-3", spicy.className)} item={itemAnimationFirstTitle} container={containerFirstTile}  setIsAnimationFinished={setIsAnimationFinished} text="Rockers" textColor="text-foreground"/> }</div>
      <div style={{ opacity: isAnimationFinished ? 1 : 0,  }} className='font-shippori min-h-28'>{isAnimationFinished && <AnimatedText className="text-2xl md:text-3xl" item={itemAnimationSubTitle}  container={containerSubTitle} text={t('desc')}  /> }</div>
     </>
   )
