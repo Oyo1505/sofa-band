@@ -83,7 +83,7 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
           <div className="space-y-3">
             {songs?.map((item, index) => (
               <motion.div 
-              className="text-2xl font-bold mb-4 text-white"
+  
                 key={`${index}-${item?.track}-div`}
                 className="flex items-center justify-between p-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-sm hover:shadow"
               >
