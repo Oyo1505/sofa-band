@@ -36,23 +36,13 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
       y: 0,
       transition: {
         duration: 0.7,
-        staggerChildren: 0.15,
+        staggerChildren: .15,
         type: "spring",
         bounce: 0.3
       }
     },
   };
 
-  const songItemVariants = {
-    hidden: { opacity: 0, },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-      }
-    }
-  };
 
   return (
     <motion.div
@@ -93,9 +83,8 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
           <div className="space-y-3">
             {songs?.map((item, index) => (
               <motion.div 
+              className="text-2xl font-bold mb-4 text-white"
                 key={`${index}-${item?.track}-div`}
-                variants={songItemVariants} 
-              
                 className="flex items-center justify-between p-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-sm hover:shadow"
               >
                 <Text 
