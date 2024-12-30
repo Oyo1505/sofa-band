@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Text from '@/domains/ui/components/text/text'
 import Title from '@/domains/ui/components/title/title'
 import moment from 'moment'
-import React, { Suspense, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import ReactPlayer from 'react-player/youtube'
 
 interface Props {

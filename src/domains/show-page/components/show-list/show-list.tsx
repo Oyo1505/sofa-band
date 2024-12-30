@@ -1,11 +1,10 @@
-'use client'
 import React from 'react'
 import ShowItem from '../show-item/show-item'
+import { Event } from '@/models/show/show'
 
-const ShowList = ({events}: {events: any[]}) => {
-  
+const ShowList = ({events}: {events: Event[]}) => {
   return (
-    events.map((event, index) => (
+    events?.map((event: Event, index: number) => (
       <ShowItem key={index} event={event} />
     ))
   )

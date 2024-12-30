@@ -1,4 +1,5 @@
 //@ts-nocheck
+'use client'
 import React from 'react'
 import Title from '@/domains/ui/components/title/title'
 import Text from '@/domains/ui/components/text/text'
@@ -7,19 +8,11 @@ import {motion} from 'framer-motion'
 import ButtonEvent from '../button-event/button-event'
 import { hours } from '@/shared/constants/hours'
 import moment from 'moment'
+import { Event } from '@/models/show/show'
 
-interface Event {
-  title: string
-  location: string
-  time: string
-  date: string
-  city: string
-  region: string
-  country: string
-}
 
 interface Props {
-  event: any 
+  event: Event
 } 
 
 const ShowItem = ({ event }: Props) => {
