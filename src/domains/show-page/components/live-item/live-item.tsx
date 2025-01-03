@@ -69,12 +69,6 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
                 transition={{ duration: 0.3 }}
               >
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    className="w-16 h-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm border border-white/30"
-                  >
-                    <Play className="w-8 h-8 text-white" />
-                  </motion.div>
                   <div className="text-center px-4">
                     <Title 
                       type="h2" 
