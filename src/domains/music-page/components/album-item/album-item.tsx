@@ -50,7 +50,7 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
       initial="hidden"
       animate="visible"
       whileHover="hover"
-      className="bg-gradient-to-br from-[rgba(235,150,31,0.5)] to-[rgba(73,161,163,0.9)] rounded-xl shadow-2xl overflow-hidden max-w-xl mx-auto my-6 backdrop-blur-3xl"
+      className="bg-linear-to-br from-[rgba(235,150,31,0.5)] to-[rgba(73,161,163,0.9)] rounded-xl shadow-2xl overflow-hidden max-w-xl mx-auto my-6 backdrop-blur-3xl"
     >
       <div className="flex flex-col md:flex-row">
         <motion.div 
@@ -58,7 +58,7 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
           whileHover={{ scale: 1.08, rotate: 2 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
           <Image
             src={image}
             quality={90}
@@ -85,7 +85,7 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
               <motion.div 
   
                 key={`${index}-${item?.track}-div`}
-                className="flex items-center justify-between p-2 rounded-lg bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 shadow-sm hover:shadow"
+                className="flex items-center justify-between p-2 rounded-lg bg-white/10 backdrop-blur-xs hover:bg-white/20 transition-all duration-300 shadow-xs hover:shadow-sm"
               >
                 <Text 
                   type="p" 

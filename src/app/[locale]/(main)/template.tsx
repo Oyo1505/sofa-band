@@ -70,7 +70,7 @@ export default function Template({ children } : { children: React.ReactNode }) {
     shouldAnimate ? (
       <div className="relative">
         <motion.div
-          className="fixed inset-0 bg-gradient-to-tr from-[rgba(235,150,31,0.3)] to-[rgba(73,161,163,0.78)] backdrop-blur-sm z-1"
+          className="fixed inset-0 bg-linear-to-tr from-[rgba(235,150,31,0.3)] to-[rgba(73,161,163,0.78)] backdrop-blur-xs z-1"
           initial="initial"
           animate="enter" 
           exit="exit"

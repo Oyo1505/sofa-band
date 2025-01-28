@@ -49,7 +49,7 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
       whileHover="hover"
       className="relative w-full max-w-4xl mx-auto my-6"
     >
-      <div className="rounded-2xl overflow-hidden shadow-2xl backdrop-blur-sm border border-purple-500/20">
+      <div className="rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xs border border-purple-500/20">
         <div className="p-3">
           <div className="relative aspect-video rounded-xl overflow-hidden">
             {videoId && (
@@ -64,7 +64,7 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
             {!isPlaying && (
               <motion.div
                 onClick={handleVideo}
-                className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"
+                className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-transparent"
                 whileHover={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
                 transition={{ duration: 0.3 }}
               >
