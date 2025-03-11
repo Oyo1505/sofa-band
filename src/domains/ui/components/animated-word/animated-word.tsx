@@ -56,13 +56,23 @@ export const AnimatedWord = ({
       opacity: 0,
       transition: {
         duration: 0.3,
-
       }
     }
   };
 
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <motion.div 
+    initial="initial" 
+    animate="animate" 
+    variants={{
+      initial: { opacity: 0 },
+      animate: { opacity: 1 }
+    }}
+    transition={{ duration: 2 }}
+    style={{ overflow: 'hidden' }}
+    //@ts-ignore
+    className={className}
+    >
       {words.map((word, index) => (
         word === wordToAnimated ? (
           <span key={index} style={{ display: 'inline-block', minWidth: 'auto', position: 'relative', height: '1.3em' }}>
@@ -87,8 +97,6 @@ export const AnimatedWord = ({
               {/* Espace réservé basé sur le mot le plus long du cycle */}
               {cycleWords?.reduce((a, b) => a.length > b.length ? a : b, '')}
             </span>
-            {/* Ajouter un espace après le mot cyclé */}
-            &nbsp;
           </span>
         ) : (
           <span key={index} style={{ display: 'inline-block', marginRight: '0.2em' }}>
@@ -96,6 +104,6 @@ export const AnimatedWord = ({
           </span>
         )
       ))}
-    </div>
+    </motion.div>
   );
 };

@@ -1,18 +1,10 @@
 //@ts-nocheck
 'use client'
-import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import React, { Dispatch } from 'react'
 import { animate, motion } from 'framer-motion'
 
 
-const AnimatedLetter = ({letter, item}: {letter:string, item:any}) => {  
-  return (
-    <motion.span className='inline-block' variants={item}>
-        {letter === ' ' ? '\u00A0' : letter}
-      </motion.span>
-  )
-}
 
 interface AnimatedTextProps {
   text?: string;
@@ -32,8 +24,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   inverse = false,
 }) => {
   const { t } = useTranslations();
-  
-  // Animation pour chaque lettre
+
   const letterVariants = {
     initial: { 
       y: 40, 
@@ -45,17 +36,17 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
       transition: {
         delay: delay + i * staggerChildren,
         duration: 0.7,
-        ease: [0.2, 0.65, 0.3, 0.9], // Courbe d'accélération personnalisée
+        ease: 'backInOut',
       },
     }),
   };
 
-  // Détermine le texte à afficher
   const displayText = translationText ? t(translationText) : text || '';
+  const displayTextArray = displayText.split('');
 
   return (
     <span className={`inline-block overflow-hidden ${className}`}>
-      {displayText.split('').map((letter, index) => (
+      {!inverse && displayTextArray.map((letter, index) => (
         <motion.span
           key={index}
           custom={index}
@@ -71,6 +62,24 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
           {letter}
         </motion.span>
       ))}
+      {inverse && 
+        displayTextArray.map((letter, index) => (
+          <motion.span
+          key={index}
+          custom={displayTextArray.length - index}
+          variants={letterVariants}
+          initial="initial"
+          animate="animate"
+          className="inline-block"
+          style={{ 
+            display: letter === ' ' ? 'inline-block' : 'inline-block',
+            width: letter === ' ' ? '0.3em' : 'auto'
+          }}
+          >
+            {letter}
+          </motion.span>
+        ))
+      }
     </span>
   );
 };

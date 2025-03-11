@@ -1,11 +1,11 @@
 'use client'
 import AnimatedText from '@/domains/ui/components/animated-text/animated-text'
-import { useLocale, useTranslations } from 'next-intl'
-import React, { useState } from 'react'
-import { Spicy_Rice } from 'next/font/google'
-import { cn } from '@/lib/utils'
-import { AnimatedWord } from '@/domains/ui/components/animated-word/animated-word'
-import { motion } from 'framer-motion'
+import { useLocale, useTranslations } from 'next-intl';
+import { Spicy_Rice } from 'next/font/google';
+import { cn } from '@/lib/utils';
+import { AnimatedWord } from '@/domains/ui/components/animated-word/animated-word';
+import { motion } from 'framer-motion';
+
 const spicy = Spicy_Rice({ subsets: ['latin'], weight: '400' })
 
 const TitlesContainer = () => {
@@ -16,8 +16,8 @@ const TitlesContainer = () => {
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.8,
-        ease: "easeInOut",
+        duration: 1.2,
+        ease: 'anticipate',
       },
     },
   };
@@ -38,7 +38,7 @@ const TitlesContainer = () => {
         text={t('desc')}  
         wordToAnimated={locale === 'en' ? 'party' : 'パーティー'}
         cycleWords={locale === 'en' ? ['rock', 'groove', 'music', 'fun'] : ['ロック', 'グルーヴ', 'ミュージック', '楽しい']}
-        cycleDuration={2000}
+        cycleDuration={1700}
       />
       </motion.div>
     </div>
