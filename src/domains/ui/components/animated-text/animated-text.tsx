@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import React, { Dispatch } from 'react'
 import { animate, motion } from 'framer-motion'
 
+
 const AnimatedLetter = ({letter, item}: {letter:string, item:any}) => {  
   return (
     <motion.span className='inline-block' variants={item}>
@@ -13,48 +14,65 @@ const AnimatedLetter = ({letter, item}: {letter:string, item:any}) => {
   )
 }
 
-const AnimatedText = (
-  { 
-    translationTheme, 
-    translationText, 
-    text, 
-    className,
-    textColor,
-    container,
-    item,
-    setIsAnimationFinished,
-  }
-  :{
-    translationTheme?: string, 
-    translationText?: string, 
-    text?: string, 
-    container:any,
-    textColor?: string,
-    item?:any
-    className?: string,
-    setIsAnimationFinished?: Dispatch<React.SetStateAction<boolean>>,
-  }) => {
+interface AnimatedTextProps {
+  text?: string;
+  translationText?: string;
+  className?: string;
+  delay?: number;
+  staggerChildren?: number;
+  inverse?: boolean;
+}
 
-  const t = useTranslations(translationTheme || '');
+export const AnimatedText: React.FC<AnimatedTextProps> = ({
+  text,
+  translationText,
+  className = '',
+  delay = 0,
+  staggerChildren = 0.03,
+  inverse = false,
+}) => {
+  const { t } = useTranslations();
+  
+  // Animation pour chaque lettre
+  const letterVariants = {
+    initial: { 
+      y: 40, 
+      opacity: 0 
+    },
+    animate: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: delay + i * staggerChildren,
+        duration: 0.7,
+        ease: [0.2, 0.65, 0.3, 0.9], // Courbe d'accélération personnalisée
+      },
+    }),
+  };
+
+  // Détermine le texte à afficher
+  const displayText = translationText ? t(translationText) : text || '';
 
   return (
-    <motion.div  
-      initial="hidden"
-      animate="visible"
-      variants={container}
-      className={cn(className,textColor)}
-      aria-hidden
-      onAnimationComplete={()=>setIsAnimationFinished && setIsAnimationFinished(true)}
-    >
-      <>
-        {text && item ?  <motion.div variants={item}>{text}</motion.div> : text ? <div>{text}</div> : null}
-
-        {translationText && item ? t(translationText).split("").map((letter, index) => (
-          <AnimatedLetter key={index} item={item} letter={letter}  />  
-        )) : translationText ? <div>{t(translationText)}</div> : null}
-      </>
-    </motion.div>
-  )
-}
+    <span className={`inline-block overflow-hidden ${className}`}>
+      {displayText.split('').map((letter, index) => (
+        <motion.span
+          key={index}
+          custom={index}
+          variants={letterVariants}
+          initial="initial"
+          animate="animate"
+          className="inline-block"
+          style={{ 
+            display: letter === ' ' ? 'inline-block' : 'inline-block',
+            width: letter === ' ' ? '0.3em' : 'auto'
+          }}
+        >
+          {letter}
+        </motion.span>
+      ))}
+    </span>
+  );
+};
 
 export default AnimatedText
