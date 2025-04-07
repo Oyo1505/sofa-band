@@ -26,11 +26,11 @@ const TitlesContainer = () => {
     <div className="overflow-hidden">
       <AnimatedText className={cn("text-8xl z-3 perspective-1000", spicy.className)} text="Sofa" />
       <div className='min-h-20 mb-6 md:mb-10 perspective-1000'>
-          <AnimatedText 
-            className={cn("text-8xl z-3", spicy.className)} 
-            inverse={true}
-            text="Rockers" 
-          />
+      <AnimatedText 
+        className={cn("text-8xl z-3", spicy.className)} 
+        inverse={true}
+        text="Rockers" 
+      />
       </div>
       <motion.div  variants={containerSubTitle} initial="hidden" animate="visible">
       <AnimatedWord
