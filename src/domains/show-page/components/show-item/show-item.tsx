@@ -30,7 +30,7 @@ const ShowItem = ({ event }: Props) => {
   const locale = useLocale()
   return (
     <>
-      <motion.div variants={item} className='font-shippori font-bold  w-full flex-col sm:flex sm:flex-row  sm:justify-around sm:items-center'>
+      <motion.div variants={item} className='font-shippori font-bold  w-full flex-col sm:flex sm:flex-row h-20  sm:justify-around sm:items-center opacity-90  backdrop-blur-xs'>
          <Text type='p' className="text-sm w-24 ">{moment(date).format('DD/MM/YYYY')}</Text>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center sm:gap-1 sm:w-96">
             {title && (

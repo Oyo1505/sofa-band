@@ -24,8 +24,11 @@ const TitlesContainer = () => {
 
   return (
     <div className="overflow-hidden">
-      <AnimatedText className={cn("text-8xl z-3 perspective-1000", spicy.className)} text="Sofa" />
-      <div className='min-h-20 mb-6 md:mb-10 perspective-1000'>
+      <div className='flex items-center justify-center'>
+      <AnimatedText className={cn("text-8xl z-3 perspective-1000", spicy.className)} text="Sofa" /> 
+      &nbsp;
+      &nbsp;
+      &nbsp;
       <AnimatedText 
         className={cn("text-8xl z-3", spicy.className)} 
         inverse={true}

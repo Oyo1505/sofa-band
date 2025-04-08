@@ -44,7 +44,6 @@ export default async function LocaleLayout({
       </NextIntlClientProvider>
       </LayoutLogic>
       <ParallaxBackground />
-      {/* <div className="absolute inset-0 pointer-events-none noise z-0" />  */}
     </div>
     </SessionProvider >
     </body>

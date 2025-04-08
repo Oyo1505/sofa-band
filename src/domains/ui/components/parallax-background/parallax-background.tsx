@@ -1,35 +1,82 @@
-import Image from 'next/image';
-import Picture1 from '@/public/image/front_band.jpg';
+'use client'
+import { motion, useAnimation, useScroll } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-const Slide = (props:any) => {
-  return (
-    <div style={{left: props.left}} className="relative flex whitespace-nowrap">
-      <Phrase src={props.src}/>
-      <Phrase src={props.src}/>
-      <Phrase src={props.src}/>
-    </div>
-  )
-}
+const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
+const speeds = [15, 25, 35, 45, 55, 40, 30, 20];
+
+const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
+
+  const shuffleArray = (array: string[]) => {
+    return array.sort(() => Math.random() - 0.5);
+  }
+  const textsParallax = shuffleArray(['Sofa Rockers', 'ソファロッカー','דיוואַן ראָקקערס', 'صوفا الروك', 'โซฟาโยก', 'सोफा रॉकर्स', '소파 락커스', '沙發搖椅', 'சோபா ராக்கர்ஸ்', 'સોફા રોકર્સ'])
+  const scaleIndex = index % scales.length;
+  const speed = speeds[scaleIndex];
+  const [windowWidth, setWindowWidth] = useState(0);
   
-const Phrase = ({src}:{src:string}) => {
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const contentWidth = windowWidth;   
+  
   return (
-    <div className={'px-5 flex gap-5 items-center'}>
-    <p className='text-[7.5vw]'>Front End Developer</p>
-    <span className="relative h-[7.5vw] aspect-[4/2] rounded-full overflow-hidden">
-        <Image style={{objectFit: "cover"}} src={src} alt="image" fill/>
-    </span>
+    <div className="h-[20%] overflow-hidden">
+      <motion.div
+        className='inline-flex'
+        animate={{
+          x: fromRight ? [0, -contentWidth/2, 0] : [-contentWidth/2, 0, -contentWidth/2],
+        }}
+        transition={{
+          x: {
+            repeat: Infinity,
+            duration: speed * 2, // Double la durée car nous allons dans les deux sens
+            ease: "linear",
+            times: [0, 0.5, 1] // Points de contrôle pour l'animation
+          }
+        }}
+      >
+        {textsParallax.map((text, index) => (
+          <Phrase key={`first-${index}`} text={text}/>
+        ))}
+        {textsParallax.map((text, index) => (
+          <Phrase key={`second-${index}`} text={text}/>
+        ))}
+      </motion.div>
     </div>
   )
 }
-const ParallaxBackground = () => {
 
-  const textsParallax = ['Sofa', 'Band', 'Rockers', 'Party']
+const Phrase = ({text}:{text:string}) => <p className='text-[9vw] w-full font-staatliches uppercase font-extrabold text-blue-900 relative whitespace-nowrap'>{text}•</p>
+
+const ParallaxBackground = () => {
+  const { scrollY } = useScroll();
+  
   return (
-    <div className='absolute inset-0 -z-1 overflow-hidden h-[100vh]'>
-      <Phrase src={Picture1.src} />
-      <Slide src={Picture1} left={"-25%"}/>
-      <Slide src={Picture1} left={"-75%"}/>
-    </div>
+    <motion.div 
+      className='absolute inset-0 -z-1 overflow-hidden h-screen bg-gradient-to-b from-gray-200 to-white opacity-65'
+      style={{
+        y: scrollY.get() * 0.5
+      }}
+    >
+      <div className='h-full flex flex-col justify-between'>
+        <Slide index={0}  fromRight={true}/>
+        <Slide index={1}  fromRight={false}/>
+        <Slide index={2}  fromRight={true}/>
+        <Slide index={3}  fromRight={false}/>
+        <Slide index={4}  fromRight={true}/>
+      </div>
+    </motion.div>
   );
 };
 
