@@ -10,7 +10,7 @@ export default auth(async function middleware(request: NextRequest) {
   const defaultLocale = request.headers.get('NEXT_LOCALE') || 'jp';
   const handleI18nRouting = createMiddleware({
     locales: ['jp', 'en'],
-    defaultLocale
+    defaultLocale: defaultLocale as 'jp' | 'en'
   });
 
   const response = handleI18nRouting(request);

@@ -1,5 +1,5 @@
 'use client'
-import { motion, useAnimation, useScroll } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
@@ -29,7 +29,7 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
   }, []);
 
   const contentWidth = windowWidth;   
-  
+
   return (
     <div className="h-[20%] overflow-hidden">
       <motion.div
@@ -57,24 +57,41 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
   )
 }
 
-const Phrase = ({text}:{text:string}) => <p className='text-[9vw] w-full font-staatliches uppercase font-extrabold text-blue-900 relative whitespace-nowrap'>{text}•</p>
+const Phrase = ({text}:{text:string}) => {
+  return (
+    <motion.p 
+      className='text-[7vw] w-full font-staatliches uppercase font-extrabold text-blue-900 relative whitespace-nowrap'
+      initial={{ filter: "blur(10px)" }}
+      animate={{ filter: "blur(0px)" }}
+      transition={{
+   
+        filter: {
+          duration: .8,
+          ease: "easeOut"
+        }
+      }}
+    >
+      {text}•
+    </motion.p>
+  );
+}
 
 const ParallaxBackground = () => {
-  const { scrollY } = useScroll();
+  // const { scrollY } = useScroll();
   
   return (
     <motion.div 
       className='absolute inset-0 -z-1 overflow-hidden h-screen bg-gradient-to-b from-gray-200 to-white opacity-65'
-      style={{
-        y: scrollY.get() * 0.5
-      }}
+      // style={{
+      //   y: scrollY.get() * 0.5
+      // }}
     >
       <div className='h-full flex flex-col justify-between'>
-        <Slide index={0}  fromRight={true}/>
-        <Slide index={1}  fromRight={false}/>
-        <Slide index={2}  fromRight={true}/>
-        <Slide index={3}  fromRight={false}/>
-        <Slide index={4}  fromRight={true}/>
+        <Slide index={0} fromRight={true}/>
+        <Slide index={1} fromRight={false}/>
+        <Slide index={2} fromRight={true}/>
+        <Slide index={3} fromRight={false}/>
+        <Slide index={4} fromRight={true}/>
       </div>
     </motion.div>
   );
