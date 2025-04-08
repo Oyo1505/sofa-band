@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 
 const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
 const speeds = [15, 25, 35, 45, 55, 40, 30, 20];
-
+const texts = ['Sofa Rockers', 'ソファロッカー','דיוואַן ראָקקערס', 'صوفا الروك', 'โซฟาโยก', 'सोफा रॉकर्स', '소파 락커스', '沙發搖椅', 'சோபா ராக்கர்ஸ்', 'સોફા રોકર્સ', 'დივან როკერები', 'ಸೋಫಾ ರಾಕರ್ಸ್']
 const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
 
   const shuffleArray = (array: string[]) => {
     return array.sort(() => Math.random() - 0.5);
   }
-  const textsParallax = shuffleArray(['Sofa Rockers', 'ソファロッカー','דיוואַן ראָקקערס', 'صوفا الروك', 'โซฟาโยก', 'सोफा रॉकर्स', '소파 락커스', '沙發搖椅', 'சோபா ராக்கர்ஸ்', 'સોફા રોકર્સ'])
+  const textsParallax = shuffleArray(texts)
   const scaleIndex = index % scales.length;
   const speed = speeds[scaleIndex];
   const [windowWidth, setWindowWidth] = useState(0);
@@ -47,7 +47,13 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
         }}
       >
         {textsParallax.map((text, index) => (
-          <Phrase key={`first-${index}`} text={text}/>
+          <>
+            <Phrase key={`first-${index}`} text={text}/>
+          
+          </>
+        ))}
+        {textsParallax.map((text, index) => (
+          <Phrase key={`second-${index}`} text={text}/>
         ))}
         {textsParallax.map((text, index) => (
           <Phrase key={`second-${index}`} text={text}/>
@@ -60,18 +66,17 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
 const Phrase = ({text}:{text:string}) => {
   return (
     <motion.p 
-      className='text-[7vw] w-full font-staatliches uppercase font-extrabold text-blue-900 relative whitespace-nowrap'
+      className='text-[7vw] text-center w-full font-staatliches uppercase font-outfit font-extrabold text-blue-900 relative whitespace-nowrap'
       initial={{ filter: "blur(10px)" }}
       animate={{ filter: "blur(0px)" }}
       transition={{
-   
         filter: {
           duration: .8,
           ease: "easeOut"
         }
       }}
     >
-      {text}•
+    {text}<span className='pl-2 pr-2 text-blue-900'>•</span>
     </motion.p>
   );
 }
