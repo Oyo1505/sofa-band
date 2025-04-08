@@ -7,8 +7,9 @@ import { cn } from '@/lib/utils';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { SessionProvider } from "next-auth/react"
-import { auth } from '@/lib/auth';
 import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
+import { auth } from '@/lib/auth';
+import ParallaxBackground from '@/domains/ui/components/parallax-background/parallax-background';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -30,19 +31,19 @@ export default async function LocaleLayout({
     notFound();
   }
   const messages = await getMessages();
-  const session = await auth();
+  const session = await auth()
   return (
     <html lang={locale}>
-    <body className={cn(rock.className, 'antialiased')}>
+    <body className={cn(rock.className)}>
     <SessionProvider session={session}>
-      <div className='relative noise-container'>
+    <div className='relative'>
       <LayoutLogic>
       <NextIntlClientProvider messages={messages}>
         <Header locale={locale} />
           {children}
       </NextIntlClientProvider>
       </LayoutLogic>
-      <div className="absolute inset-0 pointer-events-none noise z-0" /> 
+      <ParallaxBackground />
     </div>
     </SessionProvider >
     </body>

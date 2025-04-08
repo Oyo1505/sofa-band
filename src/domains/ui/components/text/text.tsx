@@ -24,15 +24,14 @@ const Text = (
     className?: string 
   }) => {
   const t = useTranslations(translationTheme || '');
-  const Tag = type.toLowerCase() as keyof JSX.IntrinsicElements;
+  const Tag = React.createElement;
 
   return (
-    <Tag className={cn(className,textColor)}>
-      {text || (translationText && translationTheme && t(translationText))}
-      {children}
-    </Tag>
+    Tag(type.toLowerCase(), { className: cn(className, textColor) }, [
+      text || (translationText && translationTheme && t(translationText)),
+      children
+    ])
   );
 };
-
 
 export default Text

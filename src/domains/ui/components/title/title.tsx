@@ -23,15 +23,19 @@ const Title = (
     children?: React.ReactNode, 
     className?: string 
   }) => {
-  const t = useTranslations(translationTheme);
+  const t = useTranslations(translationTheme || '');
 
-  const Tag = type.toLowerCase() as keyof JSX.IntrinsicElements;
+  const Tag = React.createElement;
+
+  const content = text || (translationText && translationTheme ? t(translationText) : null);
 
   return (
-    <Tag className={cn(className,textColor)}>
-      {text || translationText && t(translationText)}
-      {children}
-    </Tag>
+    Tag(
+      type.toLowerCase(),
+      { className: cn(className, textColor) },
+      content,
+      children
+    )
   );
 };
 
