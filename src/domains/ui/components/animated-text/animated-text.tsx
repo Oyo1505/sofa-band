@@ -20,7 +20,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   translationText,
   className = '',
   delay = 0,
-  staggerChildren = 0.03,
+  staggerChildren = 0.04,
   inverse = false,
 }) => {
   const { t } = useTranslations();
