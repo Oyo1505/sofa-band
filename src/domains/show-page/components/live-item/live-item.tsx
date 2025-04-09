@@ -49,7 +49,7 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
       whileHover="hover"
       className="relative w-full max-w-4xl mx-auto my-6"
     >
-      <div className="rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xs border border-purple-500/20">
+      <div className="rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xs borde">
         <div className="p-3">
           <div className="relative aspect-video rounded-xl overflow-hidden">
             {videoId && (

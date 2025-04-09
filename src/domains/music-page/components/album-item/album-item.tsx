@@ -50,11 +50,11 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
       initial="hidden"
       animate="visible"
       whileHover="hover"
-      className="bg-linear-to-br from-[rgba(235,150,31,0.5)] to-[rgba(73,161,163,0.9)] rounded-xl shadow-2xl overflow-hidden max-w-xl mx-auto my-6 backdrop-blur-3xl"
+      className="bg-linear-to-br rounded-sm from-[rgba(235,150,31,0.5)] to-[rgba(73,161,163,0.9)] shadow-2xl overflow-hidden max-w-sm md:max-w-xl mx-auto my-4 md:my-6 backdrop-blur-3xl"
     >
       <div className="flex flex-col md:flex-row">
         <motion.div 
-          className="md:w-2/5 relative group"
+          className="w-32 h-32 md:w-2/5 md:h-auto relative group mx-auto md:mx-0"
           whileHover={{ scale: 1.08, rotate: 2 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
@@ -70,12 +70,12 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
           />
         </motion.div>
 
-        <div className="p-6 md:w-3/5">
+        <div className="p-3 md:p-6 md:w-3/5">
           <motion.h2 
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, type: "spring" }}
-            className="text-2xl font-bold mb-4 text-white"
+            className="text-xl md:text-2xl font-bold mb-2 md:mb-4 text-white text-center md:text-left"
           >
             {title}
           </motion.h2>
@@ -83,13 +83,12 @@ const AlbumItem = ({ image, title, songs, label, reference, releaseYear, handleP
           <div className="space-y-3">
             {songs?.map((item, index) => (
               <motion.div 
-  
                 key={`${index}-${item?.track}-div`}
-                className="flex items-center justify-between p-2 rounded-lg bg-white/10 backdrop-blur-xs hover:bg-white/20 transition-all duration-300 shadow-xs hover:shadow-sm"
+                className="flex items-center justify-between p-1.5 md:p-2 rounded-lg bg-white/10 backdrop-blur-xs hover:bg-white/20 transition-all duration-300 shadow-xs hover:shadow-sm"
               >
                 <Text 
                   type="p" 
-                  className="font-medium text-sm text-white truncate flex-1"
+                  className="font-medium text-xs md:text-sm text-white truncate flex-1"
                 >
                   {index + 1}. {item?.track}
                 </Text>

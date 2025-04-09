@@ -24,20 +24,20 @@ const TitlesContainer = () => {
 
   return (
     <div className="overflow-hidden">
-      <div className='flex items-center justify-center'>
-      <AnimatedText className={cn("text-8xl z-3 perspective-1000", spicy.className)} text="Sofa" /> 
+      <div className='flex flex-col md:flex-row items-center justify-center'>
+      <AnimatedText className={cn("text-6xl md:text-8xl z-3 perspective-1000", spicy.className)} text="Sofa" /> 
       &nbsp;
       &nbsp;
       &nbsp;
       <AnimatedText 
-        className={cn("text-8xl z-3", spicy.className)} 
+        className={cn("text-6xl md:text-8xl z-3", spicy.className)} 
         inverse={true}
         text="Rockers" 
       />
       </div>
       <motion.div  variants={containerSubTitle} initial="hidden" animate="visible">
       <AnimatedWord
-        className="text-2xl md:text-3xl" 
+        className="text-center text-2xl md:text-3xl" 
         text={t('desc')}  
         wordToAnimated={locale === 'en' ? 'party' : 'パーティー'}
         cycleWords={locale === 'en' ? ['rock', 'groove', 'music', 'fun'] : ['ロック', 'グルーヴ', 'ミュージック', '楽しい']}

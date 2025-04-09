@@ -47,10 +47,7 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
         }}
       >
         {textsParallax.map((text, index) => (
-          <>
-            <Phrase key={`first-${index}`} text={text}/>
-          
-          </>
+           <Phrase key={`first-${index}`} text={text}/>
         ))}
         {textsParallax.map((text, index) => (
           <Phrase key={`second-${index}`} text={text}/>
@@ -65,8 +62,8 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
 
 const Phrase = ({text}:{text:string}) => {
   return (
-    <motion.p 
-      className='text-[7vw] text-center w-full font-staatliches uppercase font-outfit font-extrabold text-blue-900 relative whitespace-nowrap'
+    <motion.span 
+      className='text-[25vw] md:text-[7vw] text-center w-full font-staatliches uppercase font-outfit font-extrabold text-blue-900 relative whitespace-nowrap'
       initial={{ filter: "blur(10px)" }}
       animate={{ filter: "blur(0px)" }}
       transition={{
@@ -77,7 +74,7 @@ const Phrase = ({text}:{text:string}) => {
       }}
     >
     {text}<span className='pl-2 pr-2 text-blue-900'>•</span>
-    </motion.p>
+    </motion.span>
   );
 }
 
