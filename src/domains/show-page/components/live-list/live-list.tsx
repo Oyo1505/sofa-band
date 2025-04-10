@@ -38,7 +38,6 @@ const LiveList = () => {
 
   const getVideosChannelYoutube = async () => {
     try{
-      console.log(process.env.NEXT_PUBLIC_YOUTUBE_API_KEY)
       const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${channelId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`);
       const data = await response.json()
       return data.items[0].contentDetails.relatedPlaylists.uploads

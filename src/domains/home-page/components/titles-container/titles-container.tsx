@@ -25,12 +25,12 @@ const TitlesContainer = () => {
   return (
     <div className="overflow-hidden">
       <div className='flex flex-col md:flex-row items-center justify-center'>
-      <AnimatedText className={cn("text-6xl md:text-8xl z-3 perspective-1000", spicy.className)} text="Sofa" /> 
+      <AnimatedText className={cn("text-6xl md:text-9xl z-3 perspective-1000", spicy.className)} text="Sofa" /> 
       &nbsp;
       &nbsp;
       &nbsp;
       <AnimatedText 
-        className={cn("text-6xl md:text-8xl z-3", spicy.className)} 
+        className={cn("text-6xl md:text-9xl z-3", spicy.className)} 
         inverse={true}
         text="Rockers" 
       />

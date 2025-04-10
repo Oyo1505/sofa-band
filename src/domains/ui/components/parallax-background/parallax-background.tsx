@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
@@ -79,14 +79,14 @@ const Phrase = ({text}:{text:string}) => {
 }
 
 const ParallaxBackground = () => {
-  // const { scrollY } = useScroll();
+  const { scrollY } = useScroll();
   
   return (
     <motion.div 
-      className='absolute inset-0 -z-1 overflow-hidden h-screen bg-gradient-to-b from-gray-200 to-white opacity-65'
-      // style={{
-      //   y: scrollY.get() * 0.5
-      // }}
+      className='absolute inset-0 -z-1 overflow-hidden h-auto bg-gradient-to-b from-gray-200 to-white opacity-65'
+      style={{
+        y: scrollY.get() * 0.5
+      }}
     >
       <div className='h-full flex flex-col justify-between'>
         <Slide index={0} fromRight={true}/>
