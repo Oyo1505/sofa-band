@@ -23,14 +23,15 @@ const ShowItem = ({ event }: Props) => {
     hidden: { x: 20, opacity: 0 },
     visible: {
       x: 0,
-      opacity: 1
+      opacity: 1,
     }
+    
   };
   const timeSlot = hours[0].time_slots.filter(h => h.id === event.time)[0]
   const locale = useLocale()
   return (
     <>
-      <motion.div variants={item} className='font-shippori font-bold  w-full flex-col sm:flex sm:flex-row h-20  sm:justify-around sm:items-center opacity-90  backdrop-blur-xs'>
+      <motion.div variants={item} className='font-shippori shadow-sm md:mb-2 pt-2 pb-2 lg:pt-0 lg:pb-0 font-bold  w-full flex-col rounded-md sm:flex sm:flex-row px-2 md:px-0 md:h-20  sm:justify-around sm:items-center opacity-90 backdrop-blur-sm'>
          <Text type='p' className="text-sm w-24 ">{moment(date).format('DD/MM/YYYY')}</Text>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center sm:gap-1 sm:w-96">
             {title && (
@@ -52,7 +53,6 @@ const ShowItem = ({ event }: Props) => {
         </div>
      <ButtonEvent link={event.infoLink} /> 
     </motion.div>
-    <motion.hr variants={item} className="border-t w-full border-gray-300" />
     </>
   )
 }
