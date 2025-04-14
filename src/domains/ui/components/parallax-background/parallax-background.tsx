@@ -1,9 +1,8 @@
 'use client'
 import { motion, useScroll } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
-const speeds = [15, 25, 35, 45, 55, 40, 30, 20];
+const speeds = [30, 50, 70, 90, 110, 80, 60, 40];
 const texts = ['Sofa Rockers', 'ソファロッカー','דיוואַן ראָקקערס', 'صوفا الروك', 'โซฟาโยก', 'सोफा रॉकर्स', '소파 락커스', '沙發搖椅', 'சோபா ராக்கர்ஸ்', 'સોફા રોકર્સ', 'დივან როკერები', 'ಸೋಫಾ ರಾಕರ್ಸ್']
 const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
 
@@ -13,68 +12,38 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
   const textsParallax = shuffleArray(texts)
   const scaleIndex = index % scales.length;
   const speed = speeds[scaleIndex];
-  const [windowWidth, setWindowWidth] = useState(0);
   
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const contentWidth = windowWidth;   
-
   return (
-    <div className="h-[20%] overflow-hidden">
-      <motion.div
-        className='inline-flex'
-        animate={{
-          x: fromRight ? [0, -contentWidth/2, 0] : [-contentWidth/2, 0, -contentWidth/2],
-        }}
-        transition={{
-          x: {
-            repeat: Infinity,
-            duration: speed * 2, // Double la durée car nous allons dans les deux sens
-            ease: "linear",
-            times: [0, 0.5, 1] // Points de contrôle pour l'animation
-          }
-        }}
-      >
-        {textsParallax.map((text, index) => (
-           <Phrase key={`first-${index}`} text={text}/>
-        ))}
-        {textsParallax.map((text, index) => (
-          <Phrase key={`second-${index}`} text={text}/>
-        ))}
-        {textsParallax.map((text, index) => (
-          <Phrase key={`second-${index}`} text={text}/>
-        ))}
-      </motion.div>
+    <div className="h-[20%] overflow-hidden flex items-center">
+      <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+        <div 
+          className="flex items-center justify-center md:justify-start" 
+          style={{
+            animation: `${fromRight ? 'infinite-scroll-right' : 'infinite-scroll-left'} ${speed}s linear infinite`
+          }}
+        >
+          {textsParallax.map((text, index) => (
+            <Phrase key={`first-${index}`} text={text}/>
+          ))}
+        </div>
+        <div 
+          className="flex items-center justify-center md:justify-start " 
+          style={{
+            animation: `${fromRight ? 'infinite-scroll-right' : 'infinite-scroll-left'} ${speed}s linear infinite`
+          }}
+        >
+          {textsParallax.map((text, index) => (
+            <Phrase key={`second-${index}`} text={text}/>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
 
 const Phrase = ({text}:{text:string}) => {
   return (
-    <motion.span 
-      className='text-[25vw] md:text-[7vw] text-center w-full font-staatliches uppercase font-outfit font-extrabold text-blue-900 relative whitespace-nowrap'
-      initial={{ filter: "blur(10px)" }}
-      animate={{ filter: "blur(0px)" }}
-      transition={{
-        filter: {
-          duration: .8,
-          ease: "easeOut"
-        }
-      }}
-    >
-    {text}<span className='pl-2 pr-2 text-blue-900'>•</span>
-    </motion.span>
+    <span className="text-[25vw] md:text-[7vw] text-center w-full font-staatliches uppercase font-outfit font-extrabold text-blue-900 relative whitespace-nowrap"> {text}<span className="pl-2 pr-2 text-blue-900">•</span></span>
   );
 }
 
@@ -88,7 +57,7 @@ const ParallaxBackground = () => {
         y: scrollY.get() * 0.5
       }}
     >
-      <div className='h-full flex flex-col justify-between'>
+      <div className='h-full flex flex-col justify-center'>
         <Slide index={0} fromRight={true}/>
         <Slide index={1} fromRight={false}/>
         <Slide index={2} fromRight={true}/>
