@@ -1,6 +1,6 @@
 'use client'
 import { motion, useScroll } from 'framer-motion';
-import { useId } from 'react';
+
 
 const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
 const speeds = [30, 50, 70, 90, 110, 80, 60, 40];
@@ -23,8 +23,8 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
             animation: `${fromRight ? 'infinite-scroll-right' : 'infinite-scroll-left'} ${speed}s linear infinite`
           }}
         >
-          {textsParallax.map((text) => (
-            <Phrase key={`first-${useId()}`} text={text}/>
+          {textsParallax.map((text, index) => (
+            <Phrase key={`first-${index}`} text={text}/>
           ))}
         </div>
         <div 
@@ -33,8 +33,8 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
             animation: `${fromRight ? 'infinite-scroll-right' : 'infinite-scroll-left'} ${speed}s linear infinite`
           }}
         >
-          {textsParallax.map((text) => (
-            <Phrase key={`second-${useId()}`} text={text}/>
+          {textsParallax.map((text, index) => (
+            <Phrase key={`second-${index}`} text={text}/>
           ))}
         </div>
       </div>
