@@ -3,7 +3,7 @@ import { motion, useScroll } from 'framer-motion';
 
 
 const scales = [0.4, 0.7, 0.8, 0.9, 1, 0.9, 0.8, 0.7];
-const speeds = [30, 50, 70, 90, 110, 80, 60, 40];
+const speeds = [90,190, 110, 90, 120];
 const texts = ['Sofa Rockers', 'ソファロッカー','דיוואַן ראָקקערס', 'صوفا الروك', 'โซฟาโยก', 'सोफा रॉकर्स', '소파 락커스', '沙發搖椅', 'சோபா ராக்கர்ஸ்', 'સોફા રોકર્સ', 'დივან როკერები', 'ಸೋಫಾ ರಾಕರ್ಸ್']
 const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
 
@@ -16,7 +16,7 @@ const Slide = ({index, fromRight = false}:{index:number,fromRight:boolean}) => {
   
   return (
     <div className="h-[20%] overflow-hidden flex items-center">
-      <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+      <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_100px,_black_calc(100%-100px),transparent_100%)]">
         <div 
           className="flex items-center justify-center md:justify-start" 
           style={{
@@ -59,11 +59,11 @@ const ParallaxBackground = () => {
       }}
     >
       <div className='h-full flex flex-col justify-center'>
-        <Slide index={1} fromRight={true}/>
-        <Slide index={2} fromRight={false}/>
-        <Slide index={3} fromRight={true}/>
-        <Slide index={4} fromRight={false}/>
-        <Slide index={5} fromRight={true}/>
+        <Slide index={0} fromRight={true}/>
+        <Slide index={1} fromRight={false}/>
+        <Slide index={2} fromRight={true}/>
+        <Slide index={3} fromRight={false}/>
+        <Slide index={4} fromRight={true}/>
       </div>
     </motion.div>
   );

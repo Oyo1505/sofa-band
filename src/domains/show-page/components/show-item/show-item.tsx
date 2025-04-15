@@ -10,15 +10,14 @@ import { hours } from '@/shared/constants/hours'
 import moment from 'moment'
 import { Event } from '@/models/show/show'
 
-
 interface Props {
   event: Event
+  isChromeBrowser: boolean
 } 
 
-const ShowItem = ({ event }: Props) => {
+const ShowItem = ({ event, isChromeBrowser }: Props) => {
 
-  const { title, location, time, date, city, region, cityInJpn } = event;
-
+  const { title, location, date, city, region, cityInJpn } = event;
   const item = {
     hidden: { x: 20, opacity: 0 },
     visible: {
@@ -31,7 +30,7 @@ const ShowItem = ({ event }: Props) => {
   const locale = useLocale()
   return (
     <>
-      <motion.div variants={item} className='font-shippori shadow-sm md:mb-2 pt-2 pb-2 lg:pt-0 lg:pb-0 font-bold  w-full flex-col rounded-md sm:flex sm:flex-row px-2 md:px-0 md:h-20  sm:justify-around sm:items-center opacity-90 backdrop-blur-sm'>
+      <motion.div variants={item} className={`font-shippori shadow-sm md:mb-2 pt-2 pb-2 lg:pt-0 lg:pb-0 font-bold  w-full flex-col rounded-md sm:flex sm:flex-row px-2 md:px-0 md:h-20  sm:justify-around sm:items-center opacity-90 backdrop-blur-sm ${isChromeBrowser ? 'bg-white text-black' : 'bg-white/5'}`}>
          <Text type='p' className="text-sm w-24 ">{moment(date).format('DD/MM/YYYY')}</Text>
          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center sm:gap-1 sm:w-96">
             {title && (
