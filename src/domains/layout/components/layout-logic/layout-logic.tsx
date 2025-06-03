@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider, dehydrate } from "@tanstack/react-query"
 
-const LayoutLogic = ({children}:{children:React.ReactNode}) => {
+const LayoutLogic = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {

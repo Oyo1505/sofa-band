@@ -7,8 +7,8 @@ import moment from 'moment';
 
 const revalidate = 60;
 
-const getData = async () =>{
-  const {events} = await getEvents()
+const getData = async () => {
+  const { events } = await getEvents()
   return events
 }
 export default async function Page() {
@@ -16,21 +16,21 @@ export default async function Page() {
   const sortedData = events.sort((a, b) => moment(b.date).diff(moment(a.date)))
 
 
-const container = {
-  visible: {
-    transition: {
-      delayChildren: 0.2,
-      staggerChildren: 0.2
+  const container = {
+    visible: {
+      transition: {
+        delayChildren: 0.2,
+        staggerChildren: 0.2
+      }
     }
-  }
-};
+  };
   return (
-  <motion.div 
-    variants={container}
-    initial="hidden"
-    animate="visible"
-    className='flex flex-col lg:h-screen pt-32  items-center justify-center'>
-     <ShowList events={sortedData} />
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className='flex flex-col lg:h-screen pt-32  items-center justify-center'>
+      <ShowList events={sortedData} />
     </motion.div>
   )
 }

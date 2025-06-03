@@ -23,7 +23,7 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params:any
+  params: any
 }) {
 
   const { locale } = await params;
@@ -34,19 +34,19 @@ export default async function LocaleLayout({
   const session = await auth()
   return (
     <html lang={locale}>
-    <body className={cn(rock.className)}>
-    <SessionProvider session={session}>
-    <div className='relative'>
-      <LayoutLogic>
-      <NextIntlClientProvider messages={messages}>
-        <Header locale={locale} />
-          {children}
-      </NextIntlClientProvider>
-      </LayoutLogic>
-      <ParallaxBackground />
-    </div>
-    </SessionProvider >
-    </body>
-  </html>
+      <body className={cn(rock.className)}>
+        <SessionProvider session={session}>
+          <div className='relative'>
+            <LayoutLogic>
+              <NextIntlClientProvider messages={messages}>
+                <Header locale={locale} />
+                {children}
+              </NextIntlClientProvider>
+            </LayoutLogic>
+            <ParallaxBackground />
+          </div>
+        </SessionProvider >
+      </body>
+    </html>
   );
 }

@@ -1,17 +1,18 @@
 
 import type { NextAuthConfig } from "next-auth"
 import Google from "next-auth/providers/google"
- 
-export default { 
+
+export default {
   providers: [
     Google({
-      clientId:process.env.GOOGLE_ID!,
+      clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
-      authorization: {  
+      authorization: {
         params: {
-        access_type: 'offline',
-        prompt: 'consent',
-      }, },
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
     })
   ],
- } satisfies NextAuthConfig
+} satisfies NextAuthConfig

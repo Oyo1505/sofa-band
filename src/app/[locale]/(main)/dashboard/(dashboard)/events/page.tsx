@@ -8,8 +8,8 @@ import { useTranslations } from 'next-intl'
 import React from 'react'
 
 
-const getData = async () =>{
-  const {events} = await getEvents()
+const getData = async () => {
+  const { events } = await getEvents()
   return events
 }
 
@@ -20,7 +20,7 @@ const Page = async () => {
   return (
     <>
       <EventHeaderPage />
-      {sortedData &&  sortedData.length > 0 ? <ListEvents events={sortedData} /> : <div className='text-black'>No events</div>}
+      {sortedData && sortedData.length > 0 ? <ListEvents events={sortedData} /> : <div className='text-black'>No events</div>}
     </>
   )
 }

@@ -26,9 +26,9 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   const { t } = useTranslations();
 
   const letterVariants = {
-    initial: { 
-      y: 40, 
-      opacity: 0 
+    initial: {
+      y: 40,
+      opacity: 0
     },
     animate: (i: number) => ({
       y: 0,
@@ -54,7 +54,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
           initial="initial"
           animate="animate"
           className="inline-block"
-          style={{ 
+          style={{
             display: letter === ' ' ? 'inline-block' : 'inline-block',
             width: letter === ' ' ? '0.3em' : 'auto'
           }}
@@ -62,19 +62,19 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
           {letter}
         </motion.span>
       ))}
-      {inverse && 
+      {inverse &&
         displayTextArray.map((letter, index) => (
           <motion.span
-          key={index}
-          custom={displayTextArray.length - index}
-          variants={letterVariants}
-          initial="initial"
-          animate="animate"
-          className="inline-block"
-          style={{ 
-            display: letter === ' ' ? 'inline-block' : 'inline-block',
-            width: letter === ' ' ? '0.3em' : 'auto'
-          }}
+            key={index}
+            custom={displayTextArray.length - index}
+            variants={letterVariants}
+            initial="initial"
+            animate="animate"
+            className="inline-block"
+            style={{
+              display: letter === ' ' ? 'inline-block' : 'inline-block',
+              width: letter === ' ' ? '0.3em' : 'auto'
+            }}
           >
             {letter}
           </motion.span>

@@ -13,9 +13,10 @@ interface AnimatedWordProps {
   cycleDuration?: number;
 }
 
-export const AnimatedWord = ({ 
-  text, 
-  className = '', 
+const colors = ['bg-red-400', 'bg-cyan-400', 'bg-amber-400', 'bg-purple-400']
+export const AnimatedWord = ({
+  text,
+  className = '',
   inverse = false,
   wordToAnimated,
   cycleWords,
@@ -23,11 +24,11 @@ export const AnimatedWord = ({
 }: AnimatedWordProps) => {
   const words = text.split(' ');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
- 
+
 
   useEffect(() => {
     const interval = setInterval(() => {
-  
+
       setTimeout(() => {
         setCurrentWordIndex((prev) => (prev + 1) % (cycleWords?.length || 0));
 
@@ -48,7 +49,7 @@ export const AnimatedWord = ({
       opacity: 1,
       transition: {
         duration: 0.3,
-       
+
       }
     },
     exit: {
@@ -61,17 +62,17 @@ export const AnimatedWord = ({
   };
 
   return (
-    <motion.div 
-    initial="initial" 
-    animate="animate" 
-    variants={{
-      initial: { opacity: 0 },
-      animate: { opacity: 1 }
-    }}
-    transition={{ duration: 2 }}
-    style={{ overflow: 'hidden' }}
-    //@ts-ignore
-    className={className}
+    <motion.div
+      initial="initial"
+      animate="animate"
+      variants={{
+        initial: { opacity: 0 },
+        animate: { opacity: 1 }
+      }}
+      transition={{ duration: 2 }}
+      style={{ overflow: 'hidden' }}
+      //@ts-ignore
+      className={className}
     >
       {words.map((word, index) => (
         word === wordToAnimated ? (
@@ -83,7 +84,8 @@ export const AnimatedWord = ({
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                style={{ 
+                className={`${colors[currentWordIndex]} px-2 pb-2`}
+                style={{
                   display: 'inline-block',
                   position: 'absolute',
                   left: 0,
@@ -93,7 +95,7 @@ export const AnimatedWord = ({
                 {cycleWords?.[currentWordIndex]}
               </motion.span>
             </AnimatePresence>
-            <span style={{ visibility: 'hidden'}}>
+            <span style={{ visibility: 'hidden' }}>
               {/* Espace réservé basé sur le mot le plus long du cycle */}
               {cycleWords?.reduce((a, b) => a.length > b.length ? a : b, '')}
             </span>
