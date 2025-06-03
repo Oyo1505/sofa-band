@@ -4,10 +4,10 @@ import { cn } from '@/lib/utils'
 import React from 'react'
 
 interface Props {
-  className? : string
+  className?: string
   children: React.ReactNode
 }
-const Container = ({children, className}:Props) => {
+const Container = ({ children, className }: Props) => {
   return (
     <div className={cn('container pr-7 pl-7 md:pr-3 md:pl-3', className)}>{children}</div>
   )

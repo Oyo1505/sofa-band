@@ -8,16 +8,16 @@ const Path = (props: SVGMotionProps<SVGPathElement>) => (
     strokeWidth="3"
     stroke="hsl(0, 0%, 18%)"
     strokeLinecap="round"
-    {...props} 
+    {...props}
   />
 );
 
-export const MenuToggle = ({ toggle } : { toggle :() => void}) => (
+export const MenuToggle = ({ toggle }: { toggle: () => void }) => (
   <button onClick={toggle} className="rounded-full pl-0.5 pt-1 bg-foreground h-12 w-12 flex justify-center items-center top-3.5 left-7 z-20 cursor-pointer absolute">
     <svg className="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <Path
         variants={{
-          initial: { d: "M 2 2.5 L 20 2.5"  },  
+          initial: { d: "M 2 2.5 L 20 2.5" },
           closed: { d: "M 2 2.5 L 20 2.5" },
           open: { d: "M 3 16.5 L 17 2.5" }
         }}
@@ -32,7 +32,7 @@ export const MenuToggle = ({ toggle } : { toggle :() => void}) => (
       />
       <Path
         variants={{
-          initial: { d: "M 2 16.346 L 20 16.346"  },
+          initial: { d: "M 2 16.346 L 20 16.346" },
           closed: { d: "M 2 16.346 L 20 16.346" },
           open: { d: "M 3 2.5 L 17 16.346" }
         }}

@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
 import { usePathname } from 'next/navigation';
 
-export default function Template({ children } : { children: React.ReactNode }) {
+export default function Template({ children }: { children: React.ReactNode }) {
   const isMobile = useIsMobile();
   const locales = useLocale();
   const pathname = usePathname();
@@ -55,16 +55,16 @@ export default function Template({ children } : { children: React.ReactNode }) {
       opacity: 1,
       transition: {
         duration: 0.7,
-        ease: "easeInOut" 
+        ease: "easeInOut"
       }
     }
   };
 
-  const shouldAnimate = pathname !== '/en' && 
-                       pathname !== '/jp' && 
-                       pathname !== `/${locales}${URL_DASHBOARD}/*` && 
-                       pathname !== `/${locales}${URL_SIGNIN}` && 
-                       !isMobile;
+  const shouldAnimate = pathname !== '/en' &&
+    pathname !== '/jp' &&
+    pathname !== `/${locales}${URL_DASHBOARD}/*` &&
+    pathname !== `/${locales}${URL_SIGNIN}` &&
+    !isMobile;
 
   return (
     shouldAnimate ? (
@@ -72,7 +72,7 @@ export default function Template({ children } : { children: React.ReactNode }) {
         <motion.div
           className="fixed inset-0 bg-linear-to-tr from-[rgba(235,150,31,0.3)] to-[rgba(73,161,163,0.78)] backdrop-blur-xs z-1"
           initial="initial"
-          animate="enter" 
+          animate="enter"
           exit="exit"
           variants={overlayVariants}
         />

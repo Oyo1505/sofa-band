@@ -10,7 +10,7 @@ const spicy = Spicy_Rice({ subsets: ['latin'], weight: '400' })
 
 const TitlesContainer = () => {
   const t = useTranslations('HomePage');
-  const  locale  = useLocale();
+  const locale = useLocale();
   const containerSubTitle = {
     hidden: { opacity: 0 },
     visible: {
@@ -25,24 +25,24 @@ const TitlesContainer = () => {
   return (
     <div className="overflow-hidden">
       <div className='flex flex-col md:flex-row items-center justify-center'>
-      <AnimatedText className={cn("text-6xl md:text-9xl z-3 perspective-1000", spicy.className)} text="Sofa" /> 
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <AnimatedText 
-        className={cn("text-6xl md:text-9xl z-3", spicy.className)} 
-        inverse={true}
-        text="Rockers" 
-      />
+        <AnimatedText className={cn("text-6xl md:text-9xl z-3 perspective-1000", spicy.className)} text="Sofa" />
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <AnimatedText
+          className={cn("text-6xl md:text-9xl z-3", spicy.className)}
+          inverse={true}
+          text="Rockers"
+        />
       </div>
-      <motion.div  variants={containerSubTitle} initial="hidden" animate="visible">
-      <AnimatedWord
-        className="text-center text-2xl md:text-3xl" 
-        text={t('desc')}  
-        wordToAnimated={locale === 'en' ? 'party' : 'パーティー'}
-        cycleWords={locale === 'en' ? ['rock', 'groove', 'music', 'fun'] : ['ロック', 'グルーヴ', 'ミュージック', '楽しい']}
-        cycleDuration={1700}
-      />
+      <motion.div variants={containerSubTitle} initial="hidden" animate="visible">
+        <AnimatedWord
+          className="text-center text-2xl md:text-3xl"
+          text={t('desc')}
+          wordToAnimated={locale === 'en' ? 'party' : 'パーティー'}
+          cycleWords={locale === 'en' ? ['rock', 'groove', 'music', 'fun'] : ['ロック', 'グルーヴ', 'ミュージック', '楽しい']}
+          cycleDuration={1700}
+        />
       </motion.div>
     </div>
   )

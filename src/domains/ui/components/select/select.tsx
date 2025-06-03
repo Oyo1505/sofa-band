@@ -5,7 +5,7 @@ type TimeSlot<K extends string = 'jp' | 'en' | 'id'> = {
 };
 
 interface SelectInputProps {
-  optionsList:  TimeSlot[];
+  optionsList: TimeSlot[];
   formData?: number;
   label?: string;
   formDataKey: string;
@@ -27,22 +27,22 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   return (
     <div className='flex flex-col gap-2'>
-    <label>{label}</label>
-    <select 
-      onChange={onChange} 
-      defaultValue={time ? time.id : ''}
-      className={className}
-    >
-      <option value=""></option>
-      {optionsList?.map((option, index) => (
-        <option 
-          key={`${option?.[locale]}-${index}`} 
-          value={option?.id}
-        >
-          {option?.[locale]}
-        </option>
-      ))}
-    </select>
+      <label>{label}</label>
+      <select
+        onChange={onChange}
+        defaultValue={time ? time.id : ''}
+        className={className}
+      >
+        <option value=""></option>
+        {optionsList?.map((option, index) => (
+          <option
+            key={`${option?.[locale]}-${index}`}
+            value={option?.id}
+          >
+            {option?.[locale]}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
