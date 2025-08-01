@@ -4,24 +4,13 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Spicy_Rice } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { AnimatedWord } from '@/domains/ui/components/animated-word/animated-word';
-import { motion } from 'framer-motion';
 
 const spicy = Spicy_Rice({ subsets: ['latin'], weight: '400' })
 
 const TitlesContainer = () => {
   const t = useTranslations('HomePage');
   const locale = useLocale();
-  const containerSubTitle = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1.2,
-        ease: 'anticipate',
-      },
-    },
-  };
-
+ 
   return (
     <div className="overflow-hidden">
       <div className='flex flex-col md:flex-row items-center justify-center'>
@@ -35,7 +24,6 @@ const TitlesContainer = () => {
           text="Rockers"
         />
       </div>
-      <motion.div variants={containerSubTitle} initial="hidden" animate="visible">
         <AnimatedWord
           className="text-center text-2xl md:text-3xl"
           text={t('desc')}
@@ -43,7 +31,6 @@ const TitlesContainer = () => {
           cycleWords={locale === 'en' ? ['rock', 'groove', 'music', 'fun'] : ['ロック', 'グルーヴ', 'ミュージック', '楽しい']}
           cycleDuration={1700}
         />
-      </motion.div>
     </div>
   )
 }

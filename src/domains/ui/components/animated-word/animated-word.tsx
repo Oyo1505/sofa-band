@@ -71,7 +71,6 @@ export const AnimatedWord = ({
       }}
       transition={{ duration: 2 }}
       style={{ overflow: 'hidden' }}
-      //@ts-ignore
       className={className}
     >
       {words.map((word, index) => (
