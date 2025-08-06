@@ -1,24 +1,25 @@
 'use client'
 import { useTranslations } from 'next-intl'
 import React from 'react'
-import { URL_DASHBOARD, URL_HOME, URL_LIVE, URL_MUSIC, URL_SHOWS } from '@/lib/routes'
+import { URL_DASHBOARD, URL_HOME } from '@/lib/routes'
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage'
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons'
 import { Link } from '@/i18n/routing'
 import ButtonLogin from '../button-login/button-login'
 import { useSession } from 'next-auth/react'
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 const MenuNav = ({ locale }: { locale: string }) => {
   const t = useTranslations('Header')
   const session = useSession();
+  const segments = useSelectedLayoutSegment()
+  const dashboard = segments === 'dashboard'
+  const auth = session.status === 'authenticated'
 
   return (
     <div className='flex justify-between items-center h-20'>
       <nav className='flex text-lg gap-9 items-center justify-start'>
-        <div><Link href={URL_HOME} >{t('Home')}</Link></div>
-        <div><Link href={URL_MUSIC} >{t('Music')}</Link></div>
-        <div><Link href={URL_SHOWS} >{t('Shows')}</Link></div>
-        <div><Link href={URL_LIVE} >{t('Live')}</Link></div>
+      {dashboard && auth && <div><Link href={URL_HOME} >{t('Home')}</Link></div>} 
       </nav>
       <div className='flex gap-4 items-center'>
         <ButtonLogin />

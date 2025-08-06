@@ -35,27 +35,34 @@
   "HomePage": {
     "title":"Hello!",
     "about": "About",
-    "desc" : "We are from Osaka, we are here to party"
+    "desc" : "Rock / Reggae / Pop band from Osaka"
   },
   "AboutPage": {
     "title":"About"
   },
   "MusicPage" : {
-    "ourMusic" : "Our Music",
-    "whereToBuy" : "Where to Buy",
-    "whereToListen" : "Where to Listen",
+    "ourMusic" : "Listen",
     "Label": "Label",
     "Ref": "Ref",
-    "Date":"Date"
+    "Date":"Date",
+    "EP":"EP"
   },
   "ShowPage": {
-    "event": "Event"
+    "tour": "Tour",
+    "event": "Event",
+    "pastEvents": "Past Events",
+    "noEvents": "No events found"
    },
    "LivePage": {
-    "NoVideo": "No available video"
+    "NoVideo": "No available video",
+    "title": "Videos"
    },
    "MenuAside": {
      "Dashboard": "Dashboard",
      "Events": "Events"
+    },
+    "Footer": {
+      "whereToBuy" : "Buy on",
+      "whereToListen" : "Musical Platform"
     }
 }

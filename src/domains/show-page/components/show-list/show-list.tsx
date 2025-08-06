@@ -1,17 +1,49 @@
+'use client'
 import React from 'react'
 import ShowItem from '../show-item/show-item'
 import { Event } from '@/models/show/show'
-import { headers } from 'next/headers'
+import ShowTitle from '../show-title/show-title'
+import Text from '@/domains/ui/components/text/text'
+import Title from '@/domains/ui/components/title/title'
+import { useTranslations } from 'next-intl'
 
-const ShowList = async ({events}: {events: Event[]}) => {
-   const userAgent = (await headers()).get('user-agent');
-   const isChromeBrowser = userAgent?.includes('Chrome') || false
+const ShowList = ({events}: {events: Event[]}) => {
 
+  const today = new Date().toISOString()
+  const t = useTranslations('ShowPage')
+  const isFutureShow = events.filter((event: Event) => event.date > today)
+  const isPastShow = events.filter((event: Event) => event.date < today)
   return (
-    <div className='rounded-2xl w-full'>
-   {events?.map((event: Event, index: number) => (
-      <ShowItem key={index} event={event}  isChromeBrowser={isChromeBrowser} />
-    ))}
+    <div className='rounded-2xl w-full flex flex-col gap-5'>
+    <ShowTitle />
+    {isFutureShow.length > 0 ? (
+      <>
+    <div className='rounded-md shadow-sm bg-amber-50 p-5'>
+      {isFutureShow?.map((event: Event, index: number) => (
+          <ShowItem key={index} event={event}  />
+      ))}
+  
+    </div>
+    </>
+    ) : (
+     
+        <Text type='p' className="text-sm">No events found</Text>
+  
+    )}
+    {isPastShow.length > 0 ? (
+      <>
+        <Title type='h2' text={t('pastEvents')} className='text-2xl text-amber-50' />
+        <div className='rounded-md shadow-sm bg-amber-50 p-5'>
+          {isPastShow?.map((event: Event, index: number) => (
+            <ShowItem key={index} event={event}  />
+          ))}
+        </div>
+      </>
+    ) : (
+  
+        <Text type='p' className="text-sm">No events found</Text>
+  
+    )}
     </div>
   )
 }

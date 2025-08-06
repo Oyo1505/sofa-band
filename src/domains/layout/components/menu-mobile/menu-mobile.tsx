@@ -67,18 +67,6 @@ const MenuMobile = ({ locale, router }: { locale: string }) => {
     {
       link: URL_HOME,
       item: t('Home')
-    },
-    {
-      link: URL_MUSIC,
-      item: t('Music')
-    },
-    {
-      link: URL_SHOWS,
-      item: t('Shows')
-    },
-    {
-      link: URL_LIVE,
-      item: t('Live')
     }
   ];
 

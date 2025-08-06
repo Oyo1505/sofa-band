@@ -1,6 +1,4 @@
-//@ts-nocheck
 'use client'
-import { Play } from '@/domains/ui/components/icons/icons'
 import { motion } from 'framer-motion'
 import Text from '@/domains/ui/components/text/text'
 import Title from '@/domains/ui/components/title/title'
@@ -47,11 +45,9 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
       initial="hidden"
       animate="visible"
       whileHover="hover"
-      className="relative w-full max-w-4xl mx-auto my-6"
+      className="relative w-full mx-auto "
     >
-      <div className="rounded-2xl overflow-hidden shadow-2xl backdrop-blur-xs borde">
-        <div className="p-3">
-          <div className="relative aspect-video rounded-xl overflow-hidden">
+          <div className="relative aspect-video w-full rounded-xl overflow-hidden">
             {videoId && (
               <ReactPlayer
                 playing={isPlaying}
@@ -64,7 +60,7 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
             {!isPlaying && (
               <motion.div
                 onClick={handleVideo}
-                className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-transparent"
+                className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-transparent hover:cursor-pointer"
                 whileHover={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
                 transition={{ duration: 0.3 }}
               >
@@ -98,8 +94,6 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
               </motion.div>
             )}
           </div>
-        </div>
-      </div>
     </motion.div>
   )
 }
