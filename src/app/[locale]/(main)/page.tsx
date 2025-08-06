@@ -23,14 +23,18 @@ export default async function Home({ params }: { params: any }) {
   return (
     <div className=" flex flex-col gap-30 items-start justify-start w-full">
       <div className='w-full h-96 flex justify-between items-center gap-10'>
+        
        <TitlesContainer />
-       <div className='w-full h-full relative'>
+       <div className='w-full h-full relative hidden md:block'>
         <Image src={band} alt='sofa-band' width={400} height={500} className='h-full w-full object-cover' />
         <div className='absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-900/50 to-transparent w-1/3 h-full'></div>
         <div className='absolute inset-0 bg-gradient-to-l from-neutral-900 via-neutral-900/50 to-transparent w-1/3 h-full ml-auto'></div>
        </div>
+
       </div>
+
       <MusicList />
+
       <div className='flex flex-col md:flex-row gap-5 w-full'> 
         {/* @ts-ignore */}
         <ShowList events={sortedData} />

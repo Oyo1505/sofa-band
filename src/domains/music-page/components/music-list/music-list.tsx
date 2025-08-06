@@ -8,7 +8,7 @@ const MusicList = () => {
 
   return (
     <div className='flex flex-col gap-5 w-full'>  
-      <Title type='h2' text={t('ourMusic')} className='text-2xl text-amber-50' />
+      <Title type='h2' text={t('ourMusic')} className='text-3xl text-amber-50 font-bold' />
       <AlbumList />
     </div>
   )

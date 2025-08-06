@@ -41,22 +41,22 @@ const PlayerSong = ({index, image, album, sound, track, label, releaseYear, hand
           />
 
         <div>
-          <h2 className='text-white text-sm font-bold'>{track}</h2>
+          <h2 className='text-white  font-bold'>{track}</h2>
           <Text 
                   type="p" 
-                  className="font-medium text-xs md:text-sm text-white truncate flex-1"
+                  className="font-medium text-xs md:text-sm text-neutral-400 truncate flex-1"
                 >
                 {t('EP')}: {album}
           </Text>
           <Text 
                   type="p" 
-                  className="font-medium text-xs md:text-sm text-white truncate flex-1"
+                  className="font-medium text-xs md:text-sm text-neutral-400 truncate flex-1"
                 >
                 {t('Label')}: {label}
           </Text>
           <Text 
                   type="p" 
-                  className="font-medium text-xs md:text-sm text-white truncate flex-1"
+                  className="font-medium text-xs md:text-sm text-neutral-400 truncate flex-1"
                 >
                 {t('Date')}: {releaseYear}
           </Text>
