@@ -32,6 +32,7 @@ export default async function Home({ params }: { params: any }) {
       </div>
       <MusicList />
       <div className='flex flex-col md:flex-row gap-5 w-full'> 
+        {/* @ts-ignore */}
         <ShowList events={sortedData} />
         <LiveList />
       </div>
