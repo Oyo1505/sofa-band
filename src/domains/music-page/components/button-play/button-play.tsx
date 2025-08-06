@@ -15,7 +15,6 @@ const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSo
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    // Si une autre chanson est jouée, on arrête la chanson actuelle
     if (currentSong !== songUrl) {
       setIsPlaying(false);
     } else {
@@ -29,20 +28,20 @@ const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSo
         onClick={() => {
           setIsPlaying(false);
           handlePlay(false);
-          setCurrentSong(undefined); // Arrête la chanson actuelle
+          setCurrentSong(undefined); 
         }} 
-        className='ml-2 size-5' 
+        className='ml-2 size-10' 
       />
     ) : (
       <Play 
         onClick={() => {
           if (currentSong !== songUrl) {
-            setCurrentSong(songUrl);  // Met à jour la nouvelle chanson
+            setCurrentSong(songUrl);  
           }
           setIsPlaying(true);
-          handlePlay(true);  // Lance la lecture
+          handlePlay(true);  
         }}  
-        className='ml-2 size-5' 
+        className='ml-2 size-10' 
       />
     )
   );

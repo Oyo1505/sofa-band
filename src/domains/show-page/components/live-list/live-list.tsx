@@ -7,6 +7,7 @@ import { Live } from '@/models/lives/live';
 import Loading from '@/app/[locale]/(main)/loading';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import Title from '@/domains/ui/components/title/title';
 
 export const revalidate = 60
 
@@ -15,11 +16,12 @@ const LiveList = () => {
   const [idPlaylist, setIdPlaylist] = useState(null)
   const channelId = 'UC8xzsABKxgXbJYLhxTn8GpQ'
   const t = useTranslations('LivePage');
-
+ 
    useQuery({
     queryKey: ['youtube-channel', channelId],
     queryFn: async () => {
-      const idPlaylistUpload = await getVideosChannelYoutube()
+      const idPlaylistUpload = await getVideosChannelYoutube();
+      console.log(idPlaylistUpload)
       setIdPlaylist(idPlaylistUpload)
       return idPlaylistUpload
     },
@@ -59,18 +61,18 @@ const LiveList = () => {
       }
     }
   };
+  
   return (
-    <Suspense fallback={<Loading />}>
-    <motion.div className='grid sm:grid-cols-3 w-full gap-6'
-      variants={container}
-      initial="hidden"
-      animate="visible"
-    >
-      {livesSorted && livesSorted?.length > 0 ? livesSorted.map((item, index) =>
-        <LiveItem key={`${item.resourceId.videoId}-${index}`} title={item.title} date={item.publishedAt} videoId={item.resourceId.videoId}  />
-      ) : <p>{t('NoVideo')}</p>}
-    </motion.div>
+    <div className='flex flex-col gap-5 w-full'>
+    <Title type='h2' text={t('title')} className='text-2xl' />
+      <Suspense fallback={<Loading />}>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 w-full gap-4'>
+        {livesSorted && livesSorted?.length > 0 ? livesSorted.map((item, index) =>
+          <LiveItem key={`${item.resourceId.videoId}-${index}`} title={item.title} date={item.publishedAt} videoId={item.resourceId.videoId}  />
+        ) : <p>{t('NoVideo')}</p>}
+      </div>
     </Suspense>
+    </div>
   )
 }
 

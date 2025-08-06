@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation';
 import { SessionProvider } from "next-auth/react"
 import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
 import { auth } from '@/lib/auth';
-import ParallaxBackground from '@/domains/ui/components/parallax-background/parallax-background';
+import Footer from '@/domains/layout/components/footer/footer';
 
 const rock = RocknRoll_One({
   weight: '400',
@@ -34,16 +34,16 @@ export default async function LocaleLayout({
   const session = await auth()
   return (
     <html lang={locale}>
-      <body className={cn(rock.className)}>
+      <body className={cn(rock.className, 'bg-neutral-900')}>
         <SessionProvider session={session}>
           <div className='relative'>
             <LayoutLogic>
               <NextIntlClientProvider messages={messages}>
                 <Header locale={locale} />
                 {children}
+                <Footer />
               </NextIntlClientProvider>
             </LayoutLogic>
-            <ParallaxBackground />
           </div>
         </SessionProvider >
       </body>

@@ -34,27 +34,35 @@
   "HomePage": {
     "title":"こんにちは",
     "about": "について",
-    "desc" : "私たちは大阪出身で、ここにパーティーしに来ました。"
+    "desc" : "ロック / レガエ / ポップ バンド 大阪出身"
   },
   "AboutPage": {
     "title":"について"
   },
   "MusicPage" : {
-    "ourMusic" : "私たちの音楽",
-    "whereToBuy" : "購入場所",
-    "whereToListen" : "どこで聴くか",
+    "ourMusic" : "聴く",
     "Label": "ラベル",
     "Ref": "参照",
-    "Date":"日付"
+    "Date":"日付",
+    "EP":"EP"
   },
   "LivePage": {
-    "NoVideo": "利用可能な動画がありません"
+    "NoVideo": "利用可能な動画がありません",
+    "title": "動画"
   },
   "ShowPage": {
-    "event": "イベント"
+    "tour": "ツアー",
+    "event": "イベント",
+    "futureEvents": "未来のイベント",
+    "pastEvents": "過去のイベント",
+    "noEvents": "イベントが見つかりません"
    },
    "MenuAside": {
      "Dashboard": "ダッシュボード",
      "Events": "イベント"
+    },
+    "Footer": {
+      "whereToBuy" : "購入場所",
+      "whereToListen" : "どこで聴くか"
     }
 }
