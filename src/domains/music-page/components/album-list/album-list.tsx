@@ -1,6 +1,5 @@
 'use client'
 import React, { Suspense, useState } from 'react'
-import AlbumItem from '../player-song/album-item'
 import { StaticImageData } from 'next/image';
 import AudioComponent from '../audio/audio';
 import Loading from '@/app/[locale]/(main)/loading';
@@ -11,6 +10,7 @@ import caseof from '../../../../public/audio/caseof.mp3';
 import lalalie from '../../../../public/image/lalalie.webp'
 import ifyou from '../../../../public/image/if.png'
 import PlayerSong from '../player-song/album-item';
+
 interface Song {
   track: string;
   sound: string;
