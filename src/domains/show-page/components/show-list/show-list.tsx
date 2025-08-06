@@ -12,7 +12,7 @@ const ShowList = ({events}: {events: Event[]}) => {
   const today = new Date().toISOString()
   const t = useTranslations('ShowPage')
   const isFutureShow = events.filter((event: Event) => event.date > today)
-  const isPastShow = events.filter((event: Event) => event.date < today)
+  const isPastShow = events.filter((event: Event) => event.date < today).slice(0, 3);
   return (
     <div className='rounded-2xl w-full flex flex-col gap-5'>
     <ShowTitle />
@@ -25,25 +25,17 @@ const ShowList = ({events}: {events: Event[]}) => {
   
     </div>
     </>
-    ) : (
-     
-        <Text type='p' className="text-sm">No events found</Text>
-  
-    )}
+    ) : (<Text type='p'>{t('noEvents')}</Text>)}
     {isPastShow.length > 0 ? (
       <>
-        <Title type='h2' text={t('pastEvents')} className='text-2xl text-amber-50' />
+        <Title type='h2' text={t('pastEvents')} className='text-xl text-amber-50 font-bold' />
         <div className='rounded-md shadow-sm bg-amber-50 p-5'>
           {isPastShow?.map((event: Event, index: number) => (
             <ShowItem key={index} event={event}  />
           ))}
         </div>
       </>
-    ) : (
-  
-        <Text type='p' className="text-sm">No events found</Text>
-  
-    )}
+    ) : (<Text type='p'>{t('noEvents')}</Text>)}
     </div>
   )
 }

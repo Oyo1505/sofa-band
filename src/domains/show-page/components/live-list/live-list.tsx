@@ -61,13 +61,13 @@ const LiveList = () => {
       }
     }
   };
-  
+  const livesSortedAndSliced = livesSorted?.length > 3 ? livesSorted.slice(0, 2) : livesSorted
   return (
     <div className='flex flex-col gap-5 w-full'>
-    <Title type='h2' text={t('title')} className='text-2xl' />
+    <Title type='h2' text={t('title')} className='text-3xl font-bold' />
       <Suspense fallback={<Loading />}>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 w-full gap-4'>
-        {livesSorted && livesSorted?.length > 0 ? livesSorted.map((item, index) =>
+      <div className='grid grid-cols-1 w-full gap-4'>
+        {livesSortedAndSliced && livesSortedAndSliced?.length > 0 ? livesSortedAndSliced.map((item, index) =>
           <LiveItem key={`${item.resourceId.videoId}-${index}`} title={item.title} date={item.publishedAt} videoId={item.resourceId.videoId}  />
         ) : <p>{t('NoVideo')}</p>}
       </div>

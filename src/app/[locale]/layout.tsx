@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import "../globals.css"
-import { RocknRoll_One } from 'next/font/google'
+import { Lato, Kite_One, Raleway, Ubuntu } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
 import { cn } from '@/lib/utils';
 import { routing } from '@/i18n/routing';
@@ -11,7 +11,7 @@ import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
 import { auth } from '@/lib/auth';
 import Footer from '@/domains/layout/components/footer/footer';
 
-const rock = RocknRoll_One({
+const rock = Ubuntu({
   weight: '400',
   style: 'normal',
   display: 'swap',
@@ -34,7 +34,7 @@ export default async function LocaleLayout({
   const session = await auth()
   return (
     <html lang={locale}>
-      <body className={cn(rock.className, 'bg-neutral-900')}>
+      <body className={cn( rock.className, 'bg-neutral-900')}>
         <SessionProvider session={session}>
           <div className='relative'>
             <LayoutLogic>
