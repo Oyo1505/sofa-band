@@ -2,9 +2,6 @@
 
 @theme {
   --font-*: initial;
-  --font-shippori: Shippori Antique B1, sans-serif;
-  --font-rock: RocknRoll One, sans-serif;
-  --font-staatliches: Staatliches, sans-serif;
   --animate-patate: patate 4s ease-in-out infinite;
   --animate-patate-inverse: patateInverse 3s ease-in-out infinite;
 

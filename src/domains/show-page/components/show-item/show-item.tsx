@@ -22,7 +22,7 @@ const ShowItem = ({ event }: Props) => {
   const locale = useLocale();
 
   return (
-    <div className="flex items-center justify-between font-shippori text-neutral-900 border-b-2 last:border-b-0 border-gray-300 w-full py-3 gap-4">
+    <div className="flex items-center justify-between  text-neutral-900 border-b-2 last:border-b-0 border-gray-300 w-full py-3 gap-4">
       {/* Date Column */}
       <div className="flex flex-col items-center justify-start min-w-[60px]">
         <Text type="p" className="text-sm text-left w-full">{moment(date).format('DD')}</Text>

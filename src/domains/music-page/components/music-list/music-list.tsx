@@ -9,7 +9,7 @@ const MusicList = () => {
 
   return (
     <AnimatedSectionHomePage duration={0.2} className='flex flex-col gap-5 w-full' amount={0.4}>
-      <Title type='h2' text={t('ourMusic')} className='text-3xl text-amber-50 font-bold' />
+      <Title type='h2' text={t('ourMusic')} className='text-3xl text-foreground font-bold' />
       <AlbumList />
     </AnimatedSectionHomePage>
   )

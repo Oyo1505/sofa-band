@@ -10,8 +10,8 @@ const TitlesContainer = () => {
   const t = useTranslations('HomePage');
   return (
       <div className={cn('flex flex-col gap-2 items-start justify-start ', mulish.className)}>
-          <AnimatedWord word='SOFA' delay={0.05} className='text-8xl font-bold' />
-          <AnimatedWord word='ROCKERS' delay={0.2} className='text-8xl font-bold' />
+          <AnimatedWord word='SOFA' delay={0.05} className='md:text-8xl text-6xl font-bold' />
+          <AnimatedWord word='ROCKERS' delay={0.2} className='md:text-8xl text-6xl font-bold' />
           <AnimatedWord word={t('desc')} delay={0.5} duration={0.5} className='text-2xl' onlyOpacity={true} />
       </div>
   )

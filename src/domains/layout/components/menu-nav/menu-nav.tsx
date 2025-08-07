@@ -24,9 +24,9 @@ const MenuNav = ({ locale }: { locale: string }) => {
       <div className='flex gap-4 items-center'>
         <ButtonLogin />
         {session.status === 'authenticated' && <Link href={URL_DASHBOARD} >{t('Dashboard')}</Link>}
-        <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
-        <a target="_blank" href="https://www.discogs.com/fr/artist/14308751-Sofa-Rockers"><DiscogsIcon /></a>
-        <a target="_blank" href="http://cornerstone.shop-pro.jp/?pid=176992470"><Spotify /></a>
+        <a target="_blank" aria-label='instagram'   href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
+        <a target="_blank" aria-label='discogs' href="https://www.discogs.com/fr/artist/14308751-Sofa-Rockers"><DiscogsIcon /></a>
+        <a target="_blank" aria-label='spotify' href="http://cornerstone.shop-pro.jp/?pid=176992470"><Spotify /></a>
         <ButtonSwitchLangage locale={locale} />
       </div>
     </div>

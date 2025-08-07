@@ -24,7 +24,7 @@ export default async function Home({ params }: { params: any }) {
   const events = await getData();
   const sortedData: EventData[] = events.sort((a, b) => moment(b.date).diff(moment(a.date)))
   return (
-    <div className=" flex flex-col gap-30 items-start justify-start w-full">
+    <div className=" flex flex-col md:gap-30 gap-10  items-start justify-start w-full">
       <section className='w-full h-96 flex n items-center gap-10'> 
        <TitlesContainer />
        <ImageHero />
