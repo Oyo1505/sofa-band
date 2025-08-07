@@ -25,6 +25,7 @@ const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSo
   return (
     isPlaying ? (
       <Pause 
+        aria-label='pause song'
         onClick={() => {
           setIsPlaying(false);
           handlePlay(false);
@@ -34,6 +35,7 @@ const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSo
       />
     ) : (
       <Play 
+        aria-label='play song'
         onClick={() => {
           if (currentSong !== songUrl) {
             setCurrentSong(songUrl);  

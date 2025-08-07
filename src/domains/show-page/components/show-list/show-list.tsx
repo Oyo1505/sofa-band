@@ -18,7 +18,7 @@ const ShowList = ({events}: {events: EventData[]}) => {
     <ShowTitle />
     {isFutureShow.length > 0 ? (
       <>
-    <div className='rounded-md shadow-sm bg-amber-50 p-5'>
+    <div className='rounded-md shadow-sm bg-foreground p-5'>
       {isFutureShow?.map((event: EventData, index: number) => (
           <ShowItem key={index} event={event}  />
       ))}
@@ -28,8 +28,8 @@ const ShowList = ({events}: {events: EventData[]}) => {
     ) : (<Text type='p'>{t('noEvents')}</Text>)}
     {isPastShow.length > 0 ? (
       <>
-        <Title type='h2' text={t('pastEvents')} className='text-xl text-amber-50 font-bold' />
-        <div className='rounded-md shadow-sm bg-amber-50 p-5'>
+        <Title type='h2' text={t('pastEvents')} className='text-xl text-foreground font-bold' />
+        <div className='rounded-md shadow-sm bg-foreground p-5'>
           {isPastShow?.map((event: EventData, index: number) => (
             <ShowItem key={index} event={event}  />
           ))}

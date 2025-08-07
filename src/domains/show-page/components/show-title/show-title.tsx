@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 const ShowTitle = () => { 
   const t = useTranslations('ShowPage');
   return (
-    <Title type='h2' text={t('tour')} className='text-3xl text-amber-50 font-bold' />
+    <Title type='h2' text={t('tour')} className='text-3xl text-foreground font-bold' />
   )
 }
 

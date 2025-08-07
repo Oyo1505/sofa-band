@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 const LinksMusic = () => {
   const t = useTranslations('Footer');
   return (
-    <div className='flex flex-col md:flex-row gap-5 w-full my-10 justify-evenly items-start'>
+    <div className='flex flex-row gap-5 w-full my-10 justify-evenly items-start'>
     <div className='flex flex-col gap-2 items-start justify-center'>
       <Title type='h2' text={t('whereToListen')} className='text-2xl font-bold' />
       <a target='_blank' className='inline-flex gap-2 items-center mt-2' href='http://cornerstone.shop-pro.jp/?pid=176992470'>

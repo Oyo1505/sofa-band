@@ -1,4 +1,4 @@
-//@ts-nocheck
+
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import { animate, motion, useCycle } from 'framer-motion'
@@ -8,7 +8,8 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage';
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons';
-import { URL_HOME, URL_LIVE, URL_MUSIC, URL_SHOWS } from '@/lib/routes';
+import { URL_DASHBOARD, URL_HOME } from '@/lib/routes';
+import { useOutsideClick } from '../../hooks/use-ouside-click';
 
 const sidebar = {
   open: () => ({
@@ -40,22 +41,28 @@ const variantsLi = {
 const ItemMenu = ({ item, link, onClick, lang, locale }: { item?: string, link?: string, onClick: () => void, lang?: boolean, locale?: string }) => {
 
   return (
-    <motion.li
-      initial={{ opacity: 0 }}
-      onClick={onClick}
-      className='text-black pt-1 pb-2 '
-      variants={variantsLi}
-    >
+    <li className='text-black w-full font-bold' onClick={onClick}>
       {link && item && !lang ? <Link href={`${link}`}>{item}</Link> : locale && <ButtonSwitchLangage locale={locale} />}
-    </motion.li>
+    </li>
   )
 }
 
-const MenuMobile = ({ locale, router }: { locale: string }) => {
-  const [isOpen, toggleOpen] = useCycle(false, true);
+const MenuMobile = ({ locale }: { locale: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openMenu = () => setIsOpen(true);
+  const closeMenu = () => setIsOpen(false);
+  const toggleMenu = () => setIsOpen((prev) => !prev);
   const containerRef = useRef(null);
+  const menuRef = useRef(null);
   const { height } = useDimensions(containerRef);
   const t = useTranslations('Header');
+  
+  useOutsideClick(menuRef, () => {
+    if (isOpen) {
+      closeMenu();
+    }
+  });
 
   const variantsContainer = {
     open: {
@@ -67,60 +74,52 @@ const MenuMobile = ({ locale, router }: { locale: string }) => {
     {
       link: URL_HOME,
       item: t('Home')
+    },
+    {
+      link: URL_DASHBOARD,
+      item: t('Dashboard')
     }
   ];
 
   return (
     <>
-
       <motion.nav
-        className='md:hidden font-shippori fixed top-0 left-0 w-52 z-20'
+        className='md:hidden fixed top-0 left-0 w-52 z-20'
         animate={isOpen ? "open" : "closed"}
         custom={height}
         ref={containerRef}
       >
-        <motion.div initial='hidden' animate='visible' className={`absolute top-0 ${isOpen ? 'block' : 'hidden'} -left-(350px) w-80 bg-foreground h-screen`} variants={sidebar} />
-        <motion.ul className={`${isOpen ? 'block' : 'hidden'} p-25 relative top-24 w-56 left-4 flex flex-col gap-2`} variants={variantsContainer}>
-          {links && links?.map(({ link, item }) => <ItemMenu onClick={toggleOpen} key={link} item={item} link={link} />)}
-          <ItemMenu lang={true} locale={locale} />
-          <div className='flex items-center gap-2'>
-            <motion.li
-              onClick={toggleOpen}
-              className='text-black flex items-center gap-2'
-              variants={variantsLi}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
-
-            </motion.li>
-            <motion.li
-              initial={{ opacity: 0 }}
-              onClick={toggleOpen}
-              className='text-black flex items-center gap-2'
-              variants={variantsLi}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <a target="_blank" href="https://www.discogs.com/fr/artist/14308751-Sofa-Rockers"><DiscogsIcon /></a>
-            </motion.li>
-            <motion.li
-              initial={{ opacity: 0 }}
-              onClick={toggleOpen}
-              className='text-black flex items-center gap-2'
-              variants={variantsLi}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <a target="_blank" href="http://cornerstone.shop-pro.jp/?pid=176992470"><Spotify fillcolor='black' /></a>
-            </motion.li>
-          </div>
-        </motion.ul>
-        <MenuToggle toggle={() => toggleOpen()} />
+        <div ref={menuRef}>
+          <motion.div 
+            initial='hidden' 
+            animate='visible' 
+            className={`absolute top-0 ${isOpen ? 'block' : 'hidden'} -left-(350px) w-80 bg-foreground font-bold h-screen`} 
+            variants={sidebar} 
+          />
+          <motion.ul  
+            className={`${isOpen ? 'block' : 'hidden'} p-25 relative top-24 w-80 left-4 flex flex-col gap-2`} 
+            variants={variantsContainer}
+          >
+            {links && links?.map(({ link, item }) => (
+              <ItemMenu key={link} item={item} link={link} onClick={() => toggleMenu()} />
+            ))}
+            <ItemMenu lang={true} locale={locale} onClick={() => toggleMenu()} />
+            <div className='flex items-center gap-2'>
+              <li className='text-black flex items-center gap-2'>
+                <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>
+              </li>
+              <li className='text-black flex items-center gap-2'>
+                <a target="_blank" href="https://www.discogs.com/fr/artist/14308751-Sofa-Rockers"><DiscogsIcon /></a>
+              </li>
+              <li className='text-black flex items-center gap-2'>
+                <a target="_blank" href="http://cornerstone.shop-pro.jp/?pid=176992470"><Spotify fillcolor='black' /></a>
+              </li>
+            </div>
+          </motion.ul>
+        </div>
+        {!isOpen && <MenuToggle toggle={toggleMenu} />}
       </motion.nav>
-
     </>
-
   )
 }
 

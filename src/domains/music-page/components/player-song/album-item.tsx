@@ -28,8 +28,8 @@ const PlayerSong = ({index, image, album, sound, track, label, releaseYear, hand
   const t = useTranslations('MusicPage');
   return (
     <>
-      <div className="flex flex-col justify-between md:flex-row  bg-neutral-800 rounded-md w-full p-5">
-        <div className='flex items-center gap-5'>
+      <div className="flex flex-col justify-between md:flex-row  bg-neutral-800 rounded-md w-full p-5  truncate">
+        <div className='flex items-center gap-5 truncate'>
           <Image
             src={image}
             quality={100}
@@ -41,10 +41,10 @@ const PlayerSong = ({index, image, album, sound, track, label, releaseYear, hand
           />
 
         <div>
-          <h2 className='text-white  font-bold'>{track}</h2>
+          <h2 className='text-white  font-bold text-ellipsis'>{track}</h2>
           <Text 
                   type="p" 
-                  className="font-medium text-xs md:text-sm text-neutral-400 truncate flex-1"
+                  className="font-medium text-xs md:text-sm text-neutral-400 text-ellipsis flex-1 overflow-hidden"
                 >
                 {t('EP')}: {album}
           </Text>
@@ -64,7 +64,7 @@ const PlayerSong = ({index, image, album, sound, track, label, releaseYear, hand
         </div>
           <div className=' flex items-center justify-center '> 
                 <div className='flex items-center gap-2'>
-                  <button className='text-white' onClick={() => setCurrentSong(prevSong)}><Prev /></button>
+                  <button aria-label='previous song'  className='text-white' onClick={() => setCurrentSong(prevSong)}><Prev /></button>
                   <ButtonPlay
                     handlePlay={(newPlay) => {
                       if (newPlay) {
@@ -77,7 +77,7 @@ const PlayerSong = ({index, image, album, sound, track, label, releaseYear, hand
                     setCurrentSong={setCurrentSong}
                     currentSong={currentSong}
                   />
-                  <button className='text-white' onClick={() => setCurrentSong(nextSong)}><Next /></button>
+                  <button aria-label='next song' className='text-white' onClick={() => setCurrentSong(nextSong)}><Next /></button>
                 </div>
             
           </div>
