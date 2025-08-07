@@ -14,6 +14,9 @@ const AnimatedSectionHomePage = ({ children, delay = 0.1, duration = 0.3, classN
       transition: {
         staggerChildren: 0.1,
         delayChildren: delay,
+        duration: duration,
+        ease: "easeOut" as const,
+ 
       }
     },
   };
