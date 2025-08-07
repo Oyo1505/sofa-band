@@ -8,13 +8,13 @@ import {motion} from 'framer-motion'
 import ButtonEvent from '../button-event/button-event'
 import { hours } from '@/shared/constants/hours'
 import moment from 'moment'
-import { Event } from '@/models/show/show'
+import { EventData } from '@/models/show/show'
 
 interface Props {
-  event: Event
+  event: EventData
 } 
 
-const ShowItem = ({ event,  }: Props) => {
+const ShowItem = ({ event }: Props) => {
 
   const { title, location, date, city, region, cityInJpn } = event;
 

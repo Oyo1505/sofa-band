@@ -6,9 +6,12 @@ import MusicList from "@/domains/music-page/components/music-list/music-list";
 import { getEvents } from "@/domains/dashboard/action";
 import ShowList from "@/domains/show-page/components/show-list/show-list";
 import moment from "moment";
-import Image from "next/image";
-import band from '@/public/image/front_band.jpg'
+import ImageHero from "@/domains/home-page/components/image-hero/image-heo";
+import AnimatedSectionHomePage from "@/domains/ui/components/animated-section_home-page/animated-section_home-page";
+import { EventData } from "@/models/show/show";
+
 const revalidate = 60;
+
 
 const getData = async () => {
   const { events } = await getEvents()
@@ -19,28 +22,21 @@ export default async function Home({ params }: { params: any }) {
   const { locale } = await params
   setRequestLocale(locale);
   const events = await getData();
-  const sortedData = events.sort((a, b) => moment(b.date).diff(moment(a.date)))
+  const sortedData: EventData[] = events.sort((a, b) => moment(b.date).diff(moment(a.date)))
   return (
     <div className=" flex flex-col gap-30 items-start justify-start w-full">
-      <div className='w-full h-96 flex justify-between items-center gap-10'>
-        
+      <section className='w-full h-96 flex n items-center gap-10'> 
        <TitlesContainer />
-       <div className='w-full h-full relative hidden md:block'>
-        <Image src={band} alt='sofa-band' width={400} height={500} className='h-full w-full object-cover' />
-        <div className='absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-900/50 to-transparent w-1/3 h-full'></div>
-        <div className='absolute inset-0 bg-gradient-to-l from-neutral-900 via-neutral-900/50 to-transparent w-1/3 h-full ml-auto'></div>
-       </div>
-
-      </div>
+       <ImageHero />
+      </section>
 
       <MusicList />
 
-      <div className='flex flex-col md:flex-row gap-5 w-full'> 
-        {/* @ts-ignore */}
+      <AnimatedSectionHomePage className='flex flex-col md:flex-row gap-5 w-full'> 
+        
         <ShowList events={sortedData} />
         <LiveList />
-      </div>
-       
+      </AnimatedSectionHomePage>
     </div>
   );
 }

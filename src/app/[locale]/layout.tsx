@@ -11,7 +11,7 @@ import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
 import { auth } from '@/lib/auth';
 import Footer from '@/domains/layout/components/footer/footer';
 
-const rock = Ubuntu({
+const ubuntu = Ubuntu({
   weight: '400',
   style: 'normal',
   display: 'swap',
@@ -34,7 +34,7 @@ export default async function LocaleLayout({
   const session = await auth()
   return (
     <html lang={locale}>
-      <body className={cn( rock.className, 'bg-neutral-900')}>
+      <body className={cn( ubuntu.className, 'bg-neutral-900')}>
         <SessionProvider session={session}>
           <div className='relative'>
             <LayoutLogic>

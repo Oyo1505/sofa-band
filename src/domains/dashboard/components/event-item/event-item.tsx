@@ -1,12 +1,12 @@
 
 'use client'
 import { Link } from '@/i18n/routing'
-import { Event } from '@/shared/models/event'
 import React from 'react'
 import { hours } from '@/shared/constants/hours'
 import { useLocale, useTranslations } from 'next-intl'
+import { EventData } from '@/models/show/show'
 
-const EventItem = ({ event, deleteEvent }: { event: Event, deleteEvent: (id: string) => void }) => {
+const EventItem = ({ event, deleteEvent }: { event: EventData, deleteEvent: (id: string) => void }) => {
   const time = hours[0].time_slots.filter(h => h.id === event.time)[0]
   const locale = useLocale()
   const t = useTranslations('EventPage')

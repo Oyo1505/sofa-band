@@ -7,19 +7,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import SelectInput from '@/domains/ui/components/select/select';
 import { useLocale, useTranslations } from 'next-intl';
 import { hours } from '@/shared/constants/hours';
-import { Event } from '@/shared/models/event';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { EventData } from '@/models/show/show';
 
 interface FormEventProps {
-  addEvent?: ({ event, user }: { event: Event, user: any }) => Promise<number> | undefined;
-  editEvent?: ({ event }: { event: Event | undefined }) => void;
-  event?: Event | undefined;
+  addEvent?: ({ event, user }: { event: EventData, user: any }) => Promise<number> | undefined;
+  editEvent?: ({ event }: { event: EventData | undefined }) => void;
+  event?: EventData | undefined;
 }
 
 const FormEvent = ({ addEvent, editEvent, event }: FormEventProps) => {
   const locale = useLocale();
-  const [eventData, setEvent] = React.useState<Event | undefined>(event ?? undefined)
+  const [eventData, setEvent] = React.useState<EventData | undefined>(event ?? undefined)
   const session = useSession();
   const t = useTranslations('EventPage')
   const user = session?.data?.user
