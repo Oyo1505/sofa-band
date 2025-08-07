@@ -45,6 +45,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   const displayTextArray = displayText.split('');
 
   return (
+    <div>
     <span className={`inline-block overflow-hidden ${className}`}>
       {!inverse && displayTextArray.map((letter, index) => (
         <motion.span
@@ -56,7 +57,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
           className="inline-block"
           style={{
             display: letter === ' ' ? 'inline-block' : 'inline-block',
-            width: letter === ' ' ? '0.3em' : 'auto'
+     
           }}
         >
           {letter}
@@ -73,7 +74,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
             className="inline-block"
             style={{
               display: letter === ' ' ? 'inline-block' : 'inline-block',
-              width: letter === ' ' ? '0.3em' : 'auto'
+       
             }}
           >
             {letter}
@@ -81,6 +82,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
         ))
       }
     </span>
+    </div>
   );
 };
 

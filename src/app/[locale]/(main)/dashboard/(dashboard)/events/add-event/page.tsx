@@ -1,10 +1,11 @@
 import { addEvent } from '@/domains/dashboard/action'
 import FormEvent from '@/domains/dashboard/components/form-event/form-event'
-import { Event } from '@/shared/models/event'
+import { EventData } from '@/models/show/show'
+import { User } from 'next-auth'
 import React from 'react'
 
 const Page = () => {
-  const addEventAction = async ({ event, user }: { event: Event, user: any }): Promise<number> => {
+  const addEventAction = async ({ event, user }: { event: EventData, user: User }): Promise<number> => {
     'use server'
     const { status } = await addEvent({ event, user })
     return status

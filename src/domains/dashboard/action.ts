@@ -1,6 +1,7 @@
 
 import prisma from "@/lib/db";
-import { Event } from "@/shared/models/event";
+import { EventData } from "@/models/show/show";
+
 import { revalidatePath } from "next/cache";
 
 export const getEvents = async () => {
@@ -25,7 +26,7 @@ export const getEventById = (id: string) => {
   }
 }
 
-export const addEvent = async ({ event, user }: { event: Event, user: any }): Promise<{ event: Event | null, status: number }> => {
+export const addEvent = async ({ event, user }: { event: EventData, user: any }): Promise<{ event: EventData | null, status: number }> => {
 
   if (!event.title) {
     return { event: null, status: 400 }
@@ -53,7 +54,7 @@ export const addEvent = async ({ event, user }: { event: Event, user: any }): Pr
   }
 }
 
-export const editEventToDb = async ({ event }: { event: Event }): Promise<{ event: Event | null, status: number }> => {
+export const editEventToDb = async ({ event }: { event: EventData }): Promise<{ event: EventData | null, status: number }> => {
 
   if (!event.id) {
     return { event: null, status: 400 }
