@@ -4,7 +4,7 @@ Une application web moderne pour gérer et présenter les événements musicaux 
 
 ## 📋 Démo 
 - **[Visit](https://sofa-band-vercel.app)**
-- 
+  
 ## 📋 Description
 
 Sofa Rockers est une plateforme web développée avec Next.js qui permet de :
