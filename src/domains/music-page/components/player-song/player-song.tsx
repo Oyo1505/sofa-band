@@ -8,7 +8,6 @@ import { useTranslations } from 'next-intl';
 import { Next, Prev } from '@/domains/ui/components/icons/icons';
 
 interface Props {
-  index: number,
   image: StaticImageData
   album: string,
   sound: string,
@@ -24,18 +23,18 @@ interface Props {
   prevSong: any;
 };
 
-const PlayerSong = ({index, image, album, sound, track, label, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong, nextSong, prevSong }: Props) => {
+const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong, nextSong, prevSong }: Props) => {
   const t = useTranslations('MusicPage');
   return (
     <>
-      <div className="flex flex-col justify-between md:flex-row  bg-neutral-800 rounded-md w-full p-5  truncate">
+      <div className="flex flex-col justify-between md:flex-row  bg-neutral-800 rounded-md w-full p-5  md:h-40 truncate">
         <div className='flex items-center gap-5 truncate'>
           <Image
             src={image}
             quality={100}
             priority
             alt={album}
-            className="w-20 h-20 object-cover"
+            className="w-24 h-24 md:w-30 md:h-30 rounded-sm object-cover"
             width={250}
             height={250}
           />

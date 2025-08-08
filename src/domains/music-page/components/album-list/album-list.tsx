@@ -9,7 +9,7 @@ import lala from '../../../../public/audio/la_la_la_lie.mp3';
 import caseof from '../../../../public/audio/caseof.mp3';
 import lalalie from '../../../../public/image/lalalie.webp'
 import ifyou from '../../../../public/image/if.png'
-import PlayerSong from '../player-song/album-item';
+import PlayerSong from '../player-song/player-song';
 
 interface Song {
   track: string;
@@ -82,9 +82,8 @@ const AlbumList = () => {
 
   return (
     <Suspense fallback={<Loading />}>
-    <div className="flex flex-col gap-5 w-full">
+    <div className="flex flex-col w-full">
         <PlayerSong
-          index={0}
           image={tracks[currentTrack].image}
           album={tracks[currentTrack].album}
           sound={tracks[currentTrack].sound}
@@ -96,7 +95,6 @@ const AlbumList = () => {
           nextSong={() => currentTrack < tracks.length - 1 ? setCurrentTrack(currentTrack + 1) : setCurrentTrack(0)}
           prevSong={() => currentTrack > 0 ? setCurrentTrack(currentTrack - 1) : setCurrentTrack(tracks.length - 1)}
           isPlaying={isPlaying}
-          
           currentSong={currentSong}
           setCurrentSong={setCurrentSong}
         />
