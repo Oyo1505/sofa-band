@@ -3,7 +3,7 @@
 Une application web moderne pour gérer et présenter les événements musicaux et lives d'un groupe de musique.
 
 ## 📋 Démo 
-- **[Visit](https://sofa-band-vercel.app)**
+- **[Visit](https://sofa-band.vercel.app)**
   
 ## 📋 Description
 
