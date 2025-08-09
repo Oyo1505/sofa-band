@@ -9,6 +9,8 @@ import moment from "moment";
 import ImageHero from "@/domains/home-page/components/image-hero/image-heo";
 import AnimatedSectionHomePage from "@/domains/ui/components/animated-section_home-page/animated-section_home-page";
 import { EventData } from "@/models/show/show";
+import { Suspense } from "react";
+import LoadingSpinner from "@/domains/ui/components/loading-spinner/loading-spinner";
 
 const revalidate = 60;
 
@@ -25,15 +27,19 @@ export default async function Home({ params }: { params: any }) {
   const sortedData: EventData[] = events.sort((a, b) => moment(b.date).diff(moment(a.date)))
   return (
     <div className=" flex flex-col md:gap-30 gap-10  items-start justify-start w-full">
+      <Suspense fallback={<LoadingSpinner />}>
       <section className='w-full h-96 flex n items-center gap-10'> 
        <TitlesContainer />
        <ImageHero />
       </section>
+      </Suspense>
       <MusicList />
+      <Suspense fallback={<LoadingSpinner />}>
       <AnimatedSectionHomePage className='flex flex-col md:flex-row gap-5 w-full'> 
         <ShowList events={sortedData} />
         <LiveList />
       </AnimatedSectionHomePage>
+      </Suspense>
     </div>
   );
 }

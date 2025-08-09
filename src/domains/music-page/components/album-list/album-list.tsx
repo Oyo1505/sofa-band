@@ -97,6 +97,7 @@ const AlbumList = () => {
           isPlaying={isPlaying}
           currentSong={currentSong}
           setCurrentSong={setCurrentSong}
+          setIsPlaying={setIsPlaying}
         />
       
         {currentSong && currentSong?.length > 0  && <AudioComponent handleCurrent={handleCurrent} isPlaying={isPlaying}  songUrl={currentSong} />} 

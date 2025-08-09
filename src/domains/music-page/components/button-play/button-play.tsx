@@ -1,26 +1,18 @@
 'use client'
 import { Pause, Play } from '@/domains/ui/components/icons/icons';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useCallback } from 'react'
 
 interface ButtonPlayProps {
-  handlePlay: (isPlaying: boolean) => any;
+  handlePlay: (isPlaying: boolean) => void;
   currentPlay: boolean;                  
   songUrl: string;                       
   setCurrentSong: Dispatch<SetStateAction<string | undefined>>; 
   currentSong?:string
+  isPlaying: boolean;
+  setIsPlaying: Dispatch<SetStateAction<boolean>>;
 }
 
-const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentPlay, currentSong} : ButtonPlayProps) => {
-
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  useEffect(() => {
-    if (currentSong !== songUrl) {
-      setIsPlaying(false);
-    } else {
-      setIsPlaying(currentPlay);
-    }
-  }, [currentPlay, currentSong, songUrl]);
+const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentSong, isPlaying, setIsPlaying } : ButtonPlayProps) => {
 
   return (
     isPlaying ? (
