@@ -1,7 +1,7 @@
 
 'use client'
 import Image, { StaticImageData } from 'next/image';
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import Text from '../../../ui/components/text/text';
 import ButtonPlay from '../button-play/button-play';
 import { useTranslations } from 'next-intl';
@@ -15,16 +15,23 @@ interface Props {
   reference: string,
   track: string,
   releaseYear: number
-  handlePlay: (songUrl: boolean) => void;
+  handlePlay: (isPlaying: boolean) => void;
   isPlaying: boolean,
   currentSong?: string;
   setCurrentSong: Dispatch<SetStateAction<string | undefined>>;
-  nextSong: any;
-  prevSong: any;
+  nextSong: () => void;
+  prevSong: () => void;
+  setIsPlaying: Dispatch<SetStateAction<boolean>>;
 };
 
-const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong, nextSong, prevSong }: Props) => {
+const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong, nextSong, prevSong, setIsPlaying }: Props) => {
   const t = useTranslations('MusicPage');
+  useEffect(() => {
+    if(isPlaying && currentSong !== sound) {
+      setCurrentSong(sound)
+    }
+  }, [currentSong, isPlaying, sound, setCurrentSong])
+
   return (
     <>
       <div className="flex flex-col justify-between md:flex-row  bg-neutral-800 rounded-md w-full p-5  md:h-40 truncate">
@@ -63,20 +70,17 @@ const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay
         </div>
           <div className=' flex items-center justify-center '> 
                 <div className='flex items-center gap-2'>
-                  <button aria-label='previous song'  className='text-white' onClick={() => setCurrentSong(prevSong)}><Prev /></button>
+                  <button aria-label='previous song'  className='text-white' onClick={prevSong}><Prev /></button>
                   <ButtonPlay
-                    handlePlay={(newPlay) => {
-                      if (newPlay) {
-                        setCurrentSong(sound);
-                      }
-                      handlePlay(newPlay);
-                    }}
+                    handlePlay={(newPlay) =>handlePlay(newPlay)}
                     currentPlay={currentSong === sound && isPlaying}
                     songUrl={sound}
                     setCurrentSong={setCurrentSong}
                     currentSong={currentSong}
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
                   />
-                  <button aria-label='next song' className='text-white' onClick={() => setCurrentSong(nextSong)}><Next /></button>
+                  <button aria-label='next song' className='text-white' onClick={nextSong}><Next /></button>
                 </div>
             
           </div>
