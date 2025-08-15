@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import React from 'react'
 
-const Page = async () => {
+const Page = () => {
   const t = useTranslations('EventPage')
   return (
     <div className='flex justify-end'>
