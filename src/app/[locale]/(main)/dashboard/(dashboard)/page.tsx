@@ -7,7 +7,7 @@ const Page = () => {
   const t = useTranslations('EventPage')
   return (
     <div className='flex justify-end'>
-     <Link className='border-2 border-black text-black pr-3 pl-3 pt-1 pb-1 rounded-md' href={{ pathname: '/dashboard/events/add-event' }}>{t('addEvent')}</Link>
+     <Link className='border-1 pr-3 pl-3 pt-1 pb-1 rounded-md' href={{ pathname: '/dashboard/events/add-event' }}>{t('addEvent')}</Link>
     </div>
   )
 }

@@ -23,14 +23,12 @@ const ShowItem = ({ event }: Props) => {
 
   return (
     <div className="flex items-center justify-between  text-neutral-900 border-b-2 last:border-b-0 border-gray-300 w-full py-3 gap-4">
-      {/* Date Column */}
       <div className="flex flex-col items-center justify-start min-w-[60px]">
         <Text type="p" className="text-sm text-left w-full">{moment(date).format('DD')}</Text>
         <Text type="p" className="text-md font-bold text-left w-full">{moment(date).format('MMM')}</Text>
         <Text type="p" className="text-md font-bold text-left w-full">{moment(date).format('YYYY')}</Text>
       </div>
-      
-      {/* Event Info Column */}
+
       <div className="flex-1">
         {title && (
           <div className="mb-1">
@@ -40,15 +38,11 @@ const ShowItem = ({ event }: Props) => {
         )}
         <Text type="p" className="text-sm">{timeSlot[locale]}</Text>
       </div>
-      
-      {/* Location Column */}
       <div className="flex flex-col items-end text-right">
         <Text type="span" className="text-sm">
           {locale === 'jp' && cityInJpn ? cityInJpn : city}, {region}
         </Text>
       </div>
-      
-      {/* Button Column */}
       <div className="flex items-center">
         <ButtonEvent link={event.infoLink} />
       </div>

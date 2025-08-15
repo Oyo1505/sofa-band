@@ -73,32 +73,32 @@ const FormEvent = ({ addEvent, editEvent, event }: FormEventProps) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(eventData && eventData.id ? onEditEvent : onCreateEvent)} className='flex w-full pl-4 pr-4 md:pr-0 md:pl-0 md:w-2/3  flex-col overflow-scroll gap-4'>
-        <Input label={`${t('Title')}*`} error={errors.title} className='w-full p-1 rounded-md' {...register('title')} />
+      <form name='form-event' onSubmit={handleSubmit(eventData && eventData.id ? onEditEvent : onCreateEvent)} className='flex w-full pl-4 pr-4 md:pr-0 md:pl-0 md:w-2/3 flex-col overflow-scroll gap-4'>
+        <Input label={`${t('Title')}*`} error={errors.title} className='w-full p-1 rounded-md bg-foreground text-black' {...register('title')} />
         {eventData && eventData.id && <Input type='hidden' {...register('id')} />}
-        <Input label={`${t('Location')}*`} error={errors.location} className='w-full p-1 rounded-md' {...register('location')} />
+        <Input label={`${t('Location')}*`} error={errors.location} className='w-full p-1 rounded-md bg-foreground text-black' {...register('location')} />
         <div className='flex flex-col gap-2 md:flex-row w-full'>
           <SelectInput
             optionsList={hours[0].time_slots}
             {...register('time')}
             label={`${t('Time')}*`}
             formData={event?.time}
-            className=' p-1 rounded-md bg-white'
+            className=' p-1 rounded-md bg-foreground text-black'
             formDataKey='time_slots'
             locale={locale as 'jp' | 'en'}
             onChange={handleHoursChange}
 
           />
-          <Input type='date' label={`${t('Date')}*`} error={errors.date} className='w-full p-1 rounded-md' {...register('date')} placeholder="Time event" />
+          <Input type='date' label={`${t('Date')}*`} error={errors.date} className='w-full p-1 rounded-md bg-foreground text-black' {...register('date')} placeholder="Time event" />
         </div>
         <div className='flex flex-col gap-2 md:flex-row w-full'>
-          <Input label={`${t('City')}*`} error={errors.city} className='w-full p-1 rounded-md' {...register('city')} />
-          <Input label={`${t('cityInJpn')}`} className='w-full p-1 rounded-md' {...register('cityInJpn')} />
-          <Input label={`${t('Region')}*`} error={errors.region} className='w-full p-1 rounded-md' {...register('region')} />
+          <Input label={`${t('City')}*`} error={errors.city} className='w-full p-1 rounded-md bg-foreground text-black ' {...register('city')} />
+          <Input label={`${t('cityInJpn')}`} className='w-full p-1 rounded-md bg-foreground text-black' {...register('cityInJpn')} />
+          <Input label={`${t('Region')}*`} error={errors.region} className='w-full p-1 rounded-md bg-foreground text-black' {...register('region')} />
         </div>
-        <Input type="text" label={`${t('InfoLink')}`} error={errors.infoLink} className='w-full p-1 rounded-md' {...register('infoLink')} placeholder="Info link event" />
+        <Input type="text" label={`${t('InfoLink')}`} error={errors.infoLink} className='w-full p-1 rounded-md bg-foreground text-black' {...register('infoLink')} placeholder="Info link event" />
         <div>*<span className='italic'>Required</span></div>
-        <button type="submit" className='w-full p-2 border-black hover:bg-black hover:text-foreground border-2 rounded-md bg-primary text-black'>{t('Submit')}</button>
+        <button type="submit" className='w-full p-2 border-foreground hover:bg-foreground hover:text-black border-2 rounded-md bg-primary text-foreground'>{t('Submit')}</button>
       </form>
     </>
   )

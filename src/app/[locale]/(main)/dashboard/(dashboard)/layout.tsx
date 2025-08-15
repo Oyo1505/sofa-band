@@ -12,7 +12,7 @@ const Layout = async ({ children, params }: { children: React.ReactNode, params:
     <>
       <div className='flex h-full justify-between gap-4 p-3 overflow-scroll text-black  rounded-lg pb-10'>
         <MenuAside />
-        <div className="grow overflow-scroll h-96 bg-foreground rounded-md p-3">
+        <div className="grow overflow-scroll min-h-96 bg-neutral-800 text-white rounded-md p-3">
           {children}
         </div>
       </div>
