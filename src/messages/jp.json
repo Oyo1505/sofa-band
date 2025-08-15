@@ -15,7 +15,7 @@
     "events": "イベント"
   },
   "EventPage": {
-    "Title":"イベント",
+    "title":"イベント",
     "addEvent": "イベントを追加",
     "deleteEvent": "イベントを削除",
     "editEvent": "イベントを編集",

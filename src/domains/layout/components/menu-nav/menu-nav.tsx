@@ -7,15 +7,15 @@ import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/ico
 import { Link } from '@/i18n/routing'
 import ButtonLogin from '../button-login/button-login'
 import { useSession } from 'next-auth/react'
-import { useSelectedLayoutSegment } from 'next/navigation'
+import { usePathname, useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/navigation'
 
 const MenuNav = ({ locale }: { locale: string }) => {
   const t = useTranslations('Header')
   const session = useSession();
-  const segments = useSelectedLayoutSegment()
-  const dashboard = segments === 'dashboard'
+  const segments = usePathname()
+  const dashboard = segments.includes('/dashboard')
   const auth = session.status === 'authenticated'
-
+ 
   return (
     <div className='flex justify-between items-center h-20'>
       <nav className='flex text-lg gap-9 items-center justify-start'>

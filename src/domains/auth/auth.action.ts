@@ -8,7 +8,7 @@ export const getAuthorizedEmails = async () => {
     if (!userauthorizedEmails) {
       return { status: 400 };
     }
-
+   
     return { mails: userauthorizedEmails, status: 200 }
   } catch (error) {
     console.log(error)
