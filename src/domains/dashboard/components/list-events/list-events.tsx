@@ -11,7 +11,7 @@ const ListEvents = ({ events }: { events: EventData[] }) => {
   }
 
   return (
-    <div>{events.map((event, index) => <EventItem key={index} event={event} deleteEvent={deleteEvent} />)}</div>
+    <div>{events.map((event, index) => <EventItem key={index} index={index} event={event} deleteEvent={deleteEvent} />)}</div>
   )
 }
 

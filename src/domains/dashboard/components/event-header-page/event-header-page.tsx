@@ -7,7 +7,7 @@ const EventHeaderPage = () => {
   const t = useTranslations('EventPage')
   return (
     <div className='flex justify-between mb-5 items-center'>
-      <Title text={t('Title')} textColor='text-2xl font-bold' />
+      <Title text={t('title')} textColor='text-2xl font-bold' />
       <Link className='border-2 border-black text-black pr-3 pl-3 pt-1 pb-1 rounded-md' href={{ pathname: '/dashboard/events/add-event' }}>{t('addEvent')}</Link>
     </div>
   )

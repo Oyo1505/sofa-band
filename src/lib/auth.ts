@@ -1,5 +1,4 @@
 
-import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import NextAuth, { User } from "next-auth";
@@ -7,8 +6,8 @@ import authConfig from "./auth.config";
 import { getAuthorizedEmails } from "@/domains/auth/auth.action";
 
 const prisma = new PrismaClient()
-const clientId = process.env.GOOGLE_ID
-const clientSecret = process.env.GOOGLE_SECRET
+const clientId = process.env.NEXT_PUBLIC_GOOGLE_ID
+const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_SECRET
 
 if (!clientId || !clientSecret) {
   throw new Error("Missing NEXT_PUBLIC_GOOGLE_ID or NEXT_PUBLIC_GOOGLE_SECRET")
@@ -33,7 +32,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       if (account) {
         // First login, save the `access_token`, `refresh_token`, and other
-        // details into the JWT
 
         const userProfile: User = {
           id: token?.sub || '',

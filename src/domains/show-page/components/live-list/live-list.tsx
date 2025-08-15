@@ -21,7 +21,7 @@ const LiveList = () => {
     queryKey: ['youtube-channel', channelId],
     queryFn: async () => {
       const idPlaylistUpload = await getVideosChannelYoutube();
-      console.log(idPlaylistUpload)
+     
       setIdPlaylist(idPlaylistUpload)
       return idPlaylistUpload
     },

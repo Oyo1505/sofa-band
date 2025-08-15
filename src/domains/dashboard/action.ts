@@ -94,7 +94,7 @@ export const deleteEventById = async (id: string) => {
         id
       }
     })
-    console.log(id)
+ 
     revalidatePath('/dashboard/events')
     return { status: 200 }
   } catch (err) {
