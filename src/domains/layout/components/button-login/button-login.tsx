@@ -12,11 +12,11 @@ const ButtonLogin = () => {
   return (
     <div>
       {session.status === 'unauthenticated' ? (
-        <button onClick={() => signIn('google', { callbackUrl: `/${locale}/${URL_DASHBOARD}` })}>
+        <button onClick={() => signIn('google', { callbackUrl: `/${locale}/${URL_DASHBOARD}` })} className='hover:cursor-pointer'>
           {t('Signin')}
         </button>
       ) :
-        <button onClick={() => signOut()}>
+        <button onClick={() => signOut()} className='hover:cursor-pointer'>
           {t('Signout')}
         </button>
       }
