@@ -32,7 +32,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       if (account) {
         // First login, save the `access_token`, `refresh_token`, and other
-        // details into the JWT
 
         const userProfile: User = {
           id: token?.sub || '',
