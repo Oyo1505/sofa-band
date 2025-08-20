@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import "../globals.css"
-import { Lato, Kite_One, Raleway, Ubuntu } from 'next/font/google'
+import { Ubuntu } from 'next/font/google'
 import Header from '@/domains/layout/components/header/header';
 import { cn } from '@/lib/utils';
 import { routing } from '@/i18n/routing';

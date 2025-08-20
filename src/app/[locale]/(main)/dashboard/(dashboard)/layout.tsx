@@ -1,7 +1,6 @@
 import MenuAside from '@/domains/dashboard/components/menu-aside/menu-aside'
 import { redirect } from '@/i18n/routing'
 import { auth } from '@/lib/auth'
-import { useLocale } from 'next-intl'
 import React from 'react'
 
 const Layout = async ({ children, params }: { children: React.ReactNode, params: any }) => {
