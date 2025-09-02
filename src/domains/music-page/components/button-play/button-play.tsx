@@ -1,6 +1,6 @@
 'use client'
 import { Pause, Play } from '@/domains/ui/components/icons/icons';
-import React, { Dispatch, SetStateAction, useCallback } from 'react'
+import { Dispatch, SetStateAction } from 'react';
 
 interface ButtonPlayProps {
   handlePlay: (isPlaying: boolean) => void;

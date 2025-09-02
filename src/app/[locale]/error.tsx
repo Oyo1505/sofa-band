@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useTranslations } from 'next-intl'
 import Container from '@/domains/ui/components/container/container'
+import { useTranslations } from 'next-intl'
+import { useEffect } from 'react'
 
 export default function Error({
   error,

@@ -1,5 +1,7 @@
 'use client'
 
+import { URL_HOME } from '@/lib/routes'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function GlobalError({
@@ -41,12 +43,12 @@ export default function GlobalError({
               >
                 Try again
               </button>
-              <button
-                onClick={() => window.location.href = '/'}
+              <Link
+                href={URL_HOME}
                 className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors"
               >
                 Go home
-              </button>
+              </Link>
             </div>
           </div>
         </div>
