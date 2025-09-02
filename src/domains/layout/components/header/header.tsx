@@ -1,10 +1,10 @@
 'use client'
-import Container from '@/domains/ui/components/container/container'
-import React, { Suspense, useRef } from 'react'
-import MenuNav from '../menu-nav/menu-nav'
+import Container from '@/domains/ui/components/container/container';
 import dynamic from 'next/dynamic';
-import useScrollPosition from '../../hooks/use-scroll-positon';
+import { Suspense, useRef } from 'react';
 import { useDimensions } from '../../hooks/use-dimensions';
+import useScrollPosition from '../../hooks/use-scroll-positon';
+import MenuNav from '../menu-nav/menu-nav';
 
 const MenuMobile = dynamic(() => import('../menu-mobile/menu-mobile'), { ssr: false });
 
