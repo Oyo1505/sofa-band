@@ -1,15 +1,14 @@
 
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
-import { animate, motion, useCycle } from 'framer-motion'
-import { MenuToggle } from '../button-toggle-menu/button-toggle-menu'
-import { useDimensions } from '../../hooks/use-dimensions';
-import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
-import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage';
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons';
+import { Link } from '@/i18n/routing';
 import { URL_DASHBOARD, URL_HOME } from '@/lib/routes';
+import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
+import { useRef, useState } from 'react';
+import { useDimensions } from '../../hooks/use-dimensions';
 import { useOutsideClick } from '../../hooks/use-ouside-click';
+import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage';
 
 const sidebar = {
   open: () => ({
@@ -117,7 +116,7 @@ const MenuMobile = ({ locale }: { locale: string }) => {
             </div>
           </motion.ul>
         </div>
-        {!isOpen && <MenuToggle toggle={toggleMenu} />}
+        {/* {!isOpen && <MenuToggle toggle={toggleMenu} />} */}
       </motion.nav>
     </>
   )

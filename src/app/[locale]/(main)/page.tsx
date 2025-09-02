@@ -1,16 +1,16 @@
-import { routing } from "@/i18n/routing";
-import { setRequestLocale } from 'next-intl/server';
-import TitlesContainer from "@/domains/home-page/components/titles-container/titles-container";
-import LiveList from "@/domains/show-page/components/live-list/live-list";
-import MusicList from "@/domains/music-page/components/music-list/music-list";
 import { getEvents } from "@/domains/dashboard/action";
-import ShowList from "@/domains/show-page/components/show-list/show-list";
-import moment from "moment";
 import ImageHero from "@/domains/home-page/components/image-hero/image-heo";
+import TitlesContainer from "@/domains/home-page/components/titles-container/titles-container";
+import MusicList from "@/domains/music-page/components/music-list/music-list";
+import LiveList from "@/domains/show-page/components/live-list/live-list";
+import ShowList from "@/domains/show-page/components/show-list/show-list";
 import AnimatedSectionHomePage from "@/domains/ui/components/animated-section_home-page/animated-section_home-page";
-import { EventData } from "@/models/show/show";
-import { Suspense } from "react";
 import LoadingSpinner from "@/domains/ui/components/loading-spinner/loading-spinner";
+import { routing } from "@/i18n/routing";
+import { EventData } from "@/models/show/show";
+import moment from "moment";
+import { setRequestLocale } from 'next-intl/server';
+import { Suspense } from "react";
 
 const revalidate = 60;
 

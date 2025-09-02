@@ -1,15 +1,16 @@
+import Footer from '@/domains/layout/components/footer/footer';
+import Header from '@/domains/layout/components/header/header';
+import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
+import ErrorBoundary from '@/domains/ui/components/error-boundary/error-boundary';
+import { routing } from '@/i18n/routing';
+import { auth } from '@/lib/auth';
+import { cn } from '@/lib/utils';
+import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import "../globals.css"
-import { Ubuntu } from 'next/font/google'
-import Header from '@/domains/layout/components/header/header';
-import { cn } from '@/lib/utils';
-import { routing } from '@/i18n/routing';
+import { Ubuntu } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { SessionProvider } from "next-auth/react"
-import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
-import { auth } from '@/lib/auth';
-import Footer from '@/domains/layout/components/footer/footer';
+import "../globals.css";
 
 const ubuntu = Ubuntu({
   weight: '400',
@@ -39,9 +40,11 @@ export default async function LocaleLayout({
           <div className='relative'>
             <LayoutLogic>
               <NextIntlClientProvider messages={messages}>
-                <Header locale={locale} />
-                {children}
-                <Footer />
+                <ErrorBoundary>
+                  <Header locale={locale} />
+                  {children}
+                  <Footer />
+                </ErrorBoundary>
               </NextIntlClientProvider>
             </LayoutLogic>
           </div>
