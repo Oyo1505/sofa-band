@@ -1,5 +1,4 @@
 'use client'
-import * as React from "react";
 import { motion, SVGMotionProps } from "framer-motion";
 
 const Path = (props: SVGMotionProps<SVGPathElement>) => (

@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useState, useCallback } from 'react'
 import { StaticImageData } from 'next/image';
 import AudioComponent from '../audio/audio';
 import Loading from '@/app/[locale]/(main)/loading';
@@ -72,13 +72,21 @@ const AlbumList = () => {
   const [currentTrack, setCurrentTrack] = useState(0);
   const [currentSong, setCurrentSong] = useState<string | undefined>(tracks[currentTrack].sound);
 
-  const handlePlay = (isPlaying:boolean) => {
+  const handlePlay = useCallback((isPlaying:boolean) => {
     setIsPlaying(isPlaying)
-  };
+  }, []);
  
-  const handleCurrent = () => {
+  const handleCurrent = useCallback(() => {
     setIsPlaying(false)
-  };
+  }, []);
+
+  const nextSong = useCallback(() => {
+    setCurrentTrack(prev => prev < tracks.length - 1 ? prev + 1 : 0);
+  }, []);
+
+  const prevSong = useCallback(() => {
+    setCurrentTrack(prev => prev > 0 ? prev - 1 : tracks.length - 1);
+  }, []);
 
   return (
     <Suspense fallback={<Loading />}>
@@ -92,8 +100,8 @@ const AlbumList = () => {
           track={tracks[currentTrack].track}
           releaseYear={tracks[currentTrack].releaseYear}
           handlePlay={handlePlay}
-          nextSong={() => currentTrack < tracks.length - 1 ? setCurrentTrack(currentTrack + 1) : setCurrentTrack(0)}
-          prevSong={() => currentTrack > 0 ? setCurrentTrack(currentTrack - 1) : setCurrentTrack(tracks.length - 1)}
+          nextSong={nextSong}
+          prevSong={prevSong}
           isPlaying={isPlaying}
           currentSong={currentSong}
           setCurrentSong={setCurrentSong}

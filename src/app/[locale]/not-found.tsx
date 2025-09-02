@@ -1,5 +1,6 @@
-import { useTranslations } from 'next-intl'
 import Container from '@/domains/ui/components/container/container'
+import { URL_HOME } from '@/lib/routes'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 export default function NotFound() {
@@ -16,17 +17,11 @@ export default function NotFound() {
 
         <div className="flex gap-4 justify-center">
           <Link
-            href="/"
+            href={URL_HOME}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors inline-block"
           >
             {t('goHome')}
           </Link>
-          <button
-            onClick={() => window.history.back()}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-colors"
-          >
-            {t('goBack')}
-          </button>
         </div>
       </div>
     </Container>

@@ -1,11 +1,11 @@
 
 'use client'
+import { Next, Prev } from '@/domains/ui/components/icons/icons';
+import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import Text from '../../../ui/components/text/text';
 import ButtonPlay from '../button-play/button-play';
-import { useTranslations } from 'next-intl';
-import { Next, Prev } from '@/domains/ui/components/icons/icons';
 
 interface Props {
   image: StaticImageData
