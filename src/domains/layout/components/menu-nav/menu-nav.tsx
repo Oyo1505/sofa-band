@@ -1,13 +1,12 @@
 'use client'
-import { useTranslations } from 'next-intl'
-import React from 'react'
-import { URL_DASHBOARD, URL_HOME } from '@/lib/routes'
-import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage'
 import { DiscogsIcon, InstagramIcon, Spotify } from '@/domains/ui/components/icons/icons'
 import { Link } from '@/i18n/routing'
-import ButtonLogin from '../button-login/button-login'
+import { URL_DASHBOARD, URL_HOME } from '@/lib/routes'
 import { useSession } from 'next-auth/react'
-import { usePathname, useSelectedLayoutSegment, useSelectedLayoutSegments } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { usePathname } from 'next/navigation'
+import ButtonLogin from '../button-login/button-login'
+import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage'
 
 const MenuNav = ({ locale }: { locale: string }) => {
   const t = useTranslations('Header')

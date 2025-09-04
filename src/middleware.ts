@@ -1,8 +1,6 @@
-import createMiddleware from 'next-intl/middleware';
-import {routing} from './i18n/routing';
-import { NextRequest } from 'next/server';
-import { createNavigation } from 'next-intl/navigation';
 import NextAuth from 'next-auth';
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest } from 'next/server';
 import authConfig from './lib/auth.config';
 
 const { auth } = NextAuth(authConfig)
@@ -19,8 +17,7 @@ export default auth(async function middleware(request: NextRequest) {
   return response;
 });
 
-//export default createMiddleware(routing);
-export const {Link, redirect, usePathname, useRouter} = createNavigation(routing);
+
 export const config = {
   // Match only internationalized pathnames
   matcher: [

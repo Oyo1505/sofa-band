@@ -1,17 +1,11 @@
-
+import { getAuthorizedEmails } from "@/domains/auth/auth.action";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import NextAuth, { User } from "next-auth";
 import authConfig from "./auth.config";
-import { getAuthorizedEmails } from "@/domains/auth/auth.action";
 
 const prisma = new PrismaClient()
-const clientId = process.env.NEXT_PUBLIC_GOOGLE_ID
-const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_SECRET
 
-if (!clientId || !clientSecret) {
-  throw new Error("Missing NEXT_PUBLIC_GOOGLE_ID or NEXT_PUBLIC_GOOGLE_SECRET")
-}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -57,14 +51,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!token.access_token) throw new Error("Missing refresh token")
 
         try {
+          console.log(process.env.GOOGLE_CLIENT_ID)
           // The `token_endpoint` can be found in the provider's documentation. Or if they support OIDC,
           // at their `/.well-known/openid-configuration` endpoint.
           // i.e. https://accounts.google.com/.well-known/openid-configuration
           const response = await fetch("https://oauth2.googleapis.com/token", {
             method: "POST",
             body: new URLSearchParams({
-              client_id: process.env.GOOGLE_ID! as string,
-              client_secret: process.env.GOOGLE_SECRET! as string,
+              client_id: process.env.GOOGLE_CLIENT_ID! as string,
+              client_secret: process.env.GOOGLE_CLIENT_SECRET! as string,
               grant_type: "refresh_token",
               refresh_token: token.refresh_token! as string,
             }),
@@ -95,6 +90,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return token
         }
       }
+    },
+    async redirect({ url }) {
+      return process.env.NEXTAUTH_URL
+        ? `${process.env.NEXTAUTH_URL}/`
+        : url;
     },
     async session({ session, token }: { session: any, token: any }) {
 
