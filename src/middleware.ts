@@ -13,7 +13,7 @@ export default auth(async function middleware(request: NextRequest) {
 
   const response = handleI18nRouting(request);
   response.headers.set('NEXT_LOCALE', defaultLocale);
-
+  response.headers.set('Cache-Control', 'public, max-age=600, stale-while-revalidate=300');
   return response;
 });
 

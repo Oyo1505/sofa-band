@@ -1,5 +1,5 @@
+import { CSRFError, withCSRFProtection } from '@/lib/csrf';
 import { NextRequest, NextResponse } from 'next/server';
-import { withCSRFProtection, CSRFError } from '@/lib/csrf';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 const CHANNEL_ID = 'UC8xzsABKxgXbJYLhxTn8GpQ';
@@ -76,14 +76,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
-
-// Add rate limiting and caching headers
-export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  
-  // Add cache headers for YouTube data (cache for 10 minutes)
-  response.headers.set('Cache-Control', 'public, max-age=600, stale-while-revalidate=300');
-  
-  return response;
 }
