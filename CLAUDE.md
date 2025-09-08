@@ -111,6 +111,9 @@ POSTGRES_URL="postgresql://..."
 POSTGRES_URL_NON_POOLING="postgresql://..."
 NEXTAUTH_SECRET="..."
 NEXTAUTH_URL="http://localhost:3000"
-NEXT_PUBLIC_GOOGLE_ID="..."
-NEXT_PUBLIC_GOOGLE_SECRET="..."
+GOOGLE_CLIENT_ID="..."
+GOOGLE_CLIENT_SECRET="..."
+YOUTUBE_API_KEY="..."
 ```
+
+**Security Note**: OAuth secrets (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET) and API keys (YOUTUBE_API_KEY) are correctly kept server-side without NEXT_PUBLIC prefix for security.
