@@ -51,7 +51,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!token.access_token) throw new Error("Missing refresh token")
 
         try {
-          console.log(process.env.GOOGLE_CLIENT_ID)
           // The `token_endpoint` can be found in the provider's documentation. Or if they support OIDC,
           // at their `/.well-known/openid-configuration` endpoint.
           // i.e. https://accounts.google.com/.well-known/openid-configuration

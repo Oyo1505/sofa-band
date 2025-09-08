@@ -38,12 +38,14 @@ const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay
         <div className='flex items-center gap-5 truncate'>
           <Image
             src={image}
-            quality={100}
+            quality={90}
             priority
             alt={album}
             className="w-24 h-24 md:w-30 md:h-30 rounded-sm object-cover"
             width={250}
             height={250}
+            sizes="(max-width: 768px) 96px, 120px"
+            placeholder="blur"
           />
 
         <div>

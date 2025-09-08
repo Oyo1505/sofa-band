@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "Bash(find:*)",
       "Bash(cat:*)",
       "Read(/D:\\projets\\sofa-band/**)",
       "Read(/D:\\projets\\sofa-band\\src/**)",
@@ -14,7 +15,11 @@
       "Read(/D:\\projets\\sofa-band\\src\\domains\\dashboard\\schema/**)",
       "Read(/D:\\projets\\sofa-band\\src/**)",
       "Read(/D:\\projets\\sofa-band/**)",
-      "Read(/D:\\projets\\sofa-band\\src/**)"
+      "Read(/D:\\projets\\sofa-band\\src/**)",
+      "Read(/D:\\projets\\sofa-band\\src\\domains/**)",
+      "Read(/D:\\projets\\sofa-band\\src\\domains/**)",
+      "Read(/D:\\projets\\sofa-band\\prisma/**)",
+      "Bash(clear)"
     ],
     "deny": [],
     "ask": []
