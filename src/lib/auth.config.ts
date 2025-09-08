@@ -28,7 +28,7 @@ export default {
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NODE_ENV === 'production' ? '.yourdomain.com' : undefined, // Update with your domain
+        domain: process.env.NODE_ENV === 'production' ? process.env.NEXTAUTH_URL : undefined,
       },
     },
     callbackUrl: {
