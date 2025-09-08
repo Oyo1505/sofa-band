@@ -26,6 +26,7 @@ const ImageHero = () => {
       src={band} 
       alt='sofa-band' 
       width={400} 
+      fetchPriority='high'
       height={500} 
       className='h-full w-full object-cover' 
       sizes="(max-width: 768px) 0px, (max-width: 1200px) 50vw, 40vw"
