@@ -1,20 +1,19 @@
 //@ts-nocheck
 'use client'
-import React, { Suspense, use, useCallback, useEffect, useState } from 'react';
-import * as motion from 'framer-motion/client'
-import LiveItem from '../live-item/live-item';
-import { Live } from '@/models/lives/live';
 import Loading from '@/app/[locale]/(main)/loading';
+import Title from '@/domains/ui/components/title/title';
+import { Live } from '@/models/lives/live';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import Title from '@/domains/ui/components/title/title';
+import { Suspense, useState } from 'react';
+import LiveItem from '../live-item/live-item';
 
-export const revalidate = 60
+export const revalidate = 60;
+const channelId = 'UC8xzsABKxgXbJYLhxTn8GpQ';
 
 const LiveList = () => {
   const [livesSorted, setLives] = useState<Live[]>([])
   const [idPlaylist, setIdPlaylist] = useState(null)
-  const channelId = 'UC8xzsABKxgXbJYLhxTn8GpQ'
   const t = useTranslations('LivePage');
  
    useQuery({
@@ -40,18 +39,29 @@ const LiveList = () => {
 
   const getVideosChannelYoutube = async () => {
     try{
-      const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${channelId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`);
-      const data = await response.json()
-      return data.items[0].contentDetails.relatedPlaylists.uploads
+      const response = await fetch('/api/youtube/videos?action=channel');
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch channel data');
+      }
+      return data.playlistId;
     }catch(error){
-      console.error(error)
+      console.error('Error fetching YouTube channel data:', error);
     }
   }
 
   const getVideosPlaylistYoutube = async () => {
-    const videos = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${idPlaylist}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=50&order=date`)
-    const data = await videos.json()
-    return data?.items.map(item => item.snippet)
+    try {
+      const response = await fetch(`/api/youtube/videos?action=playlist&playlistId=${idPlaylist}`);
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch playlist data');
+      }
+      return data.videos;
+    } catch(error) {
+      console.error('Error fetching YouTube playlist data:', error);
+      return [];
+    }
   }
   const container = {
     visible: {
