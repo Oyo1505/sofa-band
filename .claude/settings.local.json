@@ -20,7 +20,8 @@
       "Read(/D:\\projets\\sofa-band\\src\\domains/**)",
       "Read(/D:\\projets\\sofa-band\\prisma/**)",
       "Bash(clear)",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

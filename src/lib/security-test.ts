@@ -4,24 +4,6 @@
  * Run these in development to validate security measures.
  */
 
-// Test CSRF token generation and validation
-export async function testCSRFImplementation() {
-  try {
-    // Test 1: Get CSRF token
-    const response = await fetch('/api/csrf');
-    const data = await response.json();
-    
-    if (!data.csrfToken) {
-      throw new Error('CSRF token not generated');
-    }
-    
-    console.log('✅ CSRF token generation working');
-    return data.csrfToken;
-  } catch (error) {
-    console.error('❌ CSRF token generation failed:', error);
-    throw error;
-  }
-}
 
 // Test YouTube API security
 export async function testYouTubeAPISecurity() {
@@ -77,7 +59,7 @@ export async function testSecurityHeaders() {
 // Test rate limiting (be careful not to trigger it)
 export async function testRateLimiting() {
   try {
-    const response = await fetch('/api/csrf');
+    const response = await fetch('/api/youtube/videos?action=channel');
     const headers = response.headers;
     
     if (headers.get('x-ratelimit-limit')) {
@@ -97,7 +79,6 @@ export async function runSecurityTests() {
   console.log('🔒 Running Security Implementation Tests...\n');
   
   try {
-    await testCSRFImplementation();
     await testYouTubeAPISecurity();
     await testSecurityHeaders();
     await testRateLimiting();
@@ -113,7 +94,6 @@ export function getSecurityCheckList() {
   return {
     '✅ OAuth secrets server-side': 'Google Client ID/Secret use process.env (no NEXT_PUBLIC)',
     '✅ YouTube API server-side': 'API key moved to server-side endpoint',
-    '✅ CSRF protection': 'Comprehensive CSRF token validation implemented',
     '✅ Security headers': 'CSP, XSS protection, frame options configured',
     '✅ Rate limiting': 'API rate limiting with proper headers',
     '✅ Secure cookies': 'NextAuth cookies configured with secure flags',

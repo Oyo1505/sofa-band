@@ -40,15 +40,6 @@ export default {
         secure: process.env.NODE_ENV === 'production',
       },
     },
-    csrfToken: {
-      name: process.env.NODE_ENV === 'production' ? '__Host-next-auth.csrf-token' : 'next-auth.csrf-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
   },
   useSecureCookies: process.env.NODE_ENV === 'production',
   trustHost: true,

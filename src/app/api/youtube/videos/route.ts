@@ -1,4 +1,3 @@
-import { CSRFError, withCSRFProtection } from '@/lib/csrf';
 import { NextRequest, NextResponse } from 'next/server';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
@@ -61,15 +60,8 @@ async function handleYouTubeRequest(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    return await withCSRFProtection(request, handleYouTubeRequest);
+    return await handleYouTubeRequest(request);
   } catch (error) {
-    if (error instanceof CSRFError) {
-      return NextResponse.json(
-        { error: 'CSRF validation failed' },
-        { status: 403 }
-      );
-    }
-    
     console.error('YouTube API error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch YouTube data' },
