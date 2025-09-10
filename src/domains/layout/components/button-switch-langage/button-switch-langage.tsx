@@ -7,8 +7,8 @@ const ButtonSwitchLangage = memo(({ locale }: { locale: string }) => {
   const pathname = usePathname()
   // const path = pathname.replace(`${locale}`, "/");
   return (
-    <Link href={pathname} className='inline-flex gap-2' locale={locale === 'jp' ? 'en' : 'jp'}>
-      <LanguageLogo /> <span>{locale === 'jp' ? '🇯🇵' : '🇬🇧'}</span>
+    <Link href={pathname} className='inline-flex gap-2' locale={locale === 'ja' ? 'en' : 'ja'}>
+      <LanguageLogo /> <span>{locale === 'ja' ? '🇯🇵' : '🇬🇧'}</span>
     </Link>
   )
 })

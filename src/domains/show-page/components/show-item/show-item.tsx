@@ -38,7 +38,7 @@ const ShowItem = memo(({ event }: Props) => {
       </div>
       <div className="flex flex-col items-end text-right">
         <Text type="span" className="text-sm">
-          {locale === 'jp' && cityInJpn ? cityInJpn : city}, {region}
+          {locale === 'ja' && cityInJpn ? cityInJpn : city}, {region}
         </Text>
       </div>
       <div className="flex items-center">
