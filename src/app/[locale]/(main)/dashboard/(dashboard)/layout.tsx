@@ -1,7 +1,8 @@
-import MenuAside from '@/domains/dashboard/components/menu-aside/menu-aside'
-import { redirect } from '@/i18n/routing'
-import { auth } from '@/lib/auth'
-import React from 'react'
+import { redirect } from '@/i18n/routing';
+import { auth } from '@/lib/auth';
+import dynamic from 'next/dynamic';
+import React from 'react';
+const MenuAside = dynamic(() => import('@/domains/dashboard/components/menu-aside/menu-aside'));
 
 const Layout = async ({ children, params }: { children: React.ReactNode, params: any }) => {
   const session = await auth()

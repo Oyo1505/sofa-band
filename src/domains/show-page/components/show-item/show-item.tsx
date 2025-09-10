@@ -1,20 +1,18 @@
 //@ts-nocheck
 'use client'
-import React from 'react'
-import Title from '@/domains/ui/components/title/title'
 import Text from '@/domains/ui/components/text/text'
-import { useLocale, useTranslations } from 'next-intl'
-import {motion} from 'framer-motion'
-import ButtonEvent from '../button-event/button-event'
+import { EventData } from '@/models/show/show'
 import { hours } from '@/shared/constants/hours'
 import moment from 'moment'
-import { EventData } from '@/models/show/show'
+import { useLocale } from 'next-intl'
+import { memo } from 'react'
+import ButtonEvent from '../button-event/button-event'
 
 interface Props {
   event: EventData
 } 
 
-const ShowItem = ({ event }: Props) => {
+const ShowItem = memo(({ event }: Props) => {
 
   const { title, location, date, city, region, cityInJpn } = event;
 
@@ -48,6 +46,6 @@ const ShowItem = ({ event }: Props) => {
       </div>
     </div>
   )
-}
-
+})
+ShowItem.displayName = 'ShowItem'
 export default ShowItem

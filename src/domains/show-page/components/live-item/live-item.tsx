@@ -1,10 +1,14 @@
 'use client'
-import { motion } from 'framer-motion'
 import Text from '@/domains/ui/components/text/text'
 import Title from '@/domains/ui/components/title/title'
+import { motion } from 'framer-motion'
 import moment from 'moment'
-import React, { useState } from 'react'
-import ReactPlayer from 'react-player/youtube'
+import dynamic from 'next/dynamic'
+import { memo, useState } from 'react'
+
+const ReactPlayer = dynamic(() => import('react-player/youtube'), {
+    ssr: false
+  });
 
 interface Props {
   title: string
@@ -15,7 +19,7 @@ interface Props {
   locale?: string
 }
 
-const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
+const LiveItem = memo(({title, videoId, date, city, cityJp, locale}:Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleVideo = () => {
@@ -96,6 +100,8 @@ const LiveItem = ({title, videoId, date, city, cityJp, locale}:Props) => {
           </div>
     </motion.div>
   )
-}
+});
+
+LiveItem.displayName = 'LiveItem';
 
 export default LiveItem

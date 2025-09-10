@@ -1,6 +1,6 @@
 'use client'
 import { Pause, Play } from '@/domains/ui/components/icons/icons';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, memo, SetStateAction } from 'react';
 
 interface ButtonPlayProps {
   handlePlay: (isPlaying: boolean) => void;
@@ -12,7 +12,7 @@ interface ButtonPlayProps {
   setIsPlaying: Dispatch<SetStateAction<boolean>>;
 }
 
-const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentSong, isPlaying, setIsPlaying } : ButtonPlayProps) => {
+const ButtonPlay = memo(({handlePlay, songUrl, setCurrentSong, currentSong, isPlaying, setIsPlaying } : ButtonPlayProps) => {
 
   return (
     isPlaying ? (
@@ -39,6 +39,8 @@ const ButtonPlay = ({handlePlay, songUrl, setCurrentSong, currentSong, isPlaying
       />
     )
   );
-}
+})
+
+ButtonPlay.displayName = 'ButtonPlay'
 
 export default ButtonPlay

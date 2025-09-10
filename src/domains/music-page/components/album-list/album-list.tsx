@@ -1,15 +1,24 @@
 'use client'
-import React, { Suspense, useState, useCallback } from 'react'
-import { StaticImageData } from 'next/image';
-import AudioComponent from '../audio/audio';
 import Loading from '@/app/[locale]/(main)/loading';
-import whisky from '../../../../public/audio/whisky.mp3';
+import dynamic from 'next/dynamic';
+import { StaticImageData } from 'next/image';
+import { Suspense, useCallback, useState } from 'react';
+import caseof from '../../../../public/audio/caseof.mp3';
 import if_you from '../../../../public/audio/ifyou.mp3';
 import lala from '../../../../public/audio/la_la_la_lie.mp3';
-import caseof from '../../../../public/audio/caseof.mp3';
-import lalalie from '../../../../public/image/lalalie.webp'
-import ifyou from '../../../../public/image/if.png'
-import PlayerSong from '../player-song/player-song';
+import whisky from '../../../../public/audio/whisky.mp3';
+import ifyou from '../../../../public/image/if.png';
+import lalalie from '../../../../public/image/lalalie.webp';
+
+
+const PlayerSong = dynamic(() => import('../player-song/player-song'), {
+    ssr: false, 
+    loading: () => <div className="h-20 bg-gray-100 animate-pulse rounded" />
+})
+const AudioComponent = dynamic(() => import('../audio/audio'), {
+    ssr: false, 
+    loading: () => <div className="h-20 bg-gray-100 animate-pulse rounded" />
+})
 
 interface Song {
   track: string;

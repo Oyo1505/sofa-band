@@ -1,15 +1,15 @@
 'use client'
-import Input from '@/domains/ui/components/input/input'
-import React from 'react'
+import Input from '@/domains/ui/components/input/input';
+import SelectInput from '@/domains/ui/components/select/select';
+import { EventData } from '@/models/show/show';
+import { hours } from '@/shared/constants/hours';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSession } from 'next-auth/react';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import React, { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { EventSchema } from '../../schema/event-schema';
-import { zodResolver } from '@hookform/resolvers/zod';
-import SelectInput from '@/domains/ui/components/select/select';
-import { useLocale, useTranslations } from 'next-intl';
-import { hours } from '@/shared/constants/hours';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { EventData } from '@/models/show/show';
 
 interface FormEventProps {
   addEvent?: ({ event, user }: { event: EventData, user: any }) => Promise<number> | undefined;
@@ -17,7 +17,7 @@ interface FormEventProps {
   event?: EventData | undefined;
 }
 
-const FormEvent = ({ addEvent, editEvent, event }: FormEventProps) => {
+const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
   const locale = useLocale();
   const [eventData, setEvent] = React.useState<EventData | undefined>(event ?? undefined)
   const session = useSession();
@@ -102,6 +102,30 @@ const FormEvent = ({ addEvent, editEvent, event }: FormEventProps) => {
       </form>
     </>
   )
-}
+}, (prevProps, nextProps) => {
 
+  if (prevProps.addEvent !== nextProps.addEvent || 
+      prevProps.editEvent !== nextProps.editEvent) {
+    return false;
+  }
+
+  const prevEvent = prevProps.event;
+  const nextEvent = nextProps.event;
+
+  if (!prevEvent && !nextEvent) return true;
+  
+  if (!prevEvent || !nextEvent) return false;
+
+  return prevEvent.id === nextEvent.id &&
+         prevEvent.title === nextEvent.title &&
+         prevEvent.location === nextEvent.location &&
+         prevEvent.time === nextEvent.time &&
+         prevEvent.city === nextEvent.city &&
+         prevEvent.cityInJpn === nextEvent.cityInJpn &&
+         prevEvent.date === nextEvent.date &&
+         prevEvent.infoLink === nextEvent.infoLink &&
+         prevEvent.region === nextEvent.region;
+});
+
+FormEvent.displayName = 'FormEvent'
 export default FormEvent
