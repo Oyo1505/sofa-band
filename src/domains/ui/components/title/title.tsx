@@ -1,10 +1,10 @@
-import { useTranslations } from 'next-intl'
-import React from 'react'
 import cn from 'clsx';
+import { useTranslations } from 'next-intl';
+import React, { memo } from 'react';
 
 type TypeTitleType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-const Title = (
+const Title = memo((
   {
     translationTheme,
     translationText,
@@ -37,7 +37,8 @@ const Title = (
       children
     )
   );
-};
+});
 
+Title.displayName ='Title';
 
 export default Title

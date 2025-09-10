@@ -1,7 +1,9 @@
 import { URL_DASHBOARD } from '@/lib/routes';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
-const ButtonLogin = () => {
+import { memo } from 'react';
+
+const ButtonLogin = memo(() => {
   const t = useTranslations('Header');
   const locale = useLocale();
   const session = useSession()
@@ -20,6 +22,6 @@ const ButtonLogin = () => {
 
     </div>
   )
-}
-
+})
+ButtonLogin.displayName = 'ButtonLogin'
 export default ButtonLogin

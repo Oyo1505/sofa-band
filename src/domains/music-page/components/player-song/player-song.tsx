@@ -3,7 +3,7 @@
 import { Next, Prev } from '@/domains/ui/components/icons/icons';
 import { useTranslations } from 'next-intl';
 import Image, { StaticImageData } from 'next/image';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, memo, SetStateAction, useEffect } from 'react';
 import Text from '../../../ui/components/text/text';
 import ButtonPlay from '../button-play/button-play';
 
@@ -24,7 +24,7 @@ interface Props {
   setIsPlaying: Dispatch<SetStateAction<boolean>>;
 };
 
-const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong, nextSong, prevSong, setIsPlaying }: Props) => {
+const PlayerSong = memo(({ image, album, sound, track, label, releaseYear, handlePlay, isPlaying, currentSong, setCurrentSong, nextSong, prevSong, setIsPlaying }: Props) => {
   const t = useTranslations('MusicPage');
   useEffect(() => {
     if(isPlaying && currentSong !== sound) {
@@ -90,6 +90,29 @@ const PlayerSong = ({ image, album, sound, track, label, releaseYear, handlePlay
       </div>
     </>
   );
-};
+}, (prevProps, nextProps) => {
+  if (prevProps.isPlaying !== nextProps.isPlaying ||
+      prevProps.currentSong !== nextProps.currentSong ||
+      prevProps.sound !== nextProps.sound) {
+    return false;
+  }
+  if (prevProps.track !== nextProps.track ||
+      prevProps.album !== nextProps.album ||
+      prevProps.label !== nextProps.label ||
+      prevProps.releaseYear !== nextProps.releaseYear ||
+      prevProps.image !== nextProps.image) {
+    return false;
+  }
+  if (prevProps.handlePlay !== nextProps.handlePlay ||
+      prevProps.setCurrentSong !== nextProps.setCurrentSong ||
+      prevProps.nextSong !== nextProps.nextSong ||
+      prevProps.prevSong !== nextProps.prevSong ||
+      prevProps.setIsPlaying !== nextProps.setIsPlaying) {
+    return false;
+  }
 
+  return true;
+});
+
+PlayerSong.displayName = 'PlayerSong'
 export default PlayerSong;

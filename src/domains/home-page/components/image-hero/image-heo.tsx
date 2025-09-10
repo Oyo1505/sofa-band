@@ -1,7 +1,7 @@
 'use client'
 import band from '@/public/image/front_band.jpg';
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from 'next/image';
 
 const ImageHero = () => {
   const variants = {
@@ -22,7 +22,7 @@ const ImageHero = () => {
         delay: 0.05,
       }}
       className='w-full h-full relative hidden md:block'>
-    <Image 
+    <Image
       src={band} 
       alt='sofa-band' 
       width={400} 

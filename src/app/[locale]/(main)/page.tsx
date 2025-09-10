@@ -4,17 +4,16 @@ import TitlesContainer from "@/domains/home-page/components/titles-container/tit
 import MusicList from "@/domains/music-page/components/music-list/music-list";
 import LiveList from "@/domains/show-page/components/live-list/live-list";
 import ShowList from "@/domains/show-page/components/show-list/show-list";
-import AnimatedSectionHomePage from "@/domains/ui/components/animated-section_home-page/animated-section_home-page";
 import LoadingSpinner from "@/domains/ui/components/loading-spinner/loading-spinner";
 import { routing } from "@/i18n/routing";
 import { EventData } from "@/models/show/show";
 import moment from "moment";
 import { setRequestLocale } from 'next-intl/server';
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const revalidate = 60;
-
-
+const AnimatedSectionHomePage = dynamic(() => import('@/domains/ui/components/animated-section_home-page/animated-section_home-page'))
+const revalidate = 180;
 const getData = async () => {
   const { events } = await getEvents()
   return events

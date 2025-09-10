@@ -1,10 +1,9 @@
 'use client'
 import { LanguageLogo } from '@/domains/ui/components/icons/icons'
 import { Link, usePathname } from '@/i18n/routing'
+import { memo } from 'react'
 
-import React from 'react'
-
-const ButtonSwitchLangage = ({ locale }: { locale: string }) => {
+const ButtonSwitchLangage = memo(({ locale }: { locale: string }) => {
   const pathname = usePathname()
   // const path = pathname.replace(`${locale}`, "/");
   return (
@@ -12,6 +11,6 @@ const ButtonSwitchLangage = ({ locale }: { locale: string }) => {
       <LanguageLogo /> <span>{locale === 'jp' ? '🇯🇵' : '🇬🇧'}</span>
     </Link>
   )
-}
-
+})
+ButtonSwitchLangage.displayName = 'ButtonSwitchLangage'
 export default ButtonSwitchLangage

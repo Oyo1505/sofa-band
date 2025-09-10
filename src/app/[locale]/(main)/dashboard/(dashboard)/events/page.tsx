@@ -1,8 +1,12 @@
-import { getEvents } from '@/domains/dashboard/action'
-import EventHeaderPage from '@/domains/dashboard/components/event-header-page/event-header-page'
-import ListEvents from '@/domains/dashboard/components/list-events/list-events'
-import moment from 'moment'
-
+import { getEvents } from '@/domains/dashboard/action';
+import moment from 'moment';
+import dynamic from 'next/dynamic';
+const ListEvents = dynamic(() => import('@/domains/dashboard/components/list-events/list-events'), {
+    loading: () => <div className="h-16 bg-gray-100 animate-pulse rounded" />
+  });
+const EventHeaderPage = dynamic(() => import('@/domains/dashboard/components/event-header-page/event-header-page'), {
+    loading: () => <div className="h-16 bg-gray-100 animate-pulse rounded" />
+  });
 
 const getData = async () => {
   const result = await getEvents()
@@ -26,7 +30,7 @@ const Page = async () => {
       </>
     )
   } catch (error) {
-    throw error // Let the error boundary handle it
+    throw error 
   }
 }
 

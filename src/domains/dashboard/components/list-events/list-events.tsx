@@ -1,8 +1,8 @@
 
-import React from 'react'
-import EventItem from '../event-item/event-item'
-import { deleteEventById } from '../../action'
-import { EventData } from '@/models/show/show'
+import { EventData } from '@/models/show/show';
+import dynamic from 'next/dynamic';
+import { deleteEventById } from '../../action';
+const EventItem = dynamic(() => import('../event-item/event-item'));
 
 const ListEvents = ({ events }: { events: EventData[] }) => {
   const deleteEvent = async (id: string) => {

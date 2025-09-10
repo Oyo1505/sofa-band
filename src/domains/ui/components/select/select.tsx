@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 type TimeSlot<K extends string = 'jp' | 'en' | 'id'> = {
   [key in K]: string | number;
@@ -14,15 +14,14 @@ interface SelectInputProps {
   className?: string;
 }
 
-const SelectInput: React.FC<SelectInputProps> = ({
+const SelectInput = memo(({
   optionsList,
   label,
   formData,
-  formDataKey,
   locale,
   onChange,
   className,
-}) => {
+}:SelectInputProps) => {
   const time = optionsList.filter(h => h.id === formData)[0]
 
   return (
@@ -45,6 +44,6 @@ const SelectInput: React.FC<SelectInputProps> = ({
       </select>
     </div>
   );
-};
-
+});
+SelectInput.displayName = 'SelectInput'
 export default SelectInput;
