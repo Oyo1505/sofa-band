@@ -8,6 +8,7 @@ import LoadingSpinner from "@/domains/ui/components/loading-spinner/loading-spin
 import { routing } from "@/i18n/routing";
 import { EventData } from "@/models/show/show";
 import moment from "moment";
+import { Metadata } from "next";
 import { setRequestLocale } from 'next-intl/server';
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
@@ -42,7 +43,15 @@ export default async function Home({ params }: { params: any }) {
     </div>
   );
 }
+export async function generateMetadata(
+  { params }:any,
 
+): Promise<Metadata> {
+   const { locale } = await params;
+  return {
+    description : locale === 'ja' ? 'ロック / レガエ / ポップ バンド 大阪出身' : 'Rock / Reggae / Pop band from Osaka'
+  }
+}
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
