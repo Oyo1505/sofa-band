@@ -12,7 +12,7 @@ export const getAuthorizedEmails = async () => {
    
     return { mails: userauthorizedEmails, status: 200 }
   } catch (error) {
-    logError(error, 'getAuthorizedEmails')
+    logError(error instanceof Error ? error : new Error(String(error)), 'getAuthorizedEmails')
     return {
       status: 500
     }
