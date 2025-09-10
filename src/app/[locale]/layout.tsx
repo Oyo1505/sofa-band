@@ -5,6 +5,7 @@ import ErrorBoundary from '@/domains/ui/components/error-boundary/error-boundary
 import { routing } from '@/i18n/routing';
 import { auth } from '@/lib/auth';
 import { cn } from '@/lib/utils';
+import { Metadata } from 'next';
 import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -18,6 +19,20 @@ const ubuntu = Ubuntu({
   display: 'swap',
   subsets: ['latin'],
 })
+
+export const metadata: Metadata = {
+  title: 'Sofa Rockers',
+  keywords : 'music, japan, osaka, rockers, sofa',
+  metadataBase: new URL(`https://sofa-band.vercel.app`),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'en': '/en',
+      'ja': '/ja',
+    },
+  },
+};
+
 
 export default async function LocaleLayout({
   children,
