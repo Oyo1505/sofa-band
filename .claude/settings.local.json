@@ -22,7 +22,8 @@
       "Bash(clear)",
       "mcp__sequential-thinking__sequentialthinking",
       "Bash(git add:*)",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "Bash(pnpm build:*)"
     ],
     "deny": [],
     "ask": []

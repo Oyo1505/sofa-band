@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from "@/lib/db";
+import { logError } from "@/lib/error-utils";
 
 export const getAuthorizedEmails = async () => {
   try {
@@ -11,7 +12,7 @@ export const getAuthorizedEmails = async () => {
    
     return { mails: userauthorizedEmails, status: 200 }
   } catch (error) {
-    console.log(error)
+    logError(error, 'getAuthorizedEmails')
     return {
       status: 500
     }

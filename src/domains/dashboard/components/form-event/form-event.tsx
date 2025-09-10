@@ -1,6 +1,7 @@
 'use client'
 import Input from '@/domains/ui/components/input/input';
 import SelectInput from '@/domains/ui/components/select/select';
+import { logError } from '@/lib/error-utils';
 import { EventData } from '@/models/show/show';
 import { hours } from '@/shared/constants/hours';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,7 +50,7 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
     try {
       await editEvent({ event: data })
     } catch (error) {
-      console.log(error)
+     logError(error instanceof Error ? error : new Error(String(error)), 'onEditEvent')
     }
   }
 
@@ -63,7 +64,7 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
         router.push(`/${locale}/dashboard/events`)
 
     } catch (error) {
-      console.log(error)
+      logError(error instanceof Error ? error : new Error(String(error)), 'onCreateEvent')
     }
   }
 
