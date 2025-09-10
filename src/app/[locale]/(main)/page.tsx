@@ -12,9 +12,10 @@ import { Metadata } from "next";
 import { setRequestLocale } from 'next-intl/server';
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-
 const AnimatedSectionHomePage = dynamic(() => import('@/domains/ui/components/animated-section_home-page/animated-section_home-page'))
+
 const revalidate = 180;
+
 const getData = async () => {
   const { events } = await getEvents()
   return events

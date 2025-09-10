@@ -23,7 +23,7 @@ const ubuntu = Ubuntu({
 export const metadata: Metadata = {
   title: 'Sofa Rockers',
   keywords : 'music, japan, osaka, rockers, sofa',
-  metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
+  metadataBase: new URL(`${process.env.NEXTAUTH_URL ?? ''}`),
   alternates: {
     canonical: '/',
     languages: {
