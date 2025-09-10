@@ -86,7 +86,7 @@ const LiveItem = memo(({title, videoId, date, city, cityJp, locale}:Props) => {
                         <>
                           <span className="text-purple-300">•</span>
                           <Text 
-                            text={locale === 'jp' ? cityJp : city} 
+                            text={locale === 'ja' ? cityJp : city} 
                             type="p" 
                             className="text-white/90 font-medium"
                           />

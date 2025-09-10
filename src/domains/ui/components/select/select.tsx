@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-type TimeSlot<K extends string = 'jp' | 'en' | 'id'> = {
+type TimeSlot<K extends string = 'ja' | 'en' | 'id'> = {
   [key in K]: string | number;
 };
 
@@ -9,7 +9,7 @@ interface SelectInputProps {
   formData?: number;
   label?: string;
   formDataKey: string;
-  locale: 'jp' | 'en';
+  locale: 'ja' | 'en';
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
 }

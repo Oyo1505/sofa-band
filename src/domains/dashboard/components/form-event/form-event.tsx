@@ -85,7 +85,7 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
             formData={event?.time}
             className=' p-1 rounded-md bg-foreground text-black'
             formDataKey='time_slots'
-            locale={locale as 'jp' | 'en'}
+            locale={locale as 'ja' | 'en'}
             onChange={handleHoursChange}
 
           />

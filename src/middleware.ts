@@ -5,10 +5,10 @@ import authConfig from './lib/auth.config';
 
 const { auth } = NextAuth(authConfig)
 export default auth(async function middleware(request: NextRequest) {
-  const defaultLocale = request.headers.get('NEXT_LOCALE') || 'jp';
+  const defaultLocale = request.headers.get('NEXT_LOCALE') || 'ja';
   const handleI18nRouting = createMiddleware({
-    locales: ['jp', 'en'],
-    defaultLocale: defaultLocale as 'jp' | 'en'
+    locales: ['ja', 'en'],
+    defaultLocale: defaultLocale as 'ja' | 'en'
   });
 
   const response = handleI18nRouting(request);
@@ -22,5 +22,5 @@ export const config = {
   // Match only internationalized pathnames
   matcher: [
     '/((?!api|_next|_vercel|.*\\..*).*)',
-    '/', '/(jp|en)/:path*']
+    '/', '/(ja|en)/:path*']
 };
