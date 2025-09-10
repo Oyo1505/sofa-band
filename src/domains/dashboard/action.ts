@@ -135,7 +135,7 @@ export const deleteEventById = async (id: string) => {
     revalidatePath('/dashboard/events')
     return { status: 200 }
   } catch (err) {
-    logError(err, 'deleteEventById')
+    logError(err instanceof Error ? err : new Error(String(err)), 'deleteEventById')
     return { status: 500 }
   }
 }
