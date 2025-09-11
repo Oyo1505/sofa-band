@@ -1,11 +1,10 @@
 import { redirect } from '@/i18n/routing';
 import { auth } from '@/lib/auth';
-import { Locale } from 'next-intl';
 import dynamic from 'next/dynamic';
 import React from 'react';
 const MenuAside = dynamic(() => import('@/domains/dashboard/components/menu-aside/menu-aside'));
 
-const Layout = async ({ children, params }: { children: React.ReactNode, params: { locale : Locale} }) => {
+const Layout = async ({ children, params }: { children: React.ReactNode, params:  Promise<{ locale: string}> }) => {
   const session = await auth()
   const { locale } = await params
   if (!session) return redirect({ href: '/', locale })
