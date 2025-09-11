@@ -9,6 +9,7 @@ import { routing } from "@/i18n/routing";
 import { EventData } from "@/models/show/show";
 import moment from "moment";
 import { Metadata } from "next";
+import { Locale } from "next-intl";
 import { setRequestLocale } from 'next-intl/server';
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
@@ -21,7 +22,7 @@ const getData = async () => {
   return events
 }
 
-export default async function Home({ params }: { params: any }) {
+export default async function Home({ params }: { params: { locale : Locale} }) {
   const { locale } = await params
   setRequestLocale(locale);
   const events = await getData();
@@ -45,8 +46,7 @@ export default async function Home({ params }: { params: any }) {
   );
 }
 export async function generateMetadata(
-  { params }:any,
-
+  { params }: { params: { locale: Locale } }
 ): Promise<Metadata> {
    const { locale } = await params;
   return {

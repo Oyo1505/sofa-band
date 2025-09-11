@@ -1,8 +1,31 @@
 import { getAuthorizedEmails } from "@/domains/auth/auth.action";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import NextAuth, { User } from "next-auth";
+import NextAuth, { User, Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import authConfig from "./auth.config";
+
+interface AuthorizedEmail {
+  id: string;
+  email: string | null;
+}
+
+interface ExtendedSession extends Session {
+  accessToken?: string;
+  idToken?: string;
+  refreshToken?: string;
+  error?: string;
+  expiresAt?: number;
+}
+
+interface ExtendedJWT extends JWT {
+  access_token?: string;
+  id_token?: string;
+  refresh_token?: string;
+  expires_at?: number;
+  error?: string;
+  user?: User;
+}
 
 const prisma = new PrismaClient()
 
@@ -17,7 +40,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       const { mails } = await getAuthorizedEmails()
-      const usersEmail = mails?.map((item: any) => item?.email)
+      const usersEmail = mails?.map((item: AuthorizedEmail) => item?.email)
       if (user?.email && !usersEmail?.includes(user?.email)) return '/'
       return true
     },
@@ -94,7 +117,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         ? `${process.env.NEXTAUTH_URL}/`
         : url;
     },
-    async session({ session, token }: { session: any, token: any }) {
+    async session({ session, token }: { session: ExtendedSession, token: ExtendedJWT }) {
 
       session.accessToken = token.access_token;
       session.idToken = token.id_token;

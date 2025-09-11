@@ -2,19 +2,26 @@
 import Input from '@/domains/ui/components/input/input';
 import SelectInput from '@/domains/ui/components/select/select';
 import { logError } from '@/lib/error-utils';
+import { URL_DASHBOARD_EVENTS } from '@/lib/routes';
 import { EventData } from '@/models/show/show';
 import { hours } from '@/shared/constants/hours';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import React, { memo } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { EventSchema } from '../../schema/event-schema';
 
+  type EventFormData = Omit<EventData,
+    'createdAt' | 'updatedAt' | 'country' | 'published' | 'authorId'
+  >;
+
+
 interface FormEventProps {
-  addEvent?: ({ event, user }: { event: EventData, user: any }) => Promise<number> | undefined;
-  editEvent?: ({ event }: { event: EventData | undefined }) => void;
+  addEvent?: ({ event, user }: { event: EventData, user: User }) => Promise<number> | undefined;
+  editEvent?: ({ event }: { event: EventData }) => Promise<void>;
   event?: EventData | undefined;
 }
 
@@ -45,26 +52,39 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
     resolver: zodResolver(EventSchema),
   });
 
-  const onEditEvent = async (data: any) => {
-    if (!editEvent) return
+   const onEditEvent: SubmitHandler<EventFormData> = async (data) => {
+    if (!editEvent || !eventData) return
+
     try {
-      await editEvent({ event: data })
+      const completeEventData: EventData = {
+        ...eventData,  
+        ...data       
+      }
+      await editEvent({ event: completeEventData })
     } catch (error) {
-     logError(error instanceof Error ? error : new Error(String(error)), 'onEditEvent')
+      logError(error instanceof Error ? error : new Error(String(error)),'onEditEvent')
     }
   }
 
-  const onCreateEvent = async (data: any) => {
-    if (!addEvent || !user) {
+ const onCreateEvent: SubmitHandler<EventFormData> = async (data) => {
+    if (!addEvent || !user || !user.id) {
       return
     }
-    try {
-      const status = await addEvent({ event: data, user })
-      if (status === 200)
-        router.push(`/${locale}/dashboard/events`)
 
+    try {
+      const completeEventData: EventData = {
+        ...data,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        country: '',
+        published: false,
+        authorId: user.id
+      }
+
+     const status = await addEvent({ event: completeEventData, user })
+      if(status === 200) router.push(URL_DASHBOARD_EVENTS)
     } catch (error) {
-      logError(error instanceof Error ? error : new Error(String(error)), 'onCreateEvent')
+      logError(error instanceof Error ? error : new Error(String(error)),'onCreateEvent')
     }
   }
 

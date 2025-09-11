@@ -1,8 +1,8 @@
 
 import prisma from "@/lib/db";
-import { EventData } from "@/models/show/show";
-
 import { DatabaseError, handleAsyncError, logError, NotFoundError, retryAsync, ValidationError } from "@/lib/error-utils";
+import { EventData } from "@/models/show/show";
+import { User } from "next-auth";
 import { revalidatePath } from "next/cache";
 
 export const getEvents = async () => {
@@ -38,9 +38,15 @@ export const getEventById = (id: string) => {
   }
 }
 
-export const addEvent = async ({ event, user }: { event: EventData, user: any }): Promise<{ event: EventData | null, status: number, error?: string }> => {
+export const addEvent = async ({ event, user }: { event: EventData, user: User }): Promise<{ event: EventData | null, status: number, error?: string }> => {
   if (!event.title) {
     const validationError = new ValidationError('Title is required', 'title')
+    logError(validationError, 'addEvent')
+    return { event: null, status: 400, error: validationError.message }
+  }
+
+  if (!user.id) {
+    const validationError = new ValidationError('User ID is required', 'userId')
     logError(validationError, 'addEvent')
     return { event: null, status: 400, error: validationError.message }
   }
@@ -58,11 +64,11 @@ export const addEvent = async ({ event, user }: { event: EventData, user: any })
         region: event.region,
         country: event.country ?? '',
         published: event.published,
-        authorId: user.id,
+        authorId: user.id!,
       },
     })
   })()
-
+  
   if (error) {
     logError(error, 'addEvent')
     return { event: null, status: 500, error: error.message }
