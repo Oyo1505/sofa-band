@@ -7,7 +7,7 @@ const getData = async (id: string) => {
   return event
 }
 
-const Page = async ({ searchParams }: { searchParams: { id : string} }) => {
+const Page = async ({ searchParams }:  { searchParams: Promise<{ id: string}> }) => {
   const { id } = await searchParams
   const event = await getData(id)
   const editEvent = async ({ event }: { event: EventData }) => {
