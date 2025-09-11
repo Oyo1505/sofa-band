@@ -5,6 +5,7 @@ import ErrorBoundary from '@/domains/ui/components/error-boundary/error-boundary
 import { routing } from '@/i18n/routing';
 import { auth } from '@/lib/auth';
 import { cn } from '@/lib/utils';
+import { Locale } from '@/shared/models/locale';
 import { Metadata } from 'next';
 import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from 'next-intl';
@@ -39,11 +40,12 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: any
+  params: { locale : Locale}
 }) {
 
   const { locale } = await params;
-  if (!routing.locales.includes(locale as any)) {
+ 
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
   const messages = await getMessages();

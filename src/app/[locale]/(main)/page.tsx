@@ -21,7 +21,7 @@ const getData = async () => {
   return events
 }
 
-export default async function Home({ params }: { params: any }) {
+export default async function Home({ params }: { params:  Promise<{ locale: string}> }) {
   const { locale } = await params
   setRequestLocale(locale);
   const events = await getData();
@@ -45,8 +45,7 @@ export default async function Home({ params }: { params: any }) {
   );
 }
 export async function generateMetadata(
-  { params }:any,
-
+  { params }: { params: Promise<{ locale: string}> }
 ): Promise<Metadata> {
    const { locale } = await params;
   return {

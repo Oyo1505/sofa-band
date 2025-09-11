@@ -1,25 +1,22 @@
 import { editEventToDb, getEventById } from '@/domains/dashboard/action'
 import FormEvent from '@/domains/dashboard/components/form-event/form-event'
-import React from 'react'
+import { EventData } from '@/models/show/show'
 
 const getData = async (id: string) => {
   const { event } = await getEventById(id)
   return event
 }
-interface EventData {
-  event: any
-}
 
-const Page = async ({ searchParams }: { searchParams: any }) => {
+const Page = async ({ searchParams }:  { searchParams: Promise<{ id: string}> }) => {
   const { id } = await searchParams
   const event = await getData(id)
-  const editEvent = async (eventData: EventData) => {
+  const editEvent = async ({ event }: { event: EventData }) => {
     'use server'
-    if (!eventData) {
+    if (!event) {
       return
     }
 
-    await editEventToDb(eventData);
+    await editEventToDb({ event });
   }
   return (event ? <FormEvent event={event} editEvent={editEvent} /> : <div className='text-black'>Event not found</div>)
 }
