@@ -138,11 +138,11 @@ export function withErrorHandling<T>(
 
 // YouTube API specific error handler
 export function withYouTubeErrorHandling(
-  handler: (request: NextRequest) => Promise<NextResponse | ApiResponse>
+  handler: (request: NextRequest, context?: ApiHandlerContext) => Promise<NextResponse | ApiResponse>
 ) {
-  return withErrorHandling(async (request: NextRequest) => {
+  return withErrorHandling(async (request: NextRequest, context?: ApiHandlerContext) => {
     try {
-      return await handler(request);
+      return await handler(request, context);
     } catch (error) {
       // Transform YouTube API errors
       if (error instanceof Error && error.message.includes('YouTube')) {
