@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { withYouTubeErrorHandling, withTimeout } from '@/lib/api-middleware';
-import { ApiResponse } from '@/lib/api-types';
+import { ApiResponse, ApiHandlerContext } from '@/lib/api-types';
 import { ExternalApiError, ValidationError } from '@/lib/error-utils';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
@@ -10,7 +10,7 @@ if (!YOUTUBE_API_KEY) {
   throw new Error('YOUTUBE_API_KEY is not configured in environment variables');
 }
 
-async function handleYouTubeRequest(request: NextRequest): Promise<ApiResponse> {
+async function handleYouTubeRequest(request: NextRequest, context?: ApiHandlerContext): Promise<ApiResponse> {
   const { searchParams } = new URL(request.url);
   const action = searchParams.get('action');
 
@@ -127,4 +127,6 @@ async function handleYouTubeRequest(request: NextRequest): Promise<ApiResponse> 
   throw new ValidationError(`Invalid action parameter: ${action}`);
 }
 
-export const GET = withYouTubeErrorHandling(handleYouTubeRequest);
+export async function GET(request: NextRequest, context?: any) {
+  return withYouTubeErrorHandling(handleYouTubeRequest)(request, context);
+}
