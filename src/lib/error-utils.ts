@@ -70,14 +70,14 @@ export class ExternalApiError extends AppError {
     message: string,
     public service: string,
     public originalStatus?: number,
-    public originalError?: any
+    public originalError?: Error | Record<string, unknown>
   ) {
     super(message, 'EXTERNAL_API_ERROR', 502)
     this.name = 'ExternalApiError'
   }
 }
 
-export function handleAsyncError<T extends any[], R>(
+export function handleAsyncError<T extends unknown[], R>(
   fn: (...args: T) => Promise<R>
 ) {
   return async (...args: T): Promise<[R, null] | [null, Error]> => {
@@ -90,7 +90,7 @@ export function handleAsyncError<T extends any[], R>(
   }
 }
 
-export function handleSyncError<T extends any[], R>(
+export function handleSyncError<T extends unknown[], R>(
   fn: (...args: T) => R
 ) {
   return (...args: T): [R, null] | [null, Error] => {

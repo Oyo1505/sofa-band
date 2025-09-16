@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { logError, formatErrorMessage, ExternalApiError, DatabaseError, ValidationError } from './error-utils';
-
-export interface ApiResponse<T = any> {
-  data?: T;
-  error?: string;
-  status: number;
-  timestamp: string;
-}
+import {
+  ApiResponse,
+  ApiHandlerContext,
+  ValidationSchema,
+  RateLimitConfig,
+  CorsConfig,
+  HealthCheckDependency,
+  HealthCheckResponse
+} from './api-types';
 
 // Rate limiting store (in production, use Redis or database)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -49,9 +51,9 @@ function getClientIdentifier(request: NextRequest): string {
 
 // Generic error handler middleware
 export function withErrorHandling<T>(
-  handler: (request: NextRequest, context?: any) => Promise<NextResponse | ApiResponse<T>>
+  handler: (request: NextRequest, context?: ApiHandlerContext) => Promise<NextResponse | ApiResponse<T>>
 ) {
-  return async (request: NextRequest, context?: any): Promise<NextResponse> => {
+  return async (request: NextRequest, context?: ApiHandlerContext): Promise<NextResponse> => {
     const startTime = Date.now();
     
     try {
@@ -122,7 +124,7 @@ export function withErrorHandling<T>(
       
       // In development, include error details
       if (process.env.NODE_ENV === 'development') {
-        (errorResponse as any).debug = {
+        (errorResponse as ApiResponse & { debug?: Record<string, unknown> }).debug = {
           errorId,
           duration: `${duration}ms`,
           stack: error instanceof Error ? error.stack : undefined
@@ -189,11 +191,7 @@ export function withTimeout<T>(
 }
 
 // Validation middleware
-export function validateRequest(schema: {
-  body?: (data: any) => boolean;
-  query?: (data: any) => boolean;
-  params?: (data: any) => boolean;
-}) {
+export function validateRequest(schema: ValidationSchema) {
   return async (request: NextRequest): Promise<void> => {
     // Validate query parameters
     if (schema.query) {
@@ -224,11 +222,7 @@ export function validateRequest(schema: {
 // CORS middleware
 export function withCors(
   handler: (request: NextRequest) => Promise<NextResponse>,
-  options: {
-    origin?: string | string[];
-    methods?: string[];
-    credentials?: boolean;
-  } = {}
+  options: CorsConfig = {}
 ) {
   const {
     origin = '*',
@@ -263,11 +257,8 @@ export function withCors(
 }
 
 // Health check endpoint helper
-export function createHealthCheck(dependencies: {
-  name: string;
-  check: () => Promise<boolean>;
-}[] = []) {
-  return withErrorHandling(async (): Promise<ApiResponse> => {
+export function createHealthCheck(dependencies: HealthCheckDependency[] = []) {
+  return withErrorHandling(async (): Promise<HealthCheckResponse> => {
     const checks = await Promise.allSettled(
       dependencies.map(async (dep) => ({
         name: dep.name,

@@ -1,22 +1,11 @@
-interface RequestOptions extends RequestInit {
-  timeout?: number;
-  retries?: number;
-  retryDelay?: number;
-  retryCondition?: (error: Error) => boolean;
-}
-
-interface ApiResponse<T = any> {
-  data?: T;
-  error?: string;
-  status: number;
-}
+import { RequestOptions, ApiResponse, EventCreateData, EventUpdateData } from './api-types';
 
 export class ApiError extends Error {
   constructor(
     message: string,
     public status: number,
     public response?: Response,
-    public data?: any
+    public data?: Record<string, unknown>
   ) {
     super(message);
     this.name = 'ApiError';
@@ -59,7 +48,7 @@ const defaultOptions: RequestOptions = {
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-const isNetworkError = (error: any): boolean => {
+const isNetworkError = (error: unknown): boolean => {
   return error instanceof TypeError && error.message.includes('Failed to fetch');
 };
 
@@ -94,7 +83,7 @@ async function fetchWithTimeout(
   }
 }
 
-async function apiRequest<T = any>(
+async function apiRequest<T = unknown>(
   url: string,
   options: RequestOptions = {}
 ): Promise<ApiResponse<T>> {
@@ -121,9 +110,9 @@ async function apiRequest<T = any>(
       }
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = await response.json().catch(() => ({})) as Record<string, unknown>;
         throw new ApiError(
-          errorData.error || `HTTP ${response.status}: ${response.statusText}`,
+          (errorData.error as string) || `HTTP ${response.status}: ${response.statusText}`,
           response.status,
           response,
           errorData
@@ -133,7 +122,8 @@ async function apiRequest<T = any>(
       const data = await response.json();
       return {
         data,
-        status: response.status
+        status: response.status,
+        timestamp: new Date().toISOString()
       };
       
     } catch (error) {
@@ -158,16 +148,17 @@ async function apiRequest<T = any>(
   // If we get here, all retries failed
   return {
     status: lastError instanceof ApiError ? lastError.status : 500,
-    error: lastError?.message || 'Unknown error occurred'
+    error: lastError?.message || 'Unknown error occurred',
+    timestamp: new Date().toISOString()
   };
 }
 
 // Convenience methods
 export const apiClient = {
-  get: <T = any>(url: string, options?: Omit<RequestOptions, 'method' | 'body'>) =>
+  get: <T = unknown>(url: string, options?: Omit<RequestOptions, 'method' | 'body'>) =>
     apiRequest<T>(url, { ...options, method: 'GET' }),
-    
-  post: <T = any>(url: string, data?: any, options?: Omit<RequestOptions, 'method'>) =>
+
+  post: <T = unknown>(url: string, data?: Record<string, unknown> | unknown[], options?: Omit<RequestOptions, 'method'>) =>
     apiRequest<T>(url, {
       ...options,
       method: 'POST',
@@ -177,8 +168,8 @@ export const apiClient = {
       },
       body: data ? JSON.stringify(data) : undefined
     }),
-    
-  put: <T = any>(url: string, data?: any, options?: Omit<RequestOptions, 'method'>) =>
+
+  put: <T = unknown>(url: string, data?: Record<string, unknown> | unknown[], options?: Omit<RequestOptions, 'method'>) =>
     apiRequest<T>(url, {
       ...options,
       method: 'PUT',
@@ -188,10 +179,10 @@ export const apiClient = {
       },
       body: data ? JSON.stringify(data) : undefined
     }),
-    
-  delete: <T = any>(url: string, options?: Omit<RequestOptions, 'method' | 'body'>) =>
+
+  delete: <T = unknown>(url: string, options?: Omit<RequestOptions, 'method' | 'body'>) =>
     apiRequest<T>(url, { ...options, method: 'DELETE' }),
-    
+
   // Direct request method for custom configurations
   request: apiRequest
 };

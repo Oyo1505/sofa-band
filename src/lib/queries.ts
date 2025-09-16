@@ -2,13 +2,22 @@ import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tan
 import { useLocale } from 'next-intl';
 import { apiClient } from './api-client';
 import { formatErrorMessage, isRetryableError } from './error-utils';
+import {
+  Event,
+  EventCreateData,
+  EventUpdateData,
+  YouTubeChannelResponse,
+  YouTubePlaylistResponse,
+  EventsListResponse,
+  EventResponse
+} from './api-types';
 
 // Query configuration defaults
 const defaultQueryConfig = {
   retry: (failureCount: number, error: unknown) => {
     // Don't retry on client errors (4xx)
-    if (error && typeof error === 'object' && 'status' in error && typeof (error as any).status === 'number') {
-      if ((error as any).status >= 400 && (error as any).status < 500) {
+    if (error && typeof error === 'object' && 'status' in error && typeof (error as { status: number }).status === 'number') {
+      if ((error as { status: number }).status >= 400 && (error as { status: number }).status < 500) {
         return false;
       }
     }
@@ -39,7 +48,7 @@ export const useYouTubeChannel = (channelId: string) => {
       
       // Our API returns { data: { playlistId: "..." }, status, timestamp }
       // But apiClient.get returns the whole JSON, so result.data contains the full response
-      return result.data.data; // Access the nested data property
+      return (result.data as { data?: { playlistId: string } })?.data || { playlistId: '' };
     },
     enabled: !!channelId,
   });
@@ -64,7 +73,7 @@ export const useYouTubePlaylist = (playlistId: string | null) => {
       
       // Our API returns { data: { videos: [...] }, status, timestamp }
       // But apiClient.get returns the whole JSON, so result.data contains the full response
-      return result.data.data.videos || [];
+      return (result.data as { data?: { videos?: unknown[] } })?.data?.videos || [];
     },
     enabled: !!playlistId,
     
@@ -75,17 +84,17 @@ export const useYouTubePlaylist = (playlistId: string | null) => {
 // Events API hooks
 export const useEvents = () => {
   const locale = useLocale();
-  
+
   return useQuery({
     ...defaultQueryConfig,
     queryKey: ['events'],
     queryFn: async () => {
-      const result = await apiClient.get<any[]>('/api/events');
-      
+      const result = await apiClient.get<Event[]>('/api/events');
+
       if (!result.data) {
         throw new Error(formatErrorMessage(new Error(result.error), locale, 'Failed to fetch events'));
       }
-      
+
       return result.data;
     },
   });
@@ -115,20 +124,20 @@ export const useEvent = (id: string | null) => {
 // Event mutations
 export const useCreateEvent = () => {
   const locale = useLocale();
-  
+
   return useMutation({
-    mutationFn: async (eventData: any) => {
-      const result = await apiClient.post('/api/events', eventData);
-      
+    mutationFn: async (eventData: EventCreateData) => {
+      const result = await apiClient.post<Event>('/api/events', eventData as unknown as Record<string, unknown>);
+
       if (!result.data) {
         throw new Error(formatErrorMessage(new Error(result.error), locale, 'Failed to create event'));
       }
-      
+
       return result.data;
     },
     retry: (failureCount, error) => {
       // Don't retry on validation errors
-      if (error && typeof error === 'object' && 'status' in error && (error as any).status === 400) {
+      if (error && typeof error === 'object' && 'status' in error && (error as { status: number }).status === 400) {
         return false;
       }
       return failureCount < 2;
@@ -138,19 +147,19 @@ export const useCreateEvent = () => {
 
 export const useUpdateEvent = () => {
   const locale = useLocale();
-  
+
   return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      const result = await apiClient.put(`/api/events/${id}`, data);
-      
+    mutationFn: async ({ id, data }: { id: string; data: EventUpdateData }) => {
+      const result = await apiClient.put<Event>(`/api/events/${id}`, data as unknown as Record<string, unknown>);
+
       if (!result.data) {
         throw new Error(formatErrorMessage(new Error(result.error), locale, 'Failed to update event'));
       }
-      
+
       return result.data;
     },
     retry: (failureCount, error) => {
-      if (error && typeof error === 'object' && 'status' in error && (error as any).status === 400) {
+      if (error && typeof error === 'object' && 'status' in error && (error as { status: number }).status === 400) {
         return false;
       }
       return failureCount < 2;
@@ -177,7 +186,7 @@ export const useDeleteEvent = () => {
 
 // Generic API hook with error handling
 export const useApiQuery = <TData = unknown, TError = Error>(
-  queryKey: any[],
+  queryKey: (string | number | boolean)[],
   queryFn: () => Promise<TData>,
   options?: Omit<UseQueryOptions<TData, TError>, 'queryKey' | 'queryFn'>
 ) => {
@@ -205,7 +214,7 @@ export const getQueryErrorMessage = (error: unknown, locale: string = 'en'): str
 };
 
 // Prefetch helpers
-export const prefetchEvents = async (queryClient: any) => {
+export const prefetchEvents = async (queryClient: { prefetchQuery: (options: any) => Promise<void> }) => {
   await queryClient.prefetchQuery({
     queryKey: ['events'],
     queryFn: async () => {
@@ -216,7 +225,7 @@ export const prefetchEvents = async (queryClient: any) => {
   });
 };
 
-export const prefetchYouTubeData = async (queryClient: any, channelId: string) => {
+export const prefetchYouTubeData = async (queryClient: { fetchQuery: (options: any) => Promise<any>; prefetchQuery: (options: any) => Promise<void> }, channelId: string) => {
   // Prefetch channel data first
   const channelResult = await queryClient.fetchQuery({
     queryKey: ['youtube-channel', channelId],
@@ -233,7 +242,7 @@ export const prefetchYouTubeData = async (queryClient: any, channelId: string) =
       queryKey: ['youtube-playlist', channelResult.playlistId],
       queryFn: async () => {
         const result = await apiClient.get(`/api/youtube/videos?action=playlist&playlistId=${channelResult.playlistId}`);
-        return result.data?.videos || [];
+        return (result.data as { data?: { videos?: unknown[] } })?.data?.videos || [];
       },
       staleTime: 30 * 60 * 1000,
     });

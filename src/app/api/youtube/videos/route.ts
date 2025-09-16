@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { withYouTubeErrorHandling, withTimeout, ApiResponse } from '@/lib/api-middleware';
+import { withYouTubeErrorHandling, withTimeout } from '@/lib/api-middleware';
+import { ApiResponse } from '@/lib/api-types';
 import { ExternalApiError, ValidationError } from '@/lib/error-utils';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
@@ -33,7 +34,7 @@ async function handleYouTubeRequest(request: NextRequest): Promise<ApiResponse> 
         `YouTube API error: ${response.status} ${response.statusText}`,
         'YouTube API',
         response.status,
-        errorText
+        new Error(errorText)
       );
     }
 
@@ -96,7 +97,7 @@ async function handleYouTubeRequest(request: NextRequest): Promise<ApiResponse> 
         `YouTube API error: ${response.status} ${response.statusText}`,
         'YouTube API',
         response.status,
-        errorText
+        new Error(errorText)
       );
     }
 
