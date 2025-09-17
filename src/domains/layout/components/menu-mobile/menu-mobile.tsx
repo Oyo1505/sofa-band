@@ -5,7 +5,7 @@ import { Link } from '@/i18n/routing';
 import { URL_DASHBOARD, URL_HOME } from '@/lib/routes';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useDimensions } from '../../hooks/use-dimensions';
 import { useOutsideClick } from '../../hooks/use-ouside-click';
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage';
@@ -49,9 +49,9 @@ const ItemMenu = ({ item, link, onClick, lang, locale }: { item?: string, link?:
 const MenuMobile = ({ locale }: { locale: string }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openMenu = () => setIsOpen(true);
-  const closeMenu = () => setIsOpen(false);
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const openMenu = useCallback(() => setIsOpen(true), []);
+  const closeMenu = () => useCallback(() =>setIsOpen(false), []);
+  const toggleMenu = () => useCallback(() => setIsOpen((prev) => !prev), []);
   const containerRef = useRef(null);
   const menuRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -63,13 +63,14 @@ const MenuMobile = ({ locale }: { locale: string }) => {
     }
   });
 
-  const variantsContainer = {
+  
+  const variantsContainer = useMemo(() => ({
     open: {
       transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-    },
-  };
+    }
+  }), []);
 
-  const links = [
+  const links = useMemo(()=>[
     {
       link: URL_HOME,
       item: t('Home')
@@ -78,7 +79,7 @@ const MenuMobile = ({ locale }: { locale: string }) => {
       link: URL_DASHBOARD,
       item: t('Dashboard')
     }
-  ];
+  ], [t]);
 
   return (
     <>
