@@ -5,9 +5,10 @@ import { Link } from '@/i18n/routing';
 import { URL_DASHBOARD, URL_HOME } from '@/lib/routes';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { useDimensions } from '../../hooks/use-dimensions';
 import { useOutsideClick } from '../../hooks/use-ouside-click';
+import useHandleMenuMobile from '../../hooks/useHandleMenuMobile';
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage';
 
 const sidebar = {
@@ -26,17 +27,6 @@ const sidebar = {
   }
 };
 
-const variantsLi = {
-  open: {
-    y: 0,
-    opacity: 1,
-  },
-  closed: {
-    y: 50,
-    opacity: 0,
-  }
-};
-
 const ItemMenu = ({ item, link, onClick, lang, locale }: { item?: string, link?: string, onClick: () => void, lang?: boolean, locale?: string }) => {
 
   return (
@@ -47,11 +37,7 @@ const ItemMenu = ({ item, link, onClick, lang, locale }: { item?: string, link?:
 }
 
 const MenuMobile = ({ locale }: { locale: string }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openMenu = () => setIsOpen(true);
-  const closeMenu = () => setIsOpen(false);
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+ const {closeMenuMobile, isOpen, toggleMenuMobile} = useHandleMenuMobile();
   const containerRef = useRef(null);
   const menuRef = useRef(null);
   const { height } = useDimensions(containerRef);
@@ -59,17 +45,18 @@ const MenuMobile = ({ locale }: { locale: string }) => {
   
   useOutsideClick(menuRef, () => {
     if (isOpen) {
-      closeMenu();
+      closeMenuMobile();
     }
   });
 
-  const variantsContainer = {
+  
+  const variantsContainer = useMemo(() => ({
     open: {
       transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-    },
-  };
+    }
+  }), []);
 
-  const links = [
+  const links = useMemo(()=>[
     {
       link: URL_HOME,
       item: t('Home')
@@ -78,7 +65,7 @@ const MenuMobile = ({ locale }: { locale: string }) => {
       link: URL_DASHBOARD,
       item: t('Dashboard')
     }
-  ];
+  ], [t]);
 
   return (
     <>
@@ -100,9 +87,9 @@ const MenuMobile = ({ locale }: { locale: string }) => {
             variants={variantsContainer}
           >
             {links && links?.map(({ link, item }) => (
-              <ItemMenu key={link} item={item} link={link} onClick={() => toggleMenu()} />
+              <ItemMenu key={link} item={item} link={link} onClick={() => toggleMenuMobile()} />
             ))}
-            <ItemMenu lang={true} locale={locale} onClick={() => toggleMenu()} />
+            <ItemMenu lang={true} locale={locale} onClick={() => toggleMenuMobile()} />
             <div className='flex items-center gap-2'>
               <li className='text-black flex items-center gap-2'>
                 <a target="_blank" href="https://www.instagram.com/sofa_rockers_posse/"><InstagramIcon /></a>

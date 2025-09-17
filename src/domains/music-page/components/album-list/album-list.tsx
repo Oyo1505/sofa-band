@@ -1,7 +1,6 @@
 'use client'
 import Loading from '@/app/[locale]/(main)/loading';
 import dynamic from 'next/dynamic';
-import { StaticImageData } from 'next/image';
 import { Suspense, useCallback, useState } from 'react';
 import caseof from '../../../../public/audio/caseof.mp3';
 import if_you from '../../../../public/audio/ifyou.mp3';
@@ -25,17 +24,6 @@ interface Song {
   sound: string;
 }
 
-interface Media {
-  title: string;  
-  image: StaticImageData;  
-  songs: Song[]; 
-  label: string; 
-  ref: string;    
-  releaseYear: number;  
-}
-interface Props {
-  albums : Media[]
-}
 const tracks = [
     {
       track:'If You',

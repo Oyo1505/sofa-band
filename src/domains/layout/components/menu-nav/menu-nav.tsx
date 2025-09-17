@@ -5,6 +5,7 @@ import { URL_DASHBOARD, URL_HOME } from '@/lib/routes'
 import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { usePathname } from 'next/navigation'
+import { useMemo } from 'react'
 import ButtonLogin from '../button-login/button-login'
 import ButtonSwitchLangage from '../button-switch-langage/button-switch-langage'
 
@@ -12,7 +13,7 @@ const MenuNav = ({ locale }: { locale: string }) => {
   const t = useTranslations('Header')
   const session = useSession();
   const segments = usePathname()
-  const dashboard = segments.includes('/dashboard')
+  const dashboard = useMemo(() => segments.includes('/dashboard'),[segments])
   const auth = session.status === 'authenticated'
  
   return (

@@ -1,8 +1,9 @@
 
 'use client'
 import { Next, Prev } from '@/domains/ui/components/icons/icons';
+import LazyImage from '@/domains/ui/components/lazy-image/lazy-image';
 import { useTranslations } from 'next-intl';
-import Image, { StaticImageData } from 'next/image';
+import { StaticImageData } from 'next/image';
 import { Dispatch, memo, SetStateAction, useEffect } from 'react';
 import Text from '../../../ui/components/text/text';
 import ButtonPlay from '../button-play/button-play';
@@ -36,10 +37,9 @@ const PlayerSong = memo(({ image, album, sound, track, label, releaseYear, handl
     <>
       <div className="flex flex-col justify-between md:flex-row  bg-neutral-800 rounded-md w-full p-5  md:h-40 truncate">
         <div className='flex items-center gap-5 truncate'>
-          <Image
+          <LazyImage
             src={image}
             quality={90}
-            priority
             alt={album}
             className="w-24 h-24 md:w-30 md:h-30 rounded-sm object-cover"
             width={250}

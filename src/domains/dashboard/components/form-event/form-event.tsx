@@ -10,7 +10,7 @@ import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { EventSchema } from '../../schema/event-schema';
 
@@ -52,7 +52,7 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
     resolver: zodResolver(EventSchema),
   });
 
-   const onEditEvent: SubmitHandler<EventFormData> = async (data) => {
+   const onEditEvent: SubmitHandler<EventFormData> = useCallback(async (data) => {
     if (!editEvent || !eventData) return
 
     try {
@@ -64,9 +64,9 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
     } catch (error) {
       logError(error instanceof Error ? error : new Error(String(error)),'onEditEvent')
     }
-  }
+  },[editEvent, eventData])
 
- const onCreateEvent: SubmitHandler<EventFormData> = async (data) => {
+ const onCreateEvent: SubmitHandler<EventFormData> = useCallback(async (data) => {
     if (!addEvent || !user || !user.id) {
       return
     }
@@ -86,11 +86,11 @@ const FormEvent = memo(({ addEvent, editEvent, event }: FormEventProps) => {
     } catch (error) {
       logError(error instanceof Error ? error : new Error(String(error)),'onCreateEvent')
     }
-  }
+  }, [addEvent, user, router]);
 
-  const handleHoursChange = (hours: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleHoursChange = useCallback((hours: React.ChangeEvent<HTMLSelectElement>) => {
     setValue('time', Number(hours.target.value))
-  }
+  }, [setValue])
 
   return (
     <>
