@@ -71,6 +71,10 @@
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--background);
   }
+
+  .font-mulish {
+    font-family: var(--font-mulish), Arial, sans-serif;
+  }
 }
 
 .perspective-1000 {

@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { Ubuntu } from 'next/font/google';
+import { Ubuntu, Mulish } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import "../globals.css";
 
@@ -19,6 +19,15 @@ const ubuntu = Ubuntu({
   style: 'normal',
   display: 'swap',
   subsets: ['latin'],
+  preload: true,
+})
+
+const mulish = Mulish({
+  weight: ['400', '700'],
+  style: 'normal',
+  display: 'swap',
+  subsets: ['latin'],
+  preload: true,
 })
 
 export async function generateMetadata({
@@ -60,7 +69,18 @@ export default async function LocaleLayout({
   const session = await auth()
   return (
     <html lang={locale}>
-      <body className={cn( ubuntu.className, 'bg-neutral-900')}>
+      <head>
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body className={cn( ubuntu.className, mulish.variable, 'bg-neutral-900')}>
         <SessionProvider session={session}>
           <div className='relative'>
             <LayoutLogic>
