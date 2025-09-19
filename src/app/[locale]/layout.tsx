@@ -21,18 +21,26 @@ const ubuntu = Ubuntu({
   subsets: ['latin'],
 })
 
-export const metadata: Metadata = {
-  title: 'Sofa Rockers',
-  keywords : 'music, japan, osaka, rockers, sofa',
-  metadataBase: new URL(`https://sofa-band.vercel.app`),
-  alternates: {
-    canonical: '/',
-    languages: {
-      'en': '/en',
-      'ja': '/ja',
+export async function generateMetadata({
+  params
+}: {
+  params: { locale: Locale }
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+  return {
+    title: 'Sofa Rockers',
+    keywords: 'music, japan, osaka, rockers, sofa',
+    metadataBase: new URL(baseUrl),
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        'en': '/en',
+        'ja': '/ja',
+      },
     },
-  },
-};
+  };
+}
 
 
 export default async function LocaleLayout({
