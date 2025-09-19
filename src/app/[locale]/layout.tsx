@@ -10,7 +10,7 @@ import { Metadata } from 'next';
 import { SessionProvider } from "next-auth/react";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import { Ubuntu, Mulish } from 'next/font/google';
+import { Mulish, Ubuntu } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import "../globals.css";
 
@@ -80,7 +80,7 @@ export default async function LocaleLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={cn( ubuntu.className, mulish.variable, 'bg-neutral-900')}>
+      <body className={cn( ubuntu.className, mulish.className, 'bg-neutral-900')}>
         <SessionProvider session={session}>
           <div className='relative'>
             <LayoutLogic>
