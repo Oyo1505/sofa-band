@@ -6,13 +6,7 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    staleTimes: {
-      dynamic: 30,
-      static: 180,
-    },
-    optimizePackageImports: ['framer-motion', '@auth/nextjs-adapter', 'next-intl'],
-  },
+
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -28,54 +22,36 @@ const nextConfig = {
         loader: "url-loader",
       },
     });
-
-    // CSS optimization
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
-        ...config.optimization.splitChunks,
-        cacheGroups: {
-          ...config.optimization.splitChunks?.cacheGroups,
-          styles: {
-            name: 'styles',
-            type: 'css/mini-extract',
-            chunks: 'all',
-            enforce: true,
-          },
-        },
-      },
-    };
-
     return config;
   },
 
   // Performance headers
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on'
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN'
-          }
-        ],
-      },
-      {
-        source: '/static/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable'
-          }
-        ],
-      }
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'X-DNS-Prefetch-Control',
+  //           value: 'on'
+  //         },
+  //         {
+  //           key: 'X-Frame-Options',
+  //           value: 'SAMEORIGIN'
+  //         }
+  //       ],
+  //     },
+  //     {
+  //       source: '/static/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'Cache-Control',
+  //           value: 'public, max-age=31536000, immutable'
+  //         }
+  //       ],
+  //     }
+  //   ];
+  // },
 };
 
 const withNextIntl = createNextIntlPlugin();

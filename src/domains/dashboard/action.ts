@@ -2,7 +2,7 @@
 import prisma from "@/lib/db";
 import { DatabaseError, handleAsyncError, logError, NotFoundError, retryAsync, ValidationError } from "@/lib/error-utils";
 import { EventData } from "@/models/show/show";
-import { User } from "next-auth";
+import { User } from "better-auth";
 import { revalidatePath } from "next/cache";
 
 export const getEvents = async () => {

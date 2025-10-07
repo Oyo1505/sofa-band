@@ -3,11 +3,10 @@ import Header from '@/domains/layout/components/header/header';
 import LayoutLogic from '@/domains/layout/components/layout-logic/layout-logic';
 import ErrorBoundary from '@/domains/ui/components/error-boundary/error-boundary';
 import { routing } from '@/i18n/routing';
-import { auth } from '@/lib/auth';
 import { cn } from '@/lib/utils';
 import { Locale } from '@/shared/models/locale';
 import { Metadata } from 'next';
-import { SessionProvider } from "next-auth/react";
+
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Mulish, Ubuntu } from 'next/font/google';
@@ -33,9 +32,9 @@ const mulish = Mulish({
 export async function generateMetadata({
   params
 }: {
-  params: { locale: Locale }
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = await params as { locale: Locale };
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
   return {
     title: 'Sofa Rockers',
@@ -57,16 +56,15 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: { locale : Locale}
+  params: Promise<{ locale: string }>
 }) {
 
-  const { locale } = await params;
+  const { locale } = await params as { locale: Locale };
  
   if (!routing.locales.includes(locale)) {
     notFound();
   }
   const messages = await getMessages();
-  const session = await auth()
   return (
     <html lang={locale}>
       <head>
@@ -81,7 +79,7 @@ export default async function LocaleLayout({
         />
       </head>
       <body className={cn( ubuntu.className, mulish.className, 'bg-neutral-900')}>
-        <SessionProvider session={session}>
+  
           <div className='relative'>
             <LayoutLogic>
               <NextIntlClientProvider messages={messages}>
@@ -93,7 +91,6 @@ export default async function LocaleLayout({
               </NextIntlClientProvider>
             </LayoutLogic>
           </div>
-        </SessionProvider >
       </body>
     </html>
   );
