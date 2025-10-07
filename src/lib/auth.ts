@@ -1,132 +1,92 @@
+
 import { getAuthorizedEmails } from "@/domains/auth/auth.action";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import NextAuth, { User, Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import authConfig from "./auth.config";
+import { APIError, betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from 'better-auth/next-js';
+import prisma from "./db";
 
-interface AuthorizedEmail {
-  id: string;
-  email: string | null;
-}
-
-interface ExtendedSession extends Session {
-  accessToken?: string;
-  idToken?: string;
-  refreshToken?: string;
-  error?: string;
-  expiresAt?: number;
-}
-
-interface ExtendedJWT extends JWT {
-  access_token?: string;
-  id_token?: string;
-  refresh_token?: string;
-  expires_at?: number;
-  error?: string;
-  user?: User;
-}
-
-const prisma = new PrismaClient()
-
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  ...authConfig,
-  session: {
-    strategy: "jwt",
-    maxAge: 60 * 60 * 20,
-    updateAge: 10 * 60,
-  },
-  callbacks: {
-    async signIn({ user }) {
-      const { mails } = await getAuthorizedEmails()
-      const usersEmail = mails?.map((item: AuthorizedEmail) => item?.email)
-      if (user?.email && !usersEmail?.includes(user?.email)) return '/'
-      return true
+const auth = betterAuth({
+  database: prismaAdapter(prisma, {
+    provider: 'postgresql',
+  }),
+  user: {
+    deleteUser: {
+      enabled: true,
     },
-    async jwt({ token, account, profile }) {
-
-      if (account) {
-        // First login, save the `access_token`, `refresh_token`, and other
-
-        const userProfile: User = {
-          id: token?.sub || '',
-          name: profile?.name,
-          email: profile?.email,
-          image: token?.picture,
-        }
-
-        return {
-          id_token: account.id_token,
-          access_token: account.access_token,
-          expires_at: Math.floor(Date.now() / 1000) + (Number(account.expires_in) || 60 * 60),
-          refresh_token: account.refresh_token,
-          user: userProfile,
-        }
-      } else if (token.expires_at && Date.now() < Number(token.expires_at) * 1000) {
-
-        // Subsequent logins, if the `access_token` is still valid, return the JWT
-
-        return token
-      } else {
-        // Subsequent logins, if the `access_token` has expired, try to refresh it
-        if (!token.access_token) throw new Error("Missing refresh token")
-
-        try {
-          // The `token_endpoint` can be found in the provider's documentation. Or if they support OIDC,
-          // at their `/.well-known/openid-configuration` endpoint.
-          // i.e. https://accounts.google.com/.well-known/openid-configuration
-          const response = await fetch("https://oauth2.googleapis.com/token", {
-            method: "POST",
-            body: new URLSearchParams({
-              client_id: process.env.GOOGLE_CLIENT_ID! as string,
-              client_secret: process.env.GOOGLE_CLIENT_SECRET! as string,
-              grant_type: "refresh_token",
-              refresh_token: token.refresh_token! as string,
-            }),
-          })
-
-          const tokensOrError = await response.json()
-
-          if (!response.ok) throw tokensOrError
-
-          const newTokens = tokensOrError as {
-            access_token: string
-            expires_in: number
-            refresh_token?: string
+  },
+  session: {
+    expiresIn: 604800, // 7 days
+    updateAge: 86400, // 1 day
+    cookieCache: {
+      enabled: true,
+      maxAge: 1800, // 30 minutes
+    },
+  },
+  socialProviders: {
+    google: {
+      prompt: 'select_account consent',
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      accessType: 'offline',
+    },
+  },
+  trustedOrigins: [process.env.NEXTAUTH_URL as string],
+  plugins: [nextCookies()],
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          if (!user.email) {
+            throw new APIError('BAD_REQUEST', {
+              message: 'Email is required',
+            });
           }
 
-          token.access_token = newTokens.access_token
-          token.expires_at = Math.floor(
-            Date.now() / 1000 + newTokens.expires_in
-          )
-          // Some providers only issue refresh tokens once, so preserve if we did not get a new one
-          if (newTokens.refresh_token)
-            token.refresh_token = newTokens.refresh_token
-          return token
-        } catch (error) {
-          console.error("Error refreshing access_token", error)
-          // If we fail to refresh the token, return an error so we can handle it on the page
-          token.error = "RefreshTokenError"
-          return token
-        }
-      }
-    },
-    async redirect({ url }) {
-      return process.env.NEXTAUTH_URL
-        ? `${process.env.NEXTAUTH_URL}/`
-        : url;
-    },
-    async session({ session, token }: { session: ExtendedSession, token: ExtendedJWT }) {
+          try {
+            const { mails, status } = await getAuthorizedEmails();
+            if (status !== 200 || !mails) {
+              throw new APIError('INTERNAL_SERVER_ERROR', {
+                message: 'Authorization check failed',
+              });
+            }
 
-      session.accessToken = token.access_token;
-      session.idToken = token.id_token;
-      session.refreshToken = token.refresh_token;
-      session.error = token.error;
-      session.expiresAt = token.expires_at
-      session.user = token.user
-      return session
-    }
+            const isAuthorized = mails.some(
+              (item) => item.email === user.email
+            );
+            if (!isAuthorized) {
+              console.warn(`Unauthorized sign-in attempt: ${user.email}`);
+              throw new APIError('UNAUTHORIZED', {
+                message:
+                  'Your email is not authorized to access this application. Please contact an administrator.',
+              });
+            }
+
+            return { data: user };
+          } catch (error) {
+
+            throw new APIError('INTERNAL_SERVER_ERROR', {
+              message: 'Authorization check failed',
+            });
+          }
+        },
+      },
+    },
   },
+});
+type Session = typeof auth.$Infer.Session;
+/**
+ * Helper function for server components to get session
+ * Compatible with Better Auth - replaces NextAuth's auth() function
+ */
 
-})
+export async function getServerSession() {
+  const { headers } = await import('next/headers');
+
+  return auth.api.getSession({
+    headers: await headers(),
+  });
+}
+
+export { auth };
+export type { Session };
+

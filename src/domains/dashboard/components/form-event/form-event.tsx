@@ -6,8 +6,9 @@ import { URL_DASHBOARD_EVENTS } from '@/lib/routes';
 import { EventData } from '@/models/show/show';
 import { hours } from '@/shared/constants/hours';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { User } from 'next-auth';
-import { useSession } from 'next-auth/react';
+import { User } from 'better-auth';
+
+import { useSession } from '@/lib/auth-client';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import React, { memo, useCallback } from 'react';
