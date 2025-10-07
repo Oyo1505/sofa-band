@@ -6,7 +6,6 @@ import { formatErrorMessage } from './error-utils';
 
 // Test configuration
 const TEST_TIMEOUT = 5000;
-const TEST_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 interface TestResult {
   name: string;
