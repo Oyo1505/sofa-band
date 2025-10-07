@@ -1,7 +1,7 @@
 import { addEvent } from '@/domains/dashboard/action'
 import FormEvent from '@/domains/dashboard/components/form-event/form-event'
 import { EventData } from '@/models/show/show'
-import { User } from 'better-auth/types/user'
+import { User } from 'better-auth'
 
 
 const Page = () => {

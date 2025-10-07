@@ -32,9 +32,9 @@ const mulish = Mulish({
 export async function generateMetadata({
   params
 }: {
-  params: { locale: Locale }
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = await params as { locale: Locale };
   const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
   return {
     title: 'Sofa Rockers',
@@ -56,10 +56,10 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: { locale : Locale}
+  params: Promise<{ locale: string }>
 }) {
 
-  const { locale } = await params;
+  const { locale } = await params as { locale: Locale };
  
   if (!routing.locales.includes(locale)) {
     notFound();
