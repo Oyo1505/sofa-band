@@ -1,28 +1,32 @@
-import React from 'react'
-import { FieldError } from 'react-hook-form'
-import { cn } from '@/lib/utils'
-interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> { }
+import React from "react";
+import { FieldError } from "react-hook-form";
+import { cn } from "@/lib/utils";
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  type?: string,
-  id?: string,
-  name: string
-  placeholder?: string
-  label?: string
-  error?: FieldError | undefined
+  type?: string;
+  id?: string;
+  name: string;
+  placeholder?: string;
+  label?: string;
+  error?: FieldError | undefined;
 }
 
-
 const Input = React.forwardRef<HTMLInputElement, Props>(
-  ({ className, type = 'text', label, error, ...props }, ref) => {
+  ({ className, type = "text", label, error, ...props }, ref) => {
     return (
-      <div className='flex flex-col gap-2'>
+      <div className="flex flex-col gap-2">
         <label htmlFor={label}>{label}</label>
-        <input className={cn(className, 'p-2')} {...props} type={type} ref={ref} />
-        {error && <p className='text-red-600 text-xs'>{error.message}</p>}
+        <input
+          className={cn(className, "p-2")}
+          {...props}
+          type={type}
+          ref={ref}
+        />
+        {error && <p className="text-red-600 text-xs">{error.message}</p>}
       </div>
-    )
-  })
-Input.displayName = "Input"
-export default Input
+    );
+  },
+);
+Input.displayName = "Input";
+export default Input;

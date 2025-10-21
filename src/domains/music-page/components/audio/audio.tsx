@@ -1,21 +1,20 @@
-'use client'
+"use client";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
 interface Props {
-  songUrl: string,
-  handleCurrent?: Dispatch<SetStateAction<void>>,
-  isPlaying: boolean
+  songUrl: string;
+  handleCurrent?: Dispatch<SetStateAction<void>>;
+  isPlaying: boolean;
 }
 
-const AudioComponent = ({songUrl, handleCurrent, isPlaying }: Props) => {
-  
+const AudioComponent = ({ songUrl, handleCurrent, isPlaying }: Props) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
-      audio.currentTime = 0;  
+      audio.currentTime = 0;
       audio.src = songUrl;
 
       const handleCanPlayThrough = () => {
@@ -26,12 +25,12 @@ const AudioComponent = ({songUrl, handleCurrent, isPlaying }: Props) => {
         }
       };
 
-      audio.addEventListener('canplaythrough', handleCanPlayThrough);
+      audio.addEventListener("canplaythrough", handleCanPlayThrough);
       return () => {
-        audio.removeEventListener('canplaythrough', handleCanPlayThrough);
+        audio.removeEventListener("canplaythrough", handleCanPlayThrough);
       };
     }
-  }, [songUrl, isPlaying]); 
+  }, [songUrl, isPlaying]);
 
   const handleEnded = () => {
     if (handleCurrent) {
@@ -48,7 +47,6 @@ const AudioComponent = ({songUrl, handleCurrent, isPlaying }: Props) => {
           name="audio-player"
           src={songUrl}
           type="audio/mp3"
-          
         />
         {/* Fallback content */}
         Your browser does not support the audio element.

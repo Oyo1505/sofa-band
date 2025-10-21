@@ -1,6 +1,6 @@
-import moment from 'moment'
-import { z } from 'zod'
-const today = moment().format('YYYY-MM-DD');
+import moment from "moment";
+import { z } from "zod";
+const today = moment().format("YYYY-MM-DD");
 export const EventSchema = z.object({
   id: z.string(),
   title: z.string().min(1),
@@ -8,7 +8,9 @@ export const EventSchema = z.object({
   time: z.number().min(1),
   city: z.string().min(1),
   cityInJpn: z.string(),
-  date: z.string().refine((date) => date >= today, { message: "Date is too old" }),
+  date: z
+    .string()
+    .refine((date) => date >= today, { message: "Date is too old" }),
   infoLink: z.string(),
   region: z.string().min(1),
-})
+});

@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { URL_HOME } from '@/lib/routes'
-import Link from 'next/link'
-import { useEffect } from 'react'
+import { URL_HOME } from "@/lib/routes";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function GlobalError({
   error,
   reset,
 }: {
-  error: Error & { digest?: string }
-  reset: () => void
+  error: Error & { digest?: string };
+  reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error)
-  }, [error])
+    console.error(error);
+  }, [error]);
 
   return (
     <html>
@@ -22,7 +22,9 @@ export default function GlobalError({
           <div className="text-center max-w-md px-6">
             <div className="mb-8">
               <h1 className="text-6xl font-bold text-red-500 mb-4">500</h1>
-              <h2 className="text-2xl font-semibold mb-4">Something went wrong!</h2>
+              <h2 className="text-2xl font-semibold mb-4">
+                Something went wrong!
+              </h2>
               <p className="text-gray-300 mb-6">
                 A critical error occurred. Please try refreshing the page.
               </p>
@@ -54,5 +56,5 @@ export default function GlobalError({
         </div>
       </body>
     </html>
-  )
+  );
 }

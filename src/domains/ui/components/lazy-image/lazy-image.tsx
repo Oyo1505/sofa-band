@@ -1,51 +1,55 @@
-'use client'
-import Image, { ImageProps, StaticImageData } from 'next/image'
-import { useState } from 'react'
-import LoadingSpinner from '../loading-spinner/loading-spinner'
+"use client";
+import Image, { ImageProps, StaticImageData } from "next/image";
+import { useState } from "react";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
 
-interface LazyImageProps extends Omit<ImageProps, 'src'> {
-  src: string | StaticImageData
-  alt: string
-  className?: string
-  containerClassName?: string
-  showSpinner?: boolean
+interface LazyImageProps extends Omit<ImageProps, "src"> {
+  src: string | StaticImageData;
+  alt: string;
+  className?: string;
+  containerClassName?: string;
+  showSpinner?: boolean;
 }
 
 const LazyImage = ({
   src,
   alt,
   className,
-  containerClassName = '',
+  containerClassName = "",
   showSpinner = true,
-  loading = 'lazy',
-  placeholder = 'blur',
+  loading = "lazy",
+  placeholder = "blur",
   quality = 85,
   ...props
 }: LazyImageProps) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [hasError, setHasError] = useState(false)
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const handleLoad = () => {
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   const handleError = () => {
-    setIsLoading(false)
-    setHasError(true)
-  }
+    setIsLoading(false);
+    setHasError(true);
+  };
 
   if (hasError) {
     return (
-      <div className={`bg-neutral-800 flex items-center justify-center ${className}`}>
+      <div
+        className={`bg-neutral-800 flex items-center justify-center ${className}`}
+      >
         <span className="text-neutral-400 text-sm">Image non disponible</span>
       </div>
-    )
+    );
   }
 
   return (
     <div className={`relative ${containerClassName}`}>
       {isLoading && showSpinner && (
-        <div className={`absolute inset-0 flex items-center justify-center bg-neutral-800 ${className}`}>
+        <div
+          className={`absolute inset-0 flex items-center justify-center bg-neutral-800 ${className}`}
+        >
           <LoadingSpinner />
         </div>
       )}
@@ -61,7 +65,7 @@ const LazyImage = ({
         {...props}
       />
     </div>
-  )
-}
+  );
+};
 
-export default LazyImage
+export default LazyImage;

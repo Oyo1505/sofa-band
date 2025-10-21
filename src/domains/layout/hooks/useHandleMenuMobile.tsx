@@ -5,16 +5,15 @@ const useHandleMenuMobile = () => {
 
   const openMenuMobile = useCallback(() => setIsOpen(true), []);
   const closeMenuMobile = useCallback(() => setIsOpen(false), []);
-  const toggleMenuMobile =  useCallback(() => setIsOpen((prev) => !prev), []);
+  const toggleMenuMobile = useCallback(() => setIsOpen((prev) => !prev), []);
 
   return {
     openMenuMobile,
     closeMenuMobile,
     toggleMenuMobile,
     isOpen,
-    setIsOpen
-  }
-}
+    setIsOpen,
+  };
+};
 
-
-export default useHandleMenuMobile
+export default useHandleMenuMobile;

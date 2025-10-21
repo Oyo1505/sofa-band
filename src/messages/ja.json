@@ -1,21 +1,21 @@
 {
   "Header": {
-    "Home"  : "ホーム",
-    "Music" : "ミュージック",
-    "About" : "について",
-    "Shows" : "ショー",
-    "Live" : "ライブ",
-    "Signin" : "サインイン",
-    "Signout" : "サインアウト",
-    "Dashboard" : "ダッシュボード"
+    "Home": "ホーム",
+    "Music": "ミュージック",
+    "About": "について",
+    "Shows": "ショー",
+    "Live": "ライブ",
+    "Signin": "サインイン",
+    "Signout": "サインアウト",
+    "Dashboard": "ダッシュボード"
   },
   "DasboardPage": {
-    "title":"ダッシュボード",
+    "title": "ダッシュボード",
     "addEvent": "イベントを追加",
     "events": "イベント"
   },
   "EventPage": {
-    "title":"イベント",
+    "title": "イベント",
     "addEvent": "イベントを追加",
     "deleteEvent": "イベントを削除",
     "editEvent": "イベントを編集",
@@ -32,19 +32,19 @@
     "Submit": "送信"
   },
   "HomePage": {
-    "title":"こんにちは",
+    "title": "こんにちは",
     "about": "について",
-    "desc" : "ロック / レガエ / ポップ バンド 大阪出身"
+    "desc": "ロック / レガエ / ポップ バンド 大阪出身"
   },
   "AboutPage": {
-    "title":"について"
+    "title": "について"
   },
-  "MusicPage" : {
-    "ourMusic" : "聴く",
+  "MusicPage": {
+    "ourMusic": "聴く",
     "Label": "ラベル",
     "Ref": "参照",
-    "Date":"日付",
-    "EP":"EP"
+    "Date": "日付",
+    "EP": "EP"
   },
   "LivePage": {
     "NoVideo": "利用可能な動画がありません",
@@ -56,26 +56,26 @@
     "futureEvents": "未来のイベント",
     "pastEvents": "過去のイベント",
     "noEvents": "イベントが見つかりません"
-   },
-   "MenuAside": {
-     "Dashboard": "ダッシュボード",
-     "Events": "イベント"
-    },
-    "Footer": {
-      "whereToBuy" : "購入場所",
-      "whereToListen" : "どこで聴くか"
-    },
-    "ErrorPage": {
-      "title": "エラーが発生しました",
-      "description": "予期しないエラーが発生しました。もう一度お試しください。",
-      "reload": "ページを再読み込み",
-      "tryAgain": "再試行",
-      "goHome": "ホームに戻る"
-    },
-    "NotFoundPage": {
-      "title": "ページが見つかりません",
-      "description": "お探しのページは存在しないか、移動されました。",
-      "goHome": "ホームに戻る",
-      "goBack": "戻る"
-    }
+  },
+  "MenuAside": {
+    "Dashboard": "ダッシュボード",
+    "Events": "イベント"
+  },
+  "Footer": {
+    "whereToBuy": "購入場所",
+    "whereToListen": "どこで聴くか"
+  },
+  "ErrorPage": {
+    "title": "エラーが発生しました",
+    "description": "予期しないエラーが発生しました。もう一度お試しください。",
+    "reload": "ページを再読み込み",
+    "tryAgain": "再試行",
+    "goHome": "ホームに戻る"
+  },
+  "NotFoundPage": {
+    "title": "ページが見つかりません",
+    "description": "お探しのページは存在しないか、移動されました。",
+    "goHome": "ホームに戻る",
+    "goBack": "戻る"
+  }
 }

@@ -1,21 +1,21 @@
 {
   "Header": {
-    "Home"  : "Home",
-    "Music" : "Music",
-    "About" : "About",
-    "Shows" : "Shows",
-    "Live" : "Live",
-    "Signin" : "Signin",
-    "Signout" : "Signout",
-    "Dashboard" : "Dashboard"
+    "Home": "Home",
+    "Music": "Music",
+    "About": "About",
+    "Shows": "Shows",
+    "Live": "Live",
+    "Signin": "Signin",
+    "Signout": "Signout",
+    "Dashboard": "Dashboard"
   },
   "DasboardPage": {
-    "title":"Dashboard",
+    "title": "Dashboard",
     "addEvent": "Add Event",
     "events": "Events"
   },
   "EventPage": {
-    "title":"Event",
+    "title": "Event",
     "addEvent": "Add Event",
     "deleteEvent": "Delete Event",
     "editEvent": "Edit Event",
@@ -33,49 +33,49 @@
     "Submit": "Submit"
   },
   "HomePage": {
-    "title":"Hello!",
+    "title": "Hello!",
     "about": "About",
-    "desc" : "Rock / Reggae / Pop band from Osaka"
+    "desc": "Rock / Reggae / Pop band from Osaka"
   },
   "AboutPage": {
-    "title":"About"
+    "title": "About"
   },
-  "MusicPage" : {
-    "ourMusic" : "Listen",
+  "MusicPage": {
+    "ourMusic": "Listen",
     "Label": "Label",
     "Ref": "Ref",
-    "Date":"Date",
-    "EP":"EP"
+    "Date": "Date",
+    "EP": "EP"
   },
   "ShowPage": {
     "tour": "Tour",
     "event": "Event",
     "pastEvents": "Past Events",
     "noEvents": "No events found"
-   },
-   "LivePage": {
+  },
+  "LivePage": {
     "NoVideo": "No available video",
     "title": "Videos"
-   },
-   "MenuAside": {
-     "Dashboard": "Dashboard",
-     "Events": "Events"
-    },
-    "Footer": {
-      "whereToBuy" : "Buy on",
-      "whereToListen" : "Musical Platform"
-    },
-    "ErrorPage": {
-      "title": "Something went wrong",
-      "description": "An unexpected error occurred. Please try again.",
-      "reload": "Reload page",
-      "tryAgain": "Try again",
-      "goHome": "Go home"
-    },
-    "NotFoundPage": {
-      "title": "Page not found",
-      "description": "The page you're looking for doesn't exist or has been moved.",
-      "goHome": "Go home",
-      "goBack": "Go back"
-    }
+  },
+  "MenuAside": {
+    "Dashboard": "Dashboard",
+    "Events": "Events"
+  },
+  "Footer": {
+    "whereToBuy": "Buy on",
+    "whereToListen": "Musical Platform"
+  },
+  "ErrorPage": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please try again.",
+    "reload": "Reload page",
+    "tryAgain": "Try again",
+    "goHome": "Go home"
+  },
+  "NotFoundPage": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go home",
+    "goBack": "Go back"
+  }
 }

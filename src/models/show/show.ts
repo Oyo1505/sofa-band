@@ -1,11 +1,11 @@
 export interface Event {
-  title: string
-  location: string
-  time: string
-  date: string
-  city: string
-  region: string
-  country: string
+  title: string;
+  location: string;
+  time: string;
+  date: string;
+  city: string;
+  region: string;
+  country: string;
 }
 
 export type EventData = {
@@ -23,4 +23,4 @@ export type EventData = {
   region: string;
   published: boolean;
   authorId: string;
-}
+};

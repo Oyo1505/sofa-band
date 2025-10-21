@@ -9,48 +9,64 @@ import { routing } from "@/i18n/routing";
 import { EventData } from "@/models/show/show";
 import moment from "moment";
 import { Metadata } from "next";
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-const AnimatedSectionHomePage = dynamic(() => import('@/domains/ui/components/animated-section_home-page/animated-section_home-page'))
+const AnimatedSectionHomePage = dynamic(
+  () =>
+    import(
+      "@/domains/ui/components/animated-section_home-page/animated-section_home-page"
+    ),
+);
 
 const revalidate = 180;
 
 const getData = async () => {
-  const { events } = await getEvents()
-  return events
-}
+  const { events } = await getEvents();
+  return events;
+};
 
-export default async function Home({ params }: { params:  Promise<{ locale: string}> }) {
-  const { locale } = await params
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   setRequestLocale(locale);
   const events = await getData();
-  const sortedData: EventData[] = events.sort((a, b) => moment(b.date).diff(moment(a.date)))
+  const sortedData: EventData[] = events.sort((a, b) =>
+    moment(b.date).diff(moment(a.date)),
+  );
   return (
     <div className=" flex flex-col md:gap-30 gap-10  items-start justify-start w-full">
       <Suspense fallback={<LoadingSpinner />}>
-      <section className='w-full h-96 flex n items-center gap-10'> 
-       <TitlesContainer />
-       <ImageHero />
-      </section>
+        <section className="w-full h-96 flex n items-center gap-10">
+          <TitlesContainer />
+          <ImageHero />
+        </section>
       </Suspense>
       <MusicList />
       <Suspense fallback={<LoadingSpinner />}>
-      <AnimatedSectionHomePage className='flex flex-col md:flex-row gap-5 w-full'> 
-        <ShowList events={sortedData} />
-        <LiveList />
-      </AnimatedSectionHomePage>
+        <AnimatedSectionHomePage className="flex flex-col md:flex-row gap-5 w-full">
+          <ShowList events={sortedData} />
+          <LiveList />
+        </AnimatedSectionHomePage>
       </Suspense>
     </div>
   );
 }
-export async function generateMetadata(
-  { params }: { params: Promise<{ locale: string}> }
-): Promise<Metadata> {
-   const { locale } = await params;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
   return {
-    description : locale === 'ja' ? 'ロック / レガエ / ポップ バンド 大阪出身' : 'Rock / Reggae / Pop band from Osaka'
-  }
+    description:
+      locale === "ja"
+        ? "ロック / レガエ / ポップ バンド 大阪出身"
+        : "Rock / Reggae / Pop band from Osaka",
+  };
 }
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
