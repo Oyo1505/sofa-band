@@ -15,38 +15,39 @@ const ShowList = ({ events }: { events: EventData[] }) => {
     .filter((event: EventData) => event.date < today)
     .slice(0, 3);
   return (
-    <div className="rounded-2xl w-full flex flex-col gap-5">
-      <BlurIn duration={0.6} blur={7}>
+    <BlurIn duration={0.6} blur={7} className="w-full">
+      <div className="rounded-2xl w-full flex flex-col gap-5">
         <ShowTitle />
-      </BlurIn>
-      {isFutureShow.length > 0 ? (
-        <>
-          <div className="rounded-md shadow-sm bg-foreground p-5">
-            {isFutureShow?.map((event: EventData, index: number) => (
-              <ShowItem key={index} event={event} />
-            ))}
-          </div>
-        </>
-      ) : (
-        <Text type="p">{t("noEvents")}</Text>
-      )}
-      {isPastShow.length > 0 ? (
-        <>
-          <Title
-            type="h2"
-            text={t("pastEvents")}
-            className="text-xl text-foreground font-bold"
-          />
-          <div className="rounded-md shadow-sm bg-foreground p-5">
-            {isPastShow?.map((event: EventData, index: number) => (
-              <ShowItem key={index} event={event} />
-            ))}
-          </div>
-        </>
-      ) : (
-        <Text type="p">{t("noEvents")}</Text>
-      )}
-    </div>
+
+        {isFutureShow.length > 0 ? (
+          <>
+            <div className="rounded-md shadow-sm bg-foreground p-5">
+              {isFutureShow?.map((event: EventData, index: number) => (
+                <ShowItem key={index} event={event} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <Text type="p">{t("noEvents")}</Text>
+        )}
+        {isPastShow.length > 0 ? (
+          <>
+            <Title
+              type="h2"
+              text={t("pastEvents")}
+              className="text-xl text-foreground font-bold"
+            />
+            <div className="rounded-md shadow-sm bg-foreground p-5">
+              {isPastShow?.map((event: EventData, index: number) => (
+                <ShowItem key={index} event={event} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <Text type="p">{t("noEvents")}</Text>
+        )}
+      </div>
+    </BlurIn>
   );
 };
 

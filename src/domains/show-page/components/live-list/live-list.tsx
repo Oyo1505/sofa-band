@@ -87,25 +87,28 @@ const LiveList = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5 w-full">
-      <BlurIn duration={0.7} blur={5}>
+    <BlurIn duration={0.7} blur={5} className="w-full">
+      <div className="flex flex-col gap-5 w-full">
         <Title type="h2" text={t("title")} className="text-3xl font-bold" />
-      </BlurIn>
-      <div className="grid grid-cols-1 w-full gap-4">
-        {livesSortedAndSliced && livesSortedAndSliced.length > 0 ? (
-          livesSortedAndSliced.map((item, index) => (
-            <LiveItem
-              key={`${item.resourceId?.videoId || item.videoId || index}`}
-              title={item.title || "Untitled"}
-              date={item.publishedAt ? new Date(item.publishedAt) : new Date()}
-              videoId={item.resourceId?.videoId || item.videoId || ""}
-            />
-          ))
-        ) : (
-          <p className="text-gray-500">{t("NoVideo")}</p>
-        )}
+
+        <div className="grid grid-cols-1 w-full gap-4">
+          {livesSortedAndSliced && livesSortedAndSliced.length > 0 ? (
+            livesSortedAndSliced.map((item, index) => (
+              <LiveItem
+                key={`${item.resourceId?.videoId || item.videoId || index}`}
+                title={item.title || "Untitled"}
+                date={
+                  item.publishedAt ? new Date(item.publishedAt) : new Date()
+                }
+                videoId={item.resourceId?.videoId || item.videoId || ""}
+              />
+            ))
+          ) : (
+            <p className="text-gray-500">{t("NoVideo")}</p>
+          )}
+        </div>
       </div>
-    </div>
+    </BlurIn>
   );
 };
 

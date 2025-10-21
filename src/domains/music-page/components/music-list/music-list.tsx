@@ -14,14 +14,15 @@ const MusicList = () => {
       className="flex flex-col gap-5 w-full"
       amount={0.4}
     >
-      <BlurIn duration={0.6} blur={7}>
+      <BlurIn duration={0.6} blur={7} className="w-full">
         <Title
           type="h2"
           text={t("ourMusic")}
           className="text-3xl text-foreground font-bold"
         />
+
+        <AlbumList />
       </BlurIn>
-      <AlbumList />
     </AnimatedSectionHomePage>
   );
 };
