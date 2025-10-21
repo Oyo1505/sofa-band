@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --font-*: initial;
@@ -91,7 +91,7 @@
   }
 }
 
-  @keyframes infinite-scroll-right {
+@keyframes infinite-scroll-right {
   from {
     transform: translateX(-100%);
   }

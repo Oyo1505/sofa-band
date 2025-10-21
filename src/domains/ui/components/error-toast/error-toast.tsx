@@ -1,48 +1,52 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface ErrorToastProps {
-  error: Error | null
-  onClose: () => void
-  duration?: number
+  error: Error | null;
+  onClose: () => void;
+  duration?: number;
 }
 
-export default function ErrorToast({ error, onClose, duration = 5000 }: ErrorToastProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const t = useTranslations('ErrorPage')
+export default function ErrorToast({
+  error,
+  onClose,
+  duration = 5000,
+}: ErrorToastProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const t = useTranslations("ErrorPage");
 
   useEffect(() => {
     if (error) {
-      setIsVisible(true)
+      setIsVisible(true);
       const timer = setTimeout(() => {
-        setIsVisible(false)
-        setTimeout(onClose, 300) // Wait for fade out animation
-      }, duration)
-      
-      return () => clearTimeout(timer)
-    }
-  }, [error, duration, onClose])
+        setIsVisible(false);
+        setTimeout(onClose, 300); // Wait for fade out animation
+      }, duration);
 
-  if (!error) return null
+      return () => clearTimeout(timer);
+    }
+  }, [error, duration, onClose]);
+
+  if (!error) return null;
 
   return (
     <div
       className={`fixed top-4 right-4 z-50 transition-all duration-300 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
       }`}
     >
       <div className="bg-red-600 text-white p-4 rounded-lg shadow-lg max-w-md">
         <div className="flex items-start justify-between">
           <div>
-            <h4 className="font-semibold mb-1">{t('title')}</h4>
+            <h4 className="font-semibold mb-1">{t("title")}</h4>
             <p className="text-sm text-red-100">{error.message}</p>
           </div>
           <button
             onClick={() => {
-              setIsVisible(false)
-              setTimeout(onClose, 300)
+              setIsVisible(false);
+              setTimeout(onClose, 300);
             }}
             className="ml-4 text-red-200 hover:text-white transition-colors"
           >
@@ -57,5 +61,5 @@ export default function ErrorToast({ error, onClose, duration = 5000 }: ErrorToa
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,5 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { logError, formatErrorMessage, ExternalApiError, DatabaseError, ValidationError } from './error-utils';
+import { NextRequest, NextResponse } from "next/server";
+import {
+  logError,
+  formatErrorMessage,
+  ExternalApiError,
+  DatabaseError,
+  ValidationError,
+} from "./error-utils";
 import {
   ApiResponse,
   ApiHandlerContext,
@@ -7,8 +13,8 @@ import {
   RateLimitConfig,
   CorsConfig,
   HealthCheckDependency,
-  HealthCheckResponse
-} from './api-types';
+  HealthCheckResponse,
+} from "./api-types";
 
 // Rate limiting store (in production, use Redis or database)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -17,23 +23,26 @@ const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 100; // requests per window
 
 // Rate limiting middleware
-export function rateLimit(maxRequests: number = RATE_LIMIT_MAX_REQUESTS, windowMs: number = RATE_LIMIT_WINDOW) {
+export function rateLimit(
+  maxRequests: number = RATE_LIMIT_MAX_REQUESTS,
+  windowMs: number = RATE_LIMIT_WINDOW,
+) {
   return (identifier: string): boolean => {
     const now = Date.now();
     const current = rateLimitStore.get(identifier);
-    
+
     if (!current || now > current.resetTime) {
       rateLimitStore.set(identifier, {
         count: 1,
-        resetTime: now + windowMs
+        resetTime: now + windowMs,
       });
       return true;
     }
-    
+
     if (current.count >= maxRequests) {
       return false;
     }
-    
+
     current.count++;
     return true;
   };
@@ -41,96 +50,107 @@ export function rateLimit(maxRequests: number = RATE_LIMIT_MAX_REQUESTS, windowM
 
 // Get client identifier for rate limiting
 function getClientIdentifier(request: NextRequest): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  const ip = forwarded ? forwarded.split(',')[0].trim() : 
-           request.headers.get('x-real-ip') ||
-           request.headers.get('cf-connecting-ip') ||
-           'unknown';
+  const forwarded = request.headers.get("x-forwarded-for");
+  const ip = forwarded
+    ? forwarded.split(",")[0].trim()
+    : request.headers.get("x-real-ip") ||
+      request.headers.get("cf-connecting-ip") ||
+      "unknown";
   return ip;
 }
 
 // Generic error handler middleware
 export function withErrorHandling<T>(
-  handler: (request: NextRequest, context?: ApiHandlerContext) => Promise<NextResponse | ApiResponse<T>>
+  handler: (
+    request: NextRequest,
+    context?: ApiHandlerContext,
+  ) => Promise<NextResponse | ApiResponse<T>>,
 ) {
-  return async (request: NextRequest, context?: ApiHandlerContext): Promise<NextResponse> => {
+  return async (
+    request: NextRequest,
+    context?: ApiHandlerContext,
+  ): Promise<NextResponse> => {
     const startTime = Date.now();
-    
+
     try {
       // Rate limiting
       const identifier = getClientIdentifier(request);
       const checkRateLimit = rateLimit();
-      
+
       if (!checkRateLimit(identifier)) {
         return NextResponse.json(
           {
-            error: 'Too many requests. Please try again later.',
+            error: "Too many requests. Please try again later.",
             status: 429,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
           } as ApiResponse,
-          { 
+          {
             status: 429,
             headers: {
-              'Retry-After': '60'
-            }
-          }
+              "Retry-After": "60",
+            },
+          },
         );
       }
-      
+
       const result = await handler(request, context);
-      
+
       // If handler returns NextResponse directly, return it
       if (result instanceof NextResponse) {
         return result;
       }
-      
+
       // If handler returns ApiResponse, convert to NextResponse
       const response: ApiResponse<T> = {
         ...result,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-      
+
       return NextResponse.json(response, { status: result.status });
-      
     } catch (error) {
       const duration = Date.now() - startTime;
       const errorId = `error-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-      
+
       // Log error with context
-      logError(error as Error, `API Handler ${request.method} ${request.url} [${errorId}] (${duration}ms)`);
-      
+      logError(
+        error as Error,
+        `API Handler ${request.method} ${request.url} [${errorId}] (${duration}ms)`,
+      );
+
       // Determine error response based on error type
       let status = 500;
-      let message = 'Internal server error';
-      
+      let message = "Internal server error";
+
       if (error instanceof ValidationError) {
         status = 400;
         message = error.message;
       } else if (error instanceof DatabaseError) {
         status = 500;
-        message = 'Database operation failed';
+        message = "Database operation failed";
       } else if (error instanceof ExternalApiError) {
         status = 502;
         message = `External service error: ${error.service}`;
       } else if (error instanceof Error) {
         message = error.message || message;
       }
-      
+
       const errorResponse: ApiResponse = {
         error: message,
         status,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-      
+
       // In development, include error details
-      if (process.env.NODE_ENV === 'development') {
-        (errorResponse as ApiResponse & { debug?: Record<string, unknown> }).debug = {
+      if (process.env.NODE_ENV === "development") {
+        (
+          errorResponse as ApiResponse & { debug?: Record<string, unknown> }
+        ).debug = {
           errorId,
           duration: `${duration}ms`,
-          stack: error instanceof Error ? error.stack : undefined
+          stack: error instanceof Error ? error.stack : undefined,
         };
       }
-      
+
       return NextResponse.json(errorResponse, { status });
     }
   };
@@ -138,41 +158,49 @@ export function withErrorHandling<T>(
 
 // YouTube API specific error handler
 export function withYouTubeErrorHandling(
-  handler: (request: NextRequest, context?: ApiHandlerContext) => Promise<NextResponse | ApiResponse>
+  handler: (
+    request: NextRequest,
+    context?: ApiHandlerContext,
+  ) => Promise<NextResponse | ApiResponse>,
 ) {
-  return withErrorHandling(async (request: NextRequest, context?: ApiHandlerContext) => {
-    try {
-      return await handler(request, context);
-    } catch (error) {
-      // Transform YouTube API errors
-      if (error instanceof Error && error.message.includes('YouTube')) {
-        throw new ExternalApiError(
-          error.message,
-          'YouTube API',
-          undefined,
-          error
-        );
+  return withErrorHandling(
+    async (request: NextRequest, context?: ApiHandlerContext) => {
+      try {
+        return await handler(request, context);
+      } catch (error) {
+        // Transform YouTube API errors
+        if (error instanceof Error && error.message.includes("YouTube")) {
+          throw new ExternalApiError(
+            error.message,
+            "YouTube API",
+            undefined,
+            error,
+          );
+        }
+        throw error;
       }
-      throw error;
-    }
-  });
+    },
+  );
 }
 
 // Database operation error handler
 export function withDatabaseErrorHandling<T>(
-  operation: () => Promise<T>
+  operation: () => Promise<T>,
 ): Promise<T> {
   return operation().catch((error) => {
-    if (error.code === 'P2025') {
-      throw new ValidationError('Record not found');
+    if (error.code === "P2025") {
+      throw new ValidationError("Record not found");
     }
-    if (error.code === 'P2002') {
-      throw new ValidationError('Unique constraint violation');
+    if (error.code === "P2002") {
+      throw new ValidationError("Unique constraint violation");
     }
-    if (error.code?.startsWith('P')) {
-      throw new DatabaseError(`Database operation failed: ${error.code}`, error);
+    if (error.code?.startsWith("P")) {
+      throw new DatabaseError(
+        `Database operation failed: ${error.code}`,
+        error,
+      );
     }
-    throw new DatabaseError('Database operation failed', error);
+    throw new DatabaseError("Database operation failed", error);
   });
 }
 
@@ -180,13 +208,13 @@ export function withDatabaseErrorHandling<T>(
 export function withTimeout<T>(
   promise: Promise<T>,
   timeoutMs: number = 30000,
-  errorMessage: string = 'Operation timed out'
+  errorMessage: string = "Operation timed out",
 ): Promise<T> {
   return Promise.race([
     promise,
     new Promise<never>((_, reject) => {
       setTimeout(() => reject(new Error(errorMessage)), timeoutMs);
-    })
+    }),
   ]);
 }
 
@@ -197,23 +225,23 @@ export function validateRequest(schema: ValidationSchema) {
     if (schema.query) {
       const url = new URL(request.url);
       const queryParams = Object.fromEntries(url.searchParams);
-      
+
       if (!schema.query(queryParams)) {
-        throw new ValidationError('Invalid query parameters');
+        throw new ValidationError("Invalid query parameters");
       }
     }
-    
+
     // Validate request body for POST/PUT/PATCH
-    if (schema.body && ['POST', 'PUT', 'PATCH'].includes(request.method)) {
+    if (schema.body && ["POST", "PUT", "PATCH"].includes(request.method)) {
       try {
         const body = await request.json();
-        
+
         if (!schema.body(body)) {
-          throw new ValidationError('Invalid request body');
+          throw new ValidationError("Invalid request body");
         }
       } catch (error) {
         if (error instanceof ValidationError) throw error;
-        throw new ValidationError('Invalid JSON in request body');
+        throw new ValidationError("Invalid JSON in request body");
       }
     }
   };
@@ -222,36 +250,41 @@ export function validateRequest(schema: ValidationSchema) {
 // CORS middleware
 export function withCors(
   handler: (request: NextRequest) => Promise<NextResponse>,
-  options: CorsConfig = {}
+  options: CorsConfig = {},
 ) {
   const {
-    origin = '*',
-    methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    credentials = false
+    origin = "*",
+    methods = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials = false,
   } = options;
-  
+
   return async (request: NextRequest): Promise<NextResponse> => {
     // Handle preflight
-    if (request.method === 'OPTIONS') {
+    if (request.method === "OPTIONS") {
       return new NextResponse(null, {
         status: 200,
         headers: {
-          'Access-Control-Allow-Origin': Array.isArray(origin) ? origin.join(', ') : origin,
-          'Access-Control-Allow-Methods': methods.join(', '),
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          'Access-Control-Allow-Credentials': credentials.toString()
-        }
+          "Access-Control-Allow-Origin": Array.isArray(origin)
+            ? origin.join(", ")
+            : origin,
+          "Access-Control-Allow-Methods": methods.join(", "),
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Credentials": credentials.toString(),
+        },
       });
     }
-    
+
     const response = await handler(request);
-    
+
     // Add CORS headers to response
-    response.headers.set('Access-Control-Allow-Origin', Array.isArray(origin) ? origin.join(', ') : origin);
+    response.headers.set(
+      "Access-Control-Allow-Origin",
+      Array.isArray(origin) ? origin.join(", ") : origin,
+    );
     if (credentials) {
-      response.headers.set('Access-Control-Allow-Credentials', 'true');
+      response.headers.set("Access-Control-Allow-Credentials", "true");
     }
-    
+
     return response;
   };
 }
@@ -262,27 +295,27 @@ export function createHealthCheck(dependencies: HealthCheckDependency[] = []) {
     const checks = await Promise.allSettled(
       dependencies.map(async (dep) => ({
         name: dep.name,
-        status: await dep.check()
-      }))
+        status: await dep.check(),
+      })),
     );
-    
+
     const results = checks.map((check, index) => ({
       name: dependencies[index].name,
-      status: check.status === 'fulfilled' ? check.value.status : false,
-      error: check.status === 'rejected' ? check.reason?.message : undefined
+      status: check.status === "fulfilled" ? check.value.status : false,
+      error: check.status === "rejected" ? check.reason?.message : undefined,
     }));
-    
-    const allHealthy = results.every(r => r.status);
-    
+
+    const allHealthy = results.every((r) => r.status);
+
     return {
       data: {
-        status: allHealthy ? 'healthy' : 'degraded',
+        status: allHealthy ? "healthy" : "degraded",
         checks: results,
         uptime: process.uptime(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
       status: allHealthy ? 200 : 503,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   });
 }

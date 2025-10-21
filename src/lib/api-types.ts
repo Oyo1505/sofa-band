@@ -225,7 +225,7 @@ export interface HealthCheckResult {
 
 export interface HealthCheckResponse {
   data: {
-    status: 'healthy' | 'degraded';
+    status: "healthy" | "degraded";
     checks: HealthCheckResult[];
     uptime: number;
     timestamp: string;
@@ -238,11 +238,11 @@ export interface HealthCheckResponse {
 // Form Data Types
 // ====================
 
-export interface EventFormData extends Omit<EventCreateData, 'published'> {
+export interface EventFormData extends Omit<EventCreateData, "published"> {
   published?: boolean;
 }
 
-export interface LiveFormData extends Omit<LiveCreateData, 'published'> {
+export interface LiveFormData extends Omit<LiveCreateData, "published"> {
   published?: boolean;
 }
 
@@ -272,39 +272,39 @@ export interface MutationConfig {
 
 export function isApiResponse<T>(obj: unknown): obj is ApiResponse<T> {
   return (
-    typeof obj === 'object' &&
+    typeof obj === "object" &&
     obj !== null &&
-    'status' in obj &&
-    typeof (obj as ApiResponse<T>).status === 'number'
+    "status" in obj &&
+    typeof (obj as ApiResponse<T>).status === "number"
   );
 }
 
 export function isApiErrorResponse(obj: unknown): obj is ApiErrorResponse {
   return (
     isApiResponse(obj) &&
-    'error' in obj &&
-    typeof (obj as ApiErrorResponse).error === 'string'
+    "error" in obj &&
+    typeof (obj as ApiErrorResponse).error === "string"
   );
 }
 
 export function isEvent(obj: unknown): obj is Event {
   return (
-    typeof obj === 'object' &&
+    typeof obj === "object" &&
     obj !== null &&
-    'id' in obj &&
-    'title' in obj &&
-    'location' in obj &&
-    'date' in obj
+    "id" in obj &&
+    "title" in obj &&
+    "location" in obj &&
+    "date" in obj
   );
 }
 
 export function isYouTubeVideo(obj: unknown): obj is YouTubeVideo {
   return (
-    typeof obj === 'object' &&
+    typeof obj === "object" &&
     obj !== null &&
-    'title' in obj &&
-    'videoId' in obj &&
-    'publishedAt' in obj
+    "title" in obj &&
+    "videoId" in obj &&
+    "publishedAt" in obj
   );
 }
 
@@ -312,20 +312,20 @@ export function isYouTubeVideo(obj: unknown): obj is YouTubeVideo {
 // Utility Types
 // ====================
 
-export type ApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+export type ApiMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 export type ApiEndpoint =
-  | '/api/events'
+  | "/api/events"
   | `/api/events/${string}`
-  | '/api/youtube/videos'
-  | '/api/auth/session'
-  | '/api/health';
+  | "/api/youtube/videos"
+  | "/api/auth/session"
+  | "/api/health";
 
 export type ApiRequestHandler<T = unknown> = (
   request: Request,
-  context?: ApiHandlerContext
+  context?: ApiHandlerContext,
 ) => Promise<ApiResponse<T>>;
 
 export type ApiMiddleware<T = unknown> = (
-  handler: ApiRequestHandler<T>
+  handler: ApiRequestHandler<T>,
 ) => ApiRequestHandler<T>;

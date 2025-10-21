@@ -1,7 +1,7 @@
-export const URL_HOME = '/'
-export const URL_MUSIC = '/music'
-export const URL_SHOWS = '/shows'
-export const URL_LIVE = '/live'
-export const URL_SIGNIN = '/signin'
-export const URL_DASHBOARD = '/dashboard'
-export const URL_DASHBOARD_EVENTS = '/dashboard/events'
+export const URL_HOME = "/";
+export const URL_MUSIC = "/music";
+export const URL_SHOWS = "/shows";
+export const URL_LIVE = "/live";
+export const URL_SIGNIN = "/signin";
+export const URL_DASHBOARD = "/dashboard";
+export const URL_DASHBOARD_EVENTS = "/dashboard/events";

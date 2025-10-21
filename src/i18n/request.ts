@@ -1,6 +1,6 @@
-import { Locale } from '@/shared/models/locale';
-import { getRequestConfig } from 'next-intl/server';
-import { routing } from './routing';
+import { Locale } from "@/shared/models/locale";
+import { getRequestConfig } from "next-intl/server";
+import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
   // Validate that the incoming `locale` parameter is valid
@@ -12,6 +12,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default
+    messages: (await import(`../messages/${locale}.json`)).default,
   };
 });

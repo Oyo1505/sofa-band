@@ -1,44 +1,43 @@
-import cn from 'clsx';
-import { useTranslations } from 'next-intl';
-import React, { memo } from 'react';
+import cn from "clsx";
+import { useTranslations } from "next-intl";
+import React, { memo } from "react";
 
-type TypeTitleType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type TypeTitleType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
-const Title = memo((
-  {
+const Title = memo(
+  ({
     translationTheme,
     translationText,
-    type = 'h1',
+    type = "h1",
     text,
     children,
     className,
     textColor,
-  }
-    : {
-      translationTheme?: string,
-      translationText?: string,
-      type?: TypeTitleType,
-      text?: string,
-      textColor?: string,
-      children?: React.ReactNode,
-      className?: string
-    }) => {
-  const t = useTranslations(translationTheme || '');
+  }: {
+    translationTheme?: string;
+    translationText?: string;
+    type?: TypeTitleType;
+    text?: string;
+    textColor?: string;
+    children?: React.ReactNode;
+    className?: string;
+  }) => {
+    const t = useTranslations(translationTheme || "");
 
-  const Tag = React.createElement;
+    const Tag = React.createElement;
 
-  const content = text || (translationText && translationTheme ? t(translationText) : null);
+    const content =
+      text || (translationText && translationTheme ? t(translationText) : null);
 
-  return (
-    Tag(
+    return Tag(
       type.toLowerCase(),
       { className: cn(className, textColor) },
       content,
-      children
-    )
-  );
-});
+      children,
+    );
+  },
+);
 
-Title.displayName ='Title';
+Title.displayName = "Title";
 
-export default Title
+export default Title;
