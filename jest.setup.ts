@@ -1,9 +1,11 @@
 import "@testing-library/jest-dom";
-import { TextEncoder, TextDecoder } from 'util';
+import { TextEncoder as NodeTextEncoder, TextDecoder as NodeTextDecoder } from 'util';
 
 // Polyfill for Web APIs in jsdom
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder as any;
+// @ts-ignore - TextEncoder types are compatible at runtime
+global.TextEncoder = NodeTextEncoder;
+// @ts-ignore - TextDecoder types are compatible at runtime
+global.TextDecoder = NodeTextDecoder;
 
 // Mock Web Request/Response for Next.js server components
 if (typeof Request === 'undefined') {
