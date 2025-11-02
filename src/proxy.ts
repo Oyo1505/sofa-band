@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "./lib/auth";
 import { URL_HOME } from "./lib/routes";
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -28,6 +28,5 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)", "/", "/(ja|en)/:path*"],
-  runtime: "nodejs",
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)", "/", "/(ja|en)/:path*"]
 };

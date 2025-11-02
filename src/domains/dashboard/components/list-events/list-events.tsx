@@ -1,23 +1,14 @@
-import { EventData } from "@/models/show/show";
+"use server";
+import { TEventData } from "@/models/show/show";
 import dynamic from "next/dynamic";
-import { deleteEventById } from "../../action";
+
 const EventItem = dynamic(() => import("../event-item/event-item"));
 
-const ListEvents = ({ events }: { events: EventData[] }) => {
-  const deleteEvent = async (id: string) => {
-    "use server";
-    await deleteEventById(id);
-  };
-
+const ListEvents = ({ events }: { events: TEventData[] }) => {
   return (
     <div>
       {events.map((event, index) => (
-        <EventItem
-          key={index}
-          index={index}
-          event={event}
-          deleteEvent={deleteEvent}
-        />
+        <EventItem key={index} index={index} event={event} />
       ))}
     </div>
   );

@@ -1,9 +1,8 @@
 import { signIn, signOut, useSession } from "@/lib/auth-client";
 import { URL_HOME } from "@/lib/routes";
 import { useTranslations } from "next-intl";
-import { memo } from "react";
 
-const ButtonLogin = memo(() => {
+const ButtonLogin = () => {
   const t = useTranslations("Header");
   const { data: session } = useSession();
 
@@ -31,6 +30,6 @@ const ButtonLogin = memo(() => {
       )}
     </div>
   );
-});
-ButtonLogin.displayName = "ButtonLogin";
+};
+
 export default ButtonLogin;

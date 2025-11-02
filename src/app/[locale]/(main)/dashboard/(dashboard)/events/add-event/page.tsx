@@ -1,6 +1,6 @@
 import { addEvent } from "@/domains/dashboard/action";
 import FormEvent from "@/domains/dashboard/components/form-event/form-event";
-import { EventData } from "@/models/show/show";
+import { TEventData } from "@/models/show/show";
 import { User } from "better-auth";
 
 const Page = () => {
@@ -8,12 +8,12 @@ const Page = () => {
     event,
     user,
   }: {
-    event: EventData;
+    event: TEventData;
     user: User;
-  }): Promise<number> => {
+  }): Promise<{ event?: TEventData | null; status: number; error?: string }> => {
     "use server";
-    const { status } = await addEvent({ event, user });
-    return status;
+    const result = await addEvent({ event, user });
+    return result;
   };
   return <FormEvent addEvent={addEventAction} />;
 };

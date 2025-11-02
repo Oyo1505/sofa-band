@@ -25,6 +25,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### Development
+
 ```bash
 pnpm dev          # Run development server with Prisma generation
 pnpm build        # Build for production with DB push
@@ -33,6 +34,7 @@ pnpm lint         # Run ESLint
 ```
 
 ### Database
+
 ```bash
 pnpm prisma generate    # Generate Prisma client
 pnpm prisma db push     # Push schema to database
@@ -43,10 +45,11 @@ pnpm prisma db push     # Push schema to database
 This is a Next.js music band website for "Sofa Rockers" with domain-driven architecture:
 
 ### Tech Stack
-- **Framework**: Next.js 15 with App Router
+
+- **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
 - **Database**: PostgreSQL with Prisma ORM
-- **Auth**: NextAuth.js v5 beta with Google provider
+- **Auth**: Better-Auth
 - **Styling**: Tailwind CSS v4
 - **Animations**: Framer Motion
 - **i18n**: next-intl (EN/JP/FR support)
@@ -80,6 +83,7 @@ src/
 ```
 
 ### Key Features
+
 - **Internationalized routing** with locale-based paths
 - **Admin dashboard** protected by NextAuth with authorized email system
 - **Music player** with React Player for audio playback
@@ -88,7 +92,9 @@ src/
 - **Responsive design** with mobile-first approach
 
 ### Database Schema
+
 Main entities:
+
 - `User`: Authentication and content authoring
 - `Event`: Upcoming concerts/shows with location, time, info links
 - `Live`: Past performances with video recordings
@@ -96,11 +102,13 @@ Main entities:
 - NextAuth tables: `Account`, `Session`, `VerificationToken`
 
 ### Authentication Flow
+
 - Google OAuth via NextAuth.js
 - Admin access restricted to emails in `AuthorizedEmail` table
 - Dashboard routes protected by middleware
 
 ### Development Notes
+
 - Uses domain-driven folder structure instead of traditional `components/pages`
 - Animations handled by Framer Motion with custom hooks
 - Audio files stored in `src/public/audio/`
@@ -108,6 +116,7 @@ Main entities:
 - Form validation with Zod schemas in `domains/dashboard/schema/`
 
 ### Environment Variables Required
+
 ```env
 POSTGRES_URL="postgresql://..."
 POSTGRES_URL_NON_POOLING="postgresql://..."

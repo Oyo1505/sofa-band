@@ -1,11 +1,11 @@
-import { getEvents } from "@/domains/dashboard/action";
+import { EventsServices } from "@/domains/dashboard/services/events";
 import moment from "moment";
 import dynamic from "next/dynamic";
 const ListEvents = dynamic(
   () => import("@/domains/dashboard/components/list-events/list-events"),
   {
     loading: () => <div className="h-16 bg-gray-100 animate-pulse rounded" />,
-  },
+  }
 );
 const EventHeaderPage = dynamic(
   () =>
@@ -14,11 +14,11 @@ const EventHeaderPage = dynamic(
     ),
   {
     loading: () => <div className="h-16 bg-gray-100 animate-pulse rounded" />,
-  },
+  }
 );
 
 const getData = async () => {
-  const result = await getEvents();
+  const result = await EventsServices.getEvents();
 
   if (result.status !== 200) {
     throw new Error(result.error || "Failed to fetch events");
@@ -31,7 +31,7 @@ const Page = async () => {
   try {
     const data = await getData();
     const sortedData = data.sort((a, b) =>
-      moment(b.createdAt).diff(moment(a.createdAt)),
+      moment(b.createdAt).diff(moment(a.createdAt))
     );
 
     return (

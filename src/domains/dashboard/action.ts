@@ -1,169 +1,92 @@
-import prisma from "@/lib/db";
-import {
-  DatabaseError,
-  handleAsyncError,
-  logError,
-  NotFoundError,
-  retryAsync,
-  ValidationError,
-} from "@/lib/error-utils";
-import { EventData } from "@/models/show/show";
+"use server";
+
+import { logError } from "@/lib/error-utils";
+import { URL_DASHBOARD_EVENTS } from "@/lib/routes";
+import { TEventData } from "@/models/show/show";
 import { User } from "better-auth";
 import { revalidatePath } from "next/cache";
-
-export const getEvents = async () => {
-  const [events, error] = await handleAsyncError(() =>
-    retryAsync(() => prisma.event.findMany(), {
-      maxRetries: 2,
-      baseDelay: 500,
-      retryCondition: (error) => !(error instanceof ValidationError),
-    }),
-  )();
-
-  if (error) {
-    logError(error, "getEvents");
-    const dbError = new DatabaseError("Failed to fetch events", error);
-    return { events: [], status: 500, error: dbError.message };
-  }
-
-  return { events, status: 200 };
-};
-
-export const getEventById = (id: string) => {
-  if (!id) {
-    return { status: 400 };
-  }
-  try {
-    const event = prisma.event.findUnique({
-      where: { id },
-    });
-    return { event, status: 200 };
-  } catch (error) {
-    return { status: 500 };
-  }
-};
+import { EventsServices } from "./services/events";
+import {
+  updateWithOwnershipCheck,
+  deleteWithOwnershipCheck,
+} from "./services/event-ownership";
+import { DALError } from "@/lib/data/dal/core/errors";
 
 export const addEvent = async ({
   event,
   user,
 }: {
-  event: EventData;
+  event: TEventData;
   user: User;
-}): Promise<{ event: EventData | null; status: number; error?: string }> => {
-  if (!event.title) {
-    const validationError = new ValidationError("Title is required", "title");
-    logError(validationError, "addEvent");
-    return { event: null, status: 400, error: validationError.message };
-  }
-
-  if (!user.id) {
-    const validationError = new ValidationError(
-      "User ID is required",
-      "userId",
+}): Promise<{ event?: TEventData | null; status: number; error?: string }> => {
+  try {
+    const result = await EventsServices.create({ event, user });
+    revalidatePath(URL_DASHBOARD_EVENTS);
+    return result;
+  } catch (error) {
+    logError(
+      error instanceof Error ? error : new Error(String(error)),
+      "addEvent: action"
     );
-    logError(validationError, "addEvent");
-    return { event: null, status: 400, error: validationError.message };
+    return { status: 500 };
   }
-
-  const [eventData, error] = await handleAsyncError(async () => {
-    return await prisma.event.create({
-      data: {
-        title: event.title,
-        location: event.location,
-        time: event.time,
-        city: event.city,
-        cityInJpn: event.cityInJpn,
-        date: event.date,
-        infoLink: event.infoLink,
-        region: event.region,
-        country: event.country ?? "",
-        published: event.published,
-        authorId: user.id!,
-      },
-    });
-  })();
-
-  if (error) {
-    logError(error, "addEvent");
-    return { event: null, status: 500, error: error.message };
-  }
-
-  return { event: eventData, status: 200 };
 };
 
 export const editEventToDb = async ({
   event,
 }: {
-  event: EventData;
-}): Promise<{ event: EventData | null; status: number; error?: string }> => {
-  if (!event.id) {
-    const validationError = new ValidationError("Event ID is required", "id");
-    logError(validationError, "editEventToDb");
-    return { event: null, status: 400, error: validationError.message };
-  }
+  event: TEventData;
+}): Promise<{ event?: TEventData | null; status: number; error?: string }> => {
+  try {
+    // Verify ownership before updating
+    const updatedEvent = await updateWithOwnershipCheck(event);
+    revalidatePath(URL_DASHBOARD_EVENTS);
+    return { event: updatedEvent, status: 200 };
+  } catch (error) {
+    logError(
+      error instanceof Error ? error : new Error(String(error)),
+      "editEventToDb: action"
+    );
 
-  const [updatedEvent, error] = await handleAsyncError(() =>
-    retryAsync(
-      () =>
-        prisma.event.update({
-          where: { id: event.id },
-          data: {
-            title: event.title,
-            location: event.location,
-            time: event.time,
-            city: event.city,
-            cityInJpn: event.cityInJpn,
-            date: event.date,
-            infoLink: event.infoLink,
-            region: event.region,
-            published: event.published,
-          },
-        }),
-      {
-        maxRetries: 2,
-        baseDelay: 500,
-        retryCondition: (error: any) => {
-          // Don't retry on validation errors (P2025 = record not found)
-          if (error.code === "P2025") return false;
-          return !(error instanceof ValidationError);
-        },
-      },
-    ),
-  )();
-
-  if (error) {
-    logError(error, "editEventToDb");
-
-    // Handle specific Prisma errors
-    if ((error as any).code === "P2025") {
-      const notFoundError = new NotFoundError("Event");
-      return { event: null, status: 404, error: notFoundError.message };
+    // Handle authorization errors with appropriate status codes
+    if (error instanceof DALError) {
+      return {
+        status: error.toHTTPStatus(),
+        error: error.message
+      };
     }
 
-    const dbError = new DatabaseError("Failed to update event", error);
-    return { event: null, status: 500, error: dbError.message };
+    return { status: 500, error: "Failed to update event" };
   }
-
-  revalidatePath(`/dashboard/events/edit-event?id=${event.id}`);
-  return { event: updatedEvent, status: 200 };
 };
 
-export const deleteEventById = async (id: string) => {
-  if (!id) return { event: null, status: 400 };
+export const deleteEventById = async (
+  id: string
+): Promise<{ success: boolean; error?: string }> => {
   try {
-    await prisma.event.delete({
-      where: {
-        id,
-      },
-    });
-
-    revalidatePath("/dashboard/events");
-    return { status: 200 };
-  } catch (err) {
+    // Verify ownership before deleting
+    await deleteWithOwnershipCheck(id);
+    revalidatePath(URL_DASHBOARD_EVENTS);
+    return { success: true };
+  } catch (error) {
     logError(
-      err instanceof Error ? err : new Error(String(err)),
-      "deleteEventById",
+      error instanceof Error ? error : new Error(String(error)),
+      "deleteEventById: action"
     );
-    return { status: 500 };
+
+    // Provide user-friendly error messages for authorization failures
+    if (error instanceof DALError) {
+      return {
+        success: false,
+        error: error.type === "FORBIDDEN"
+          ? "You don't have permission to delete this event"
+          : error.message
+      };
+    }
+
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error)
+    };
   }
 };

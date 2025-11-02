@@ -10,7 +10,6 @@ import { URL_DASHBOARD, URL_HOME } from "@/lib/routes";
 import { useSession } from "@/lib/auth-client";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 import ButtonLogin from "../button-login/button-login";
 import ButtonSwitchLangage from "../button-switch-langage/button-switch-langage";
 
@@ -18,7 +17,7 @@ const MenuNav = ({ locale }: { locale: string }) => {
   const t = useTranslations("Header");
   const { data: session } = useSession();
   const segments = usePathname();
-  const dashboard = useMemo(() => segments.includes("/dashboard"), [segments]);
+  const dashboard = segments.includes("/dashboard");
 
   return (
     <div className="flex justify-between items-center h-20">

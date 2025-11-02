@@ -6,6 +6,8 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactCompiler: true,
+  pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
   images: {
     formats: ["image/webp", "image/avif"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -13,15 +15,13 @@ const nextConfig = {
     minimumCacheTTL: 31536000,
   },
 
-  webpack(config) {
-    // Audio files optimization
-    config.module.rules.push({
-      test: /\.mp3$/,
-      use: {
-        loader: "url-loader",
+  turbopack: {
+    rules: {
+      "*.mp3": {
+        loaders: ["url-loader"],
+        as: "*.js",
       },
-    });
-    return config;
+    },
   },
 };
 

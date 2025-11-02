@@ -1,18 +1,18 @@
 //@ts-nocheck
 "use client";
 import Text from "@/domains/ui/components/text/text";
-import { EventData } from "@/models/show/show";
+import { TEventData } from "@/models/show/show";
 import { hours } from "@/shared/constants/hours";
 import moment from "moment";
 import { useLocale } from "next-intl";
-import { memo } from "react";
+
 import ButtonEvent from "../button-event/button-event";
 
 interface Props {
-  event: EventData;
+  event: TEventData;
 }
 
-const ShowItem = memo(({ event }: Props) => {
+const ShowItem = ({ event }: Props) => {
   const { title, location, date, city, region, cityInJpn } = event;
 
   const timeSlot = hours[0].time_slots.filter((h) => h.id === event.time)[0];
@@ -57,6 +57,6 @@ const ShowItem = memo(({ event }: Props) => {
       </div>
     </div>
   );
-});
-ShowItem.displayName = "ShowItem";
+};
+
 export default ShowItem;

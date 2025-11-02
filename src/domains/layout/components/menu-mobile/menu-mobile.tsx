@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 import { URL_DASHBOARD, URL_HOME } from "@/lib/routes";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { useDimensions } from "../../hooks/use-dimensions";
 import { useOutsideClick } from "../../hooks/use-ouside-click";
 import useHandleMenuMobile from "../../hooks/useHandleMenuMobile";
@@ -67,28 +67,22 @@ const MenuMobile = ({ locale }: { locale: string }) => {
     }
   });
 
-  const variantsContainer = useMemo(
-    () => ({
-      open: {
-        transition: { staggerChildren: 0.07, delayChildren: 0.2 },
-      },
-    }),
-    [],
-  );
+  const variantsContainer = {
+    open: {
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+    },
+  };
 
-  const links = useMemo(
-    () => [
-      {
-        link: URL_HOME,
-        item: t("Home"),
-      },
-      {
-        link: URL_DASHBOARD,
-        item: t("Dashboard"),
-      },
-    ],
-    [t],
-  );
+  const links = [
+    {
+      link: URL_HOME,
+      item: t("Home"),
+    },
+    {
+      link: URL_DASHBOARD,
+      item: t("Dashboard"),
+    },
+  ];
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { getEvents } from "@/domains/dashboard/action";
+import { EventsServices } from "@/domains/dashboard/services/events";
 import ImageHero from "@/domains/home-page/components/image-hero/image-heo";
 import TitlesContainer from "@/domains/home-page/components/titles-container/titles-container";
 import MusicList from "@/domains/music-page/components/music-list/music-list";
@@ -6,7 +6,7 @@ import LiveList from "@/domains/show-page/components/live-list/live-list";
 import ShowList from "@/domains/show-page/components/show-list/show-list";
 import LoadingSpinner from "@/domains/ui/components/loading-spinner/loading-spinner";
 import { routing } from "@/i18n/routing";
-import { EventData } from "@/models/show/show";
+import { TEventData } from "@/models/show/show";
 import moment from "moment";
 import { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
@@ -16,13 +16,11 @@ const AnimatedSectionHomePage = dynamic(
   () =>
     import(
       "@/domains/ui/components/animated-section_home-page/animated-section_home-page"
-    ),
+    )
 );
 
-const revalidate = 180;
-
 const getData = async () => {
-  const { events } = await getEvents();
+  const { events } = await EventsServices.getEvents();
   return events;
 };
 
@@ -34,9 +32,8 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
   const events = await getData();
-  const sortedData: EventData[] = events.sort((a, b) =>
-    moment(b.date).diff(moment(a.date)),
-  );
+  const sortedData: TEventData[] | undefined =
+    events && events.sort((a, b) => moment(b.date).diff(moment(a.date)));
   return (
     <div className=" flex flex-col md:gap-30 gap-10  items-start justify-start w-full">
       <Suspense fallback={<LoadingSpinner />}>
