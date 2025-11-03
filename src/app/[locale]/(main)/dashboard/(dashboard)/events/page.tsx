@@ -1,4 +1,4 @@
-import { EventsServices } from "@/domains/dashboard/services/events";
+import { Container } from "@/lib/di/container";
 import moment from "moment";
 import dynamic from "next/dynamic";
 const ListEvents = dynamic(
@@ -18,13 +18,14 @@ const EventHeaderPage = dynamic(
 );
 
 const getData = async () => {
-  const result = await EventsServices.getEvents();
+  const eventService = Container.getEventService();
+  const result = await eventService.getAll();
 
   if (result.status !== 200) {
     throw new Error(result.error || "Failed to fetch events");
   }
 
-  return result.events;
+  return result.data || [];
 };
 
 const Page = async () => {

@@ -1,12 +1,13 @@
 import { editEventToDb } from "@/domains/dashboard/action";
 import FormEvent from "@/domains/dashboard/components/form-event/form-event";
-import { EventsServices } from "@/domains/dashboard/services/events";
+import { Container } from "@/lib/di/container";
 
 import { TEventData } from "@/models/show/show";
 
 const getData = async (id: string) => {
-  const { event } = await EventsServices.getEventById(id);
-  return event;
+  const eventService = Container.getEventService();
+  const result = await eventService.getById(id);
+  return result.data;
 };
 
 const Page = async ({

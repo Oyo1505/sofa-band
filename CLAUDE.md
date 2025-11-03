@@ -16,11 +16,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### While implementing
 
+- Have to respect Clean code pratice.
+
+- All Test have to passed green
+
 - You should update the plan as you work.
 
 - After you complete tasks in the plan, you should update and append detailed descriptions of the changes you made, so following tasks can be easily hand over to other engineers.
 
-- Files rapport have to be in the folder docs
+- Files rapport have to be in the folder .claudedocs
 
 ## Commands
 
@@ -59,7 +63,7 @@ This is a Next.js music band website for "Sofa Rockers" with domain-driven archi
 
 ### Directory Structure
 
-The project follows a domain-driven architecture pattern:
+The project follows a domain-driven architecture pattern with **SOLID principles** and **Dependency Injection**:
 
 ```
 src/
@@ -71,12 +75,21 @@ src/
 ├── domains/                     # Domain-specific modules
 │   ├── auth/                   # Authentication logic
 │   ├── dashboard/              # Admin dashboard features
+│   │   ├── interfaces/         # Service contracts (IEventService, IEventRepository, IEventValidator)
+│   │   ├── services/           # Business logic with DI
+│   │   ├── validators/         # Validation logic
+│   │   └── components/         # UI components
 │   ├── home-page/             # Homepage components
 │   ├── layout/                # Layout components (header, footer, nav)
 │   ├── music-page/            # Music player and audio features
 │   ├── show-page/             # Events and live performances
 │   └── ui/                    # Reusable UI components
 ├── lib/                       # Utilities and configurations
+│   ├── data/                  # Data access layer
+│   │   └── repositories/      # Repository implementations (Prisma)
+│   ├── di/                    # Dependency Injection container
+│   ├── interfaces/            # Shared interfaces (ILogger)
+│   └── logging/               # Logger implementations
 ├── models/                    # TypeScript types and interfaces
 ├── messages/                  # i18n translation files
 └── shared/                    # Shared utilities and constants
@@ -114,6 +127,37 @@ Main entities:
 - Audio files stored in `src/public/audio/`
 - All user-facing content supports multi-language
 - Form validation with Zod schemas in `domains/dashboard/schema/`
+
+### Architecture Patterns
+
+**SOLID Principles Implementation**:
+- **Dependency Injection**: Services use constructor injection for dependencies
+- **Interface Segregation**: Specialized interfaces (IEventRepository, IEventService, IEventValidator, ILogger)
+- **Dependency Inversion**: Dependencies on abstractions (interfaces) instead of concrete implementations
+- **Single Responsibility**: Each class has one clear responsibility (service, repository, validator, logger)
+- **Open/Closed**: Services are open for extension via interfaces, closed for modification
+
+**Service Layer Pattern**:
+```typescript
+// Get service instance from DI container
+const eventService = Container.getEventService();
+const result = await eventService.create(event, user);
+```
+
+**Repository Pattern**:
+- Abstracts data access through `IEventRepository` interface
+- Current implementation: `PrismaEventRepository`
+- Easy to swap implementations (e.g., MongoDB, in-memory for tests)
+
+**Testing Strategy**:
+- Unit tests use mocks via dependency injection
+- Services are fully testable in isolation
+- Example: `tests/unit/services/events.service.test.ts`
+
+**Migration Notes**:
+- All event operations now use DI container: `Container.getEventService()`
+- Old static methods pattern replaced with instance methods
+- Pages use container to access services instead of direct imports
 
 ### Environment Variables Required
 
