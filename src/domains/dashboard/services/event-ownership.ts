@@ -1,8 +1,8 @@
 "use server";
 
 import { verifyOwnership, canModifyResource } from "@/lib/data/dal/core/auth";
-import { EventData } from "@/lib/data/events";
-import { logError, ValidationError } from "@/lib/error-utils";
+import { Container } from "@/lib/di/container";
+import { ValidationError } from "@/lib/error-utils";
 import { TEventData } from "@/models/show/show";
 
 /**
@@ -10,6 +10,7 @@ import { TEventData } from "@/models/show/show";
  *
  * Provides secure event operations with built-in ownership verification.
  * All modification operations verify that the current user owns the event.
+ * Uses dependency injection for better testability.
  */
 
 /**
@@ -27,18 +28,19 @@ export async function verifyEventOwnership(
     throw new ValidationError("Event ID is required", "eventId");
   }
 
-  // Fetch the event
-  const result = await EventData.getEventsById(eventId);
+  // Get event service from DI container
+  const eventService = Container.getEventService();
+  const result = await eventService.getById(eventId);
 
-  if (!result.event) {
+  if (!result.data) {
     throw new ValidationError("Event not found", "eventId");
   }
 
   // Verify ownership
-  await verifyOwnership(result.event.authorId);
+  await verifyOwnership(result.data.authorId);
 
   return {
-    event: result.event,
+    event: result.data,
     canModify: true,
   };
 }
@@ -51,11 +53,14 @@ export async function verifyEventOwnership(
  */
 export async function canModifyEvent(eventId: string): Promise<boolean> {
   try {
-    const result = await EventData.getEventsById(eventId);
-    if (!result.event) return false;
-    return await canModifyResource(result.event.authorId);
+    const eventService = Container.getEventService();
+    const result = await eventService.getById(eventId);
+
+    if (!result.data) return false;
+    return await canModifyResource(result.data.authorId);
   } catch (error) {
-    logError(
+    const logger = Container.getLogger();
+    logger.error(
       error instanceof Error ? error : new Error(String(error)),
       "canModifyEvent"
     );
@@ -76,14 +81,15 @@ export async function updateWithOwnershipCheck(
   // Verify ownership before updating
   await verifyEventOwnership(event.id);
 
-  // Proceed with update
-  const result = await EventData.update(event);
+  // Proceed with update using DI container
+  const eventService = Container.getEventService();
+  const result = await eventService.update(event);
 
-  if (!result.event) {
+  if (!result.data) {
     throw new ValidationError("Failed to update event", "event");
   }
 
-  return result.event;
+  return result.data;
 }
 
 /**
@@ -96,6 +102,7 @@ export async function deleteWithOwnershipCheck(eventId: string): Promise<void> {
   // Verify ownership before deleting
   await verifyEventOwnership(eventId);
 
-  // Proceed with deletion
-  await EventData.delete(eventId);
+  // Proceed with deletion using DI container
+  const eventService = Container.getEventService();
+  await eventService.delete(eventId);
 }

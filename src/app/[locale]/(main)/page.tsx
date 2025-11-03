@@ -1,4 +1,4 @@
-import { EventsServices } from "@/domains/dashboard/services/events";
+import { Container } from "@/lib/di/container";
 import ImageHero from "@/domains/home-page/components/image-hero/image-heo";
 import TitlesContainer from "@/domains/home-page/components/titles-container/titles-container";
 import MusicList from "@/domains/music-page/components/music-list/music-list";
@@ -20,8 +20,9 @@ const AnimatedSectionHomePage = dynamic(
 );
 
 const getData = async () => {
-  const { events } = await EventsServices.getEvents();
-  return events;
+  const eventService = Container.getEventService();
+  const result = await eventService.getAll();
+  return result.data || [];
 };
 
 export default async function Home({

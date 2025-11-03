@@ -1,147 +1,223 @@
-import { EventData } from "@/lib/data/events";
+import { IEventRepository } from "@/domains/dashboard/interfaces/event-repository.interface";
+import {
+  IEventService,
+  ServiceResult,
+} from "@/domains/dashboard/interfaces/event-service.interface";
+import { IEventValidator } from "@/domains/dashboard/interfaces/event-validator.interface";
 import {
   DatabaseError,
   handleAsyncError,
-  logError,
   NotFoundError,
   retryAsync,
-  ValidationError,
 } from "@/lib/error-utils";
+import { ILogger } from "@/lib/interfaces/logger.interface";
 import { TEventData } from "@/models/show/show";
 import { User } from "better-auth";
 
-export class EventsServices {
-  static async create({
-    event,
-    user,
-  }: {
-    event: TEventData;
-    user: User;
-  }): Promise<{ event: TEventData | null; status: number; error?: string }> {
-    if (!event.title) {
-      const validationError = new ValidationError("Title is required", "title");
-      logError(validationError, "addEvent");
-      return { event: null, status: 400, error: validationError.message };
+/**
+ * Events Service with Dependency Injection
+ *
+ * Orchestrates event operations using injected dependencies.
+ * Follows SOLID principles for better testability and maintainability.
+ */
+export class EventsServices implements IEventService {
+  constructor(
+    private readonly eventRepository: IEventRepository,
+    private readonly validator: IEventValidator,
+    private readonly logger: ILogger
+  ) {}
+
+  async create(
+    event: TEventData,
+    user: User
+  ): Promise<ServiceResult<TEventData>> {
+    // Validate input
+    const validation = this.validator.validateCreate(event, user.id!);
+    if (!validation.isValid) {
+      const firstError = validation.errors[0];
+      this.logger.error(firstError, "EventsServices.create");
+      return {
+        data: null,
+        status: 400,
+        error: firstError.message,
+      };
     }
 
-    if (!user.id) {
-      const validationError = new ValidationError(
-        "User ID is required",
-        "userId"
-      );
-      logError(validationError, "addEvent");
-      return { event: null, status: 400, error: validationError.message };
-    }
-
+    // Create event with retry logic
     const [result, error] = await handleAsyncError(async () => {
-      return await EventData.create({ event, user });
+      return await retryAsync(
+        () => this.eventRepository.create(event, user.id!),
+        {
+          maxRetries: 2,
+          baseDelay: 500,
+        }
+      );
     })();
 
     if (error) {
-      logError(error, "addEvent");
-      return { event: null, status: 500, error: error.message };
+      this.logger.error(error, "EventsServices.create");
+      return {
+        data: null,
+        status: 500,
+        error: error.message,
+      };
     }
 
-    return { event: result?.event || null, status: result?.status || 200, error: result?.error };
+    return {
+      data: result || null,
+      status: 200,
+    };
   }
-  static async getEvents() {
+
+  async getAll(): Promise<ServiceResult<TEventData[]>> {
     const [result, error] = await handleAsyncError(() =>
-      retryAsync(() => EventData.getEvents(), {
+      retryAsync(() => this.eventRepository.findAll(), {
         maxRetries: 2,
         baseDelay: 500,
       })
     )();
 
     if (error) {
-      logError(error, "getEvents");
+      this.logger.error(error, "EventsServices.getAll");
       const dbError = new DatabaseError("Failed to fetch events", error);
-      return { events: [], status: 500, error: dbError.message };
+      return {
+        data: [],
+        status: 500,
+        error: dbError.message,
+      };
     }
 
-    return { events: result?.events || [], status: result?.status || 200 };
+    return {
+      data: result || [],
+      status: 200,
+    };
   }
 
-  static async getEventById(
-    id: string
-  ): Promise<{ event?: TEventData | null; status: number; error?: string }> {
-    if (!id) {
-      return { status: 400 };
+  async getById(id: string): Promise<ServiceResult<TEventData>> {
+    // Validate ID
+    const validation = this.validator.validateId(id);
+    if (!validation.isValid) {
+      return {
+        data: null,
+        status: 400,
+        error: validation.errors[0].message,
+      };
     }
+
     const [result, error] = await handleAsyncError(() =>
-      retryAsync(() => EventData.getEventsById(id), {
+      retryAsync(() => this.eventRepository.findById(id), {
         maxRetries: 2,
         baseDelay: 500,
       })
     )();
+
     if (error) {
-      logError(error, "getEventById");
+      this.logger.error(error, "EventsServices.getById");
       const dbError = new DatabaseError("Failed to fetch event", error);
-      return { event: null, status: 500, error: dbError.message };
+      return {
+        data: null,
+        status: 500,
+        error: dbError.message,
+      };
     }
-    return { event: result?.event || null, status: result?.status || 200 };
+
+    return {
+      data: result || null,
+      status: 200,
+    };
   }
 
-  static async upadate(
-    event: TEventData
-  ): Promise<{ event: TEventData | null; status: number; error?: string }> {
-    if (!event.id) {
-      const validationError = new ValidationError("Event ID is required", "id");
-      logError(validationError, "upadate");
-      return { event: null, status: 400, error: validationError.message };
+  async update(event: TEventData): Promise<ServiceResult<TEventData>> {
+    // Validate input
+    const validation = this.validator.validateUpdate(event);
+    if (!validation.isValid) {
+      const firstError = validation.errors[0];
+      this.logger.error(firstError, "EventsServices.update");
+      return {
+        data: null,
+        status: 400,
+        error: firstError.message,
+      };
     }
 
     const [result, error] = await handleAsyncError(() =>
-      retryAsync(() => EventData.update(event), {
+      retryAsync(() => this.eventRepository.update(event), {
         maxRetries: 2,
         baseDelay: 500,
         retryCondition: (error: any) => {
           // Don't retry on validation errors (P2025 = record not found)
           if (error.code === "P2025") return false;
-          return !(error instanceof ValidationError);
+          return true;
         },
       })
     )();
 
     if (error) {
-      logError(error, "upadate: EventsServices");
+      this.logger.error(error, "EventsServices.update");
 
       // Handle specific Prisma errors
       if ((error as any).code === "P2025") {
         const notFoundError = new NotFoundError("Event");
-        return { event: null, status: 404, error: notFoundError.message };
+        return {
+          data: null,
+          status: 404,
+          error: notFoundError.message,
+        };
       }
 
       const dbError = new DatabaseError("Failed to update event", error);
-      return { event: null, status: 500, error: dbError.message };
+      return {
+        data: null,
+        status: 500,
+        error: dbError.message,
+      };
     }
 
-    return { event: result?.event || null, status: result?.status || 200 };
+    return {
+      data: result || null,
+      status: 200,
+    };
   }
 
-  static async deleteEvent(id: string) {
-    if (!id) return { event: null, status: 400 };
+  async delete(id: string): Promise<ServiceResult<void>> {
+    // Validate ID
+    const validation = this.validator.validateId(id);
+    if (!validation.isValid) {
+      return {
+        status: 400,
+        error: validation.errors[0].message,
+      };
+    }
+
     const [, error] = await handleAsyncError(() =>
-      retryAsync(() => EventData.delete(id), {
+      retryAsync(() => this.eventRepository.delete(id), {
         maxRetries: 2,
         baseDelay: 500,
         retryCondition: (error: any) => {
           // Don't retry on validation errors (P2025 = record not found)
           if (error.code === "P2025") return false;
-          return !(error instanceof ValidationError);
+          return true;
         },
       })
     )();
+
     if (error) {
-      logError(error, "deleteEvent");
+      this.logger.error(error, "EventsServices.delete");
 
       // Handle specific Prisma errors
       if ((error as any).code === "P2025") {
         const notFoundError = new NotFoundError("Event");
-        return { event: null, status: 404, error: notFoundError.message };
+        return {
+          status: 404,
+          error: notFoundError.message,
+        };
       }
 
-      const dbError = new DatabaseError("Failed to update event", error);
-      return { event: null, status: 500, error: dbError.message };
+      const dbError = new DatabaseError("Failed to delete event", error);
+      return {
+        status: 500,
+        error: dbError.message,
+      };
     }
 
     return { status: 200 };

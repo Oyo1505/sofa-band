@@ -1,16 +1,22 @@
 "use server";
 
-import { logError } from "@/lib/error-utils";
+import { Container } from "@/lib/di/container";
 import { URL_DASHBOARD_EVENTS } from "@/lib/routes";
 import { TEventData } from "@/models/show/show";
 import { User } from "better-auth";
 import { revalidatePath } from "next/cache";
-import { EventsServices } from "./services/events";
 import {
   updateWithOwnershipCheck,
   deleteWithOwnershipCheck,
 } from "./services/event-ownership";
 import { DALError } from "@/lib/data/dal/core/errors";
+
+/**
+ * Server Actions for Event Management
+ *
+ * Uses dependency injection container to get service instances.
+ * All actions handle errors and revalidate Next.js cache when needed.
+ */
 
 export const addEvent = async ({
   event,
@@ -20,11 +26,18 @@ export const addEvent = async ({
   user: User;
 }): Promise<{ event?: TEventData | null; status: number; error?: string }> => {
   try {
-    const result = await EventsServices.create({ event, user });
+    const eventService = Container.getEventService();
+    const result = await eventService.create(event, user);
     revalidatePath(URL_DASHBOARD_EVENTS);
-    return result;
+
+    return {
+      event: result.data,
+      status: result.status,
+      error: result.error,
+    };
   } catch (error) {
-    logError(
+    const logger = Container.getLogger();
+    logger.error(
       error instanceof Error ? error : new Error(String(error)),
       "addEvent: action"
     );
@@ -43,7 +56,8 @@ export const editEventToDb = async ({
     revalidatePath(URL_DASHBOARD_EVENTS);
     return { event: updatedEvent, status: 200 };
   } catch (error) {
-    logError(
+    const logger = Container.getLogger();
+    logger.error(
       error instanceof Error ? error : new Error(String(error)),
       "editEventToDb: action"
     );
@@ -52,7 +66,7 @@ export const editEventToDb = async ({
     if (error instanceof DALError) {
       return {
         status: error.toHTTPStatus(),
-        error: error.message
+        error: error.message,
       };
     }
 
@@ -69,7 +83,8 @@ export const deleteEventById = async (
     revalidatePath(URL_DASHBOARD_EVENTS);
     return { success: true };
   } catch (error) {
-    logError(
+    const logger = Container.getLogger();
+    logger.error(
       error instanceof Error ? error : new Error(String(error)),
       "deleteEventById: action"
     );
@@ -78,15 +93,16 @@ export const deleteEventById = async (
     if (error instanceof DALError) {
       return {
         success: false,
-        error: error.type === "FORBIDDEN"
-          ? "You don't have permission to delete this event"
-          : error.message
+        error:
+          error.type === "FORBIDDEN"
+            ? "You don't have permission to delete this event"
+            : error.message,
       };
     }
 
     return {
       success: false,
-      error: error instanceof Error ? error.message : String(error)
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 };
