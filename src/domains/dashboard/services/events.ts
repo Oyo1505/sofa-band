@@ -6,9 +6,9 @@ import {
 import { IEventValidator } from "@/domains/dashboard/interfaces/event-validator.interface";
 import {
   DatabaseError,
-  handleAsyncError,
   NotFoundError,
   retryAsync,
+  tryCatch,
 } from "@/lib/error-utils";
 import { ILogger } from "@/lib/interfaces/logger.interface";
 import { TEventData } from "@/models/show/show";
@@ -44,42 +44,42 @@ export class EventsServices implements IEventService {
     }
 
     // Create event with retry logic
-    const [result, error] = await handleAsyncError(async () => {
-      return await retryAsync(
+    const result = await tryCatch(
+      retryAsync(
         () => this.eventRepository.create(event, user.id!),
         {
           maxRetries: 2,
           baseDelay: 500,
         }
-      );
-    })();
+      )
+    );
 
-    if (error) {
-      this.logger.error(error, "EventsServices.create");
+    if (!result.success) {
+      this.logger.error(result.error, "EventsServices.create");
       return {
         data: null,
         status: 500,
-        error: error.message,
+        error: result.error.message,
       };
     }
 
     return {
-      data: result || null,
+      data: result.data || null,
       status: 200,
     };
   }
 
   async getAll(): Promise<ServiceResult<TEventData[]>> {
-    const [result, error] = await handleAsyncError(() =>
+    const result = await tryCatch(
       retryAsync(() => this.eventRepository.findAll(), {
         maxRetries: 2,
         baseDelay: 500,
       })
-    )();
+    );
 
-    if (error) {
-      this.logger.error(error, "EventsServices.getAll");
-      const dbError = new DatabaseError("Failed to fetch events", error);
+    if (!result.success) {
+      this.logger.error(result.error, "EventsServices.getAll");
+      const dbError = new DatabaseError("Failed to fetch events", result.error);
       return {
         data: [],
         status: 500,
@@ -88,7 +88,7 @@ export class EventsServices implements IEventService {
     }
 
     return {
-      data: result || [],
+      data: result.data || [],
       status: 200,
     };
   }
@@ -104,16 +104,16 @@ export class EventsServices implements IEventService {
       };
     }
 
-    const [result, error] = await handleAsyncError(() =>
+    const result = await tryCatch(
       retryAsync(() => this.eventRepository.findById(id), {
         maxRetries: 2,
         baseDelay: 500,
       })
-    )();
+    );
 
-    if (error) {
-      this.logger.error(error, "EventsServices.getById");
-      const dbError = new DatabaseError("Failed to fetch event", error);
+    if (!result.success) {
+      this.logger.error(result.error, "EventsServices.getById");
+      const dbError = new DatabaseError("Failed to fetch event", result.error);
       return {
         data: null,
         status: 500,
@@ -122,7 +122,7 @@ export class EventsServices implements IEventService {
     }
 
     return {
-      data: result || null,
+      data: result.data || null,
       status: 200,
     };
   }
@@ -140,7 +140,7 @@ export class EventsServices implements IEventService {
       };
     }
 
-    const [result, error] = await handleAsyncError(() =>
+    const result = await tryCatch(
       retryAsync(() => this.eventRepository.update(event), {
         maxRetries: 2,
         baseDelay: 500,
@@ -150,13 +150,13 @@ export class EventsServices implements IEventService {
           return true;
         },
       })
-    )();
+    );
 
-    if (error) {
-      this.logger.error(error, "EventsServices.update");
+    if (!result.success) {
+      this.logger.error(result.error, "EventsServices.update");
 
       // Handle specific Prisma errors
-      if ((error as any).code === "P2025") {
+      if ((result.error as any).code === "P2025") {
         const notFoundError = new NotFoundError("Event");
         return {
           data: null,
@@ -165,7 +165,7 @@ export class EventsServices implements IEventService {
         };
       }
 
-      const dbError = new DatabaseError("Failed to update event", error);
+      const dbError = new DatabaseError("Failed to update event", result.error);
       return {
         data: null,
         status: 500,
@@ -174,7 +174,7 @@ export class EventsServices implements IEventService {
     }
 
     return {
-      data: result || null,
+      data: result.data || null,
       status: 200,
     };
   }
@@ -189,7 +189,7 @@ export class EventsServices implements IEventService {
       };
     }
 
-    const [, error] = await handleAsyncError(() =>
+    const result = await tryCatch(
       retryAsync(() => this.eventRepository.delete(id), {
         maxRetries: 2,
         baseDelay: 500,
@@ -199,13 +199,13 @@ export class EventsServices implements IEventService {
           return true;
         },
       })
-    )();
+    );
 
-    if (error) {
-      this.logger.error(error, "EventsServices.delete");
+    if (!result.success) {
+      this.logger.error(result.error, "EventsServices.delete");
 
       // Handle specific Prisma errors
-      if ((error as any).code === "P2025") {
+      if ((result.error as any).code === "P2025") {
         const notFoundError = new NotFoundError("Event");
         return {
           status: 404,
@@ -213,7 +213,7 @@ export class EventsServices implements IEventService {
         };
       }
 
-      const dbError = new DatabaseError("Failed to delete event", error);
+      const dbError = new DatabaseError("Failed to delete event", result.error);
       return {
         status: 500,
         error: dbError.message,
