@@ -112,22 +112,8 @@ jest.mock('better-auth/next-js', () => ({
   nextCookies: jest.fn(() => ({})),
 }));
 
-// Mock error utilities
-jest.mock('@/lib/error-utils', () => ({
-  logError: jest.fn(),
-  ValidationError: class ValidationError extends Error {
-    constructor(message: string) {
-      super(message);
-      this.name = 'ValidationError';
-    }
-  },
-  ExternalApiError: class ExternalApiError extends Error {
-    constructor(message: string, service: string, statusCode?: number, cause?: Error) {
-      super(message);
-      this.name = 'ExternalApiError';
-    }
-  },
-}));
+// Note: error-utils is NOT mocked to allow testing real error handling behavior
+// Tests will use the actual error utilities and classes
 
 // Mock Next.js headers
 jest.mock('next/headers', () => ({
