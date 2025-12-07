@@ -45,13 +45,10 @@ export class EventsServices implements IEventService {
 
     // Create event with retry logic
     const result = await tryCatch(
-      retryAsync(
-        () => this.eventRepository.create(event, user.id!),
-        {
-          maxRetries: 2,
-          baseDelay: 500,
-        }
-      )
+      retryAsync(() => this.eventRepository.create(event, user.id!), {
+        maxRetries: 2,
+        baseDelay: 500,
+      })
     );
 
     if (!result.success) {

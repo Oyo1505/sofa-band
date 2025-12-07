@@ -42,7 +42,7 @@ process.env.NEXTAUTH_SECRET = 'test-secret';
 process.env.GOOGLE_CLIENT_ID = 'test-google-client-id';
 process.env.GOOGLE_CLIENT_SECRET = 'test-google-client-secret';
 process.env.YOUTUBE_API_KEY = 'test-youtube-api-key';
-process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test';
+process.env.POSTGRES_URL = 'postgresql://test:test@localhost:5432/test';
 process.env.POSTGRES_URL_NON_POOLING = 'postgresql://test:test@localhost:5432/test';
 
 // Mock next-intl
@@ -52,7 +52,7 @@ jest.mock('next-intl', () => ({
 }));
 
 // Mock Prisma Client
-jest.mock('@/lib/db', () => ({
+jest.mock('@/lib/prisma', () => ({
   __esModule: true,
   default: {
     authorizedEmail: {

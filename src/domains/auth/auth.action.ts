@@ -1,7 +1,6 @@
 "use server";
-
-import prisma from "@/lib/db";
 import { logError } from "@/lib/error-utils";
+import prisma from "@/lib/prisma";
 
 export const getAuthorizedEmails = async () => {
   try {
@@ -14,7 +13,7 @@ export const getAuthorizedEmails = async () => {
   } catch (error) {
     logError(
       error instanceof Error ? error : new Error(String(error)),
-      "getAuthorizedEmails",
+      "getAuthorizedEmails"
     );
     return {
       status: 500,

@@ -2,8 +2,7 @@ import { getAuthorizedEmails } from "@/domains/auth/auth.action";
 import { APIError, betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import prisma from "./db";
-
+import prisma from "../lib/prisma";
 const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -50,7 +49,7 @@ const auth = betterAuth({
             }
 
             const isAuthorized = mails.some(
-              (item) => item.email === user.email,
+              (item) => item.email === user.email
             );
             if (!isAuthorized) {
               console.warn(`Unauthorized sign-in attempt: ${user.email}`);

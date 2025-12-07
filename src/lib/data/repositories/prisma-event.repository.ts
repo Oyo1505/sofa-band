@@ -1,6 +1,6 @@
 import { IEventRepository } from "@/domains/dashboard/interfaces/event-repository.interface";
 import { TEventData } from "@/models/show/show";
-import { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from "@prisma/generated";
 
 /**
  * Prisma Event Repository
