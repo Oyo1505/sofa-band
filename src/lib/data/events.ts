@@ -1,6 +1,6 @@
-import prisma from "@/lib/db";
+import prisma from "@/lib/prisma";
 import { TEventData } from "@/models/show/show";
-import { Event } from "@prisma/client";
+import type { Event } from "@prisma/generated";
 import { User } from "better-auth";
 import { cache } from "react";
 

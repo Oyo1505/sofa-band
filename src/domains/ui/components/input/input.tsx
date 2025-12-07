@@ -1,7 +1,6 @@
 import React from "react";
 import { FieldError } from "react-hook-form";
 import { cn } from "@/lib/utils";
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: string;

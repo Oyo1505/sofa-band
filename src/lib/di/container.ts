@@ -1,12 +1,12 @@
 import { IEventRepository } from "@/domains/dashboard/interfaces/event-repository.interface";
 import { IEventService } from "@/domains/dashboard/interfaces/event-service.interface";
 import { IEventValidator } from "@/domains/dashboard/interfaces/event-validator.interface";
-import { EventValidator } from "@/domains/dashboard/validators/event.validator";
 import { EventsServices } from "@/domains/dashboard/services/events";
+import { EventValidator } from "@/domains/dashboard/validators/event.validator";
 import { PrismaEventRepository } from "@/lib/data/repositories/prisma-event.repository";
-import { ConsoleLogger } from "@/lib/logging/console.logger";
 import { ILogger } from "@/lib/interfaces/logger.interface";
-import prisma from "@/lib/db";
+import { ConsoleLogger } from "@/lib/logging/console.logger";
+import prisma from "@/lib/prisma";
 
 /**
  * Dependency Injection Container

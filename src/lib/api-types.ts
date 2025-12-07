@@ -73,7 +73,7 @@ export interface EventCreateData {
   published?: boolean;
 }
 
-export interface EventUpdateData extends Partial<EventCreateData> {}
+export type EventUpdateData = Partial<EventCreateData>;
 
 export interface EventsListResponse {
   data: Event[];
@@ -115,7 +115,7 @@ export interface LiveCreateData {
   published?: boolean;
 }
 
-export interface LiveUpdateData extends Partial<LiveCreateData> {}
+export type LiveUpdateData = Partial<LiveCreateData>;
 
 // ====================
 // YouTube API Types
