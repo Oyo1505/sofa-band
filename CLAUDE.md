@@ -52,7 +52,7 @@ This is a Next.js music band website for "Sofa Rockers" with domain-driven archi
 
 - **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
-- **Database**: PostgreSQL with Prisma ORM
+- **Database**: PostgreSQL with Prisma 7 ORM
 - **Auth**: Better-Auth
 - **Styling**: Tailwind CSS v4
 - **Animations**: Framer Motion
@@ -131,6 +131,7 @@ Main entities:
 ### Architecture Patterns
 
 **SOLID Principles Implementation**:
+
 - **Dependency Injection**: Services use constructor injection for dependencies
 - **Interface Segregation**: Specialized interfaces (IEventRepository, IEventService, IEventValidator, ILogger)
 - **Dependency Inversion**: Dependencies on abstractions (interfaces) instead of concrete implementations
@@ -138,6 +139,7 @@ Main entities:
 - **Open/Closed**: Services are open for extension via interfaces, closed for modification
 
 **Service Layer Pattern**:
+
 ```typescript
 // Get service instance from DI container
 const eventService = Container.getEventService();
@@ -145,16 +147,19 @@ const result = await eventService.create(event, user);
 ```
 
 **Repository Pattern**:
+
 - Abstracts data access through `IEventRepository` interface
 - Current implementation: `PrismaEventRepository`
 - Easy to swap implementations (e.g., MongoDB, in-memory for tests)
 
 **Testing Strategy**:
+
 - Unit tests use mocks via dependency injection
 - Services are fully testable in isolation
 - Example: `tests/unit/services/events.service.test.ts`
 
 **Migration Notes**:
+
 - All event operations now use DI container: `Container.getEventService()`
 - Old static methods pattern replaced with instance methods
 - Pages use container to access services instead of direct imports
