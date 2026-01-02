@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 const EventItem = dynamic(() => import("../event-item/event-item"));
 
-const ListEvents = ({ events }: { events: TEventData[] }) => {
+const ListEvents = async ({ events }: { events: TEventData[] }) => {
   return (
     <div>
       {events.map((event, index) => (
